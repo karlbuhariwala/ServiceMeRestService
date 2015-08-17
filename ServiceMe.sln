@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestServiceV1", "RestServiceV1\RestServiceV1.csproj", "{D261675E-03D8-4D11-928F-A415BE0270D5}"
 EndProject
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "AzureCloudService", "AzureCloudService\AzureCloudService.ccproj", "{6E05E7EB-5B4F-4342-A3A4-0C3DC572534A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{D261675E-03D8-4D11-928F-A415BE0270D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D261675E-03D8-4D11-928F-A415BE0270D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D261675E-03D8-4D11-928F-A415BE0270D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E05E7EB-5B4F-4342-A3A4-0C3DC572534A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E05E7EB-5B4F-4342-A3A4-0C3DC572534A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E05E7EB-5B4F-4342-A3A4-0C3DC572534A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E05E7EB-5B4F-4342-A3A4-0C3DC572534A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
