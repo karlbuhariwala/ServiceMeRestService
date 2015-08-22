@@ -228,6 +228,25 @@ namespace RestServiceV1
         }
 
         /// <summary>
+        /// Gets the user cases.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <returns>
+        /// Get user cases container
+        /// </returns>
+        GetUserCasesReturnContainer IServiceMe.GetUserCases(GetUserCasesRequestContainer contents)
+        {
+            try
+            {
+                return (GetUserCasesReturnContainer)this.RunCommand(new GetUserCasesCommand(), contents);
+            }
+            catch (Exception)
+            {
+                return new GetUserCasesReturnContainer() { ReturnCode = ReturnCodes.GenericExceptionErrorCode };
+            }
+        }
+
+        /// <summary>
         /// Runs the command.
         /// </summary>
         /// <param name="command">The command.</param>

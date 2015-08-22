@@ -32,6 +32,11 @@ namespace RestServiceV1.DataContracts
         private DateTimeOffset closedDate;
 
         /// <summary>
+        /// The last update date time
+        /// </summary>
+        private DateTimeOffset lastUpdateDateTime;
+
+        /// <summary>
         /// Gets or sets the case identifier.
         /// </summary>
         /// <value>
@@ -112,6 +117,74 @@ namespace RestServiceV1.DataContracts
         ///   <c>true</c> if [new message]; otherwise, <c>false</c>.
         /// </value>
         public bool NewMessage { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [new email].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [new email]; otherwise, <c>false</c>.
+        /// </value>
+        public bool NewEmail { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [new phone call].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [new phone call]; otherwise, <c>false</c>.
+        /// </value>
+        public bool NewPhoneCall { get; set; }
+
+        /// <summary>
+        /// Gets or sets the assigned agent identifier.
+        /// </summary>
+        /// <value>
+        /// The assigned agent identifier.
+        /// </value>
+        public string AssignedAgentId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the assigned agent.
+        /// </summary>
+        /// <value>
+        /// The name of the assigned agent.
+        /// </value>
+        public string AssignedAgentName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the last update date time.
+        /// </summary>
+        /// <value>
+        /// The last update date time.
+        /// </value>
+        public DateTimeOffset LastUpdateDateTime
+        {
+            get
+            {
+                return this.lastUpdateDateTime;
+            }
+            set
+            {
+                this.lastUpdateDateTime = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the last update date time string.
+        /// </summary>
+        /// <value>
+        /// The last update date time string.
+        /// </value>
+        public string LastUpdateDateTimeString // format: 2011-11-11T15:05:46.4733406+01:00
+        {
+            get
+            {
+                return this.lastUpdateDateTime.ToString(Constants.DateTimeFormat);
+            }
+            set
+            {
+                this.lastUpdateDateTime = DateTimeOffset.Parse(value);
+            }
+        }
 
         /// <summary>
         /// Gets or sets the created date.

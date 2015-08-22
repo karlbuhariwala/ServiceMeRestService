@@ -10,6 +10,11 @@ namespace RestServiceV1
     public static class Constants
     {
         /// <summary>
+        /// The date time format
+        /// </summary>
+        public const string DateTimeFormat = "yyyy-MM-ddTHH:mm:ss.fffffffzzz";
+
+        /// <summary>
         /// The query separator
         /// </summary>
         public const string QuerySeparator = "|$|";

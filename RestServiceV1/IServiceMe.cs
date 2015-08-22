@@ -168,5 +168,18 @@ namespace RestServiceV1
             BodyStyle = WebMessageBodyStyle.Bare,
             UriTemplate = "SaveNewCase")]
         SaveNewCaseReturnContainer SaveNewCase(SaveNewCaseRequestContainer contents);
+
+        /// <summary>
+        /// Gets the user cases.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <returns>Get user cases container</returns>
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Bare,
+            UriTemplate = "GetUserCases")]
+        GetUserCasesReturnContainer GetUserCases(GetUserCasesRequestContainer contents);
     }
 }
