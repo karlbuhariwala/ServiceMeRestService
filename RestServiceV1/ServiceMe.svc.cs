@@ -247,6 +247,63 @@ namespace RestServiceV1
         }
 
         /// <summary>
+        /// Gets the user case detail.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <returns>
+        /// Get user case detail return container
+        /// </returns>
+        GetUserCaseDetailReturnContainer IServiceMe.GetUserCaseDetail(GetUserCaseDetailRequestContainer contents)
+        {
+            try
+            {
+                return (GetUserCaseDetailReturnContainer)this.RunCommand(new GetUserCaseDetailCommand(), contents);
+            }
+            catch (Exception)
+            {
+                return new GetUserCaseDetailReturnContainer() { ReturnCode = ReturnCodes.GenericExceptionErrorCode };
+            }
+        }
+
+        /// <summary>
+        /// Gets the agents for case.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <returns>
+        /// Get agents for the case return container
+        /// </returns>
+        GetAgentsForCaseReturnContainer IServiceMe.GetAgentsForCase(GetAgentsForCaseRequestContainer contents)
+        {
+            try
+            {
+                return (GetAgentsForCaseReturnContainer)this.RunCommand(new GetAgentsForCaseCommand(), contents);
+            }
+            catch (Exception)
+            {
+                return new GetAgentsForCaseReturnContainer() { ReturnCode = ReturnCodes.GenericExceptionErrorCode };
+            }
+        }
+
+        /// <summary>
+        /// Gets the agent context case details.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <returns>
+        /// Get agent context case details return container
+        /// </returns>
+        GetAgentContextCaseDetailsReturnContainer IServiceMe.GetAgentContextCaseDetails(GetAgentContextCaseDetailsRequestContainer contents)
+        {
+            try
+            {
+                return (GetAgentContextCaseDetailsReturnContainer)this.RunCommand(new GetAgentContextCaseDetailsCommand(), contents);
+            }
+            catch (Exception)
+            {
+                return new GetAgentContextCaseDetailsReturnContainer() { ReturnCode = ReturnCodes.GenericExceptionErrorCode };
+            }
+        }
+
+        /// <summary>
         /// Runs the command.
         /// </summary>
         /// <param name="command">The command.</param>

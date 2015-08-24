@@ -101,17 +101,21 @@
   <ItemGroup>
     <Compile Include="DataContracts\Communication\BaseContainer.cs" />
     <Compile Include="DataContracts\Communication\CaseOverviewForUserContainer.cs" />
+    <Compile Include="DataContracts\Communication\GetAgentContextCaseDetailsContainer.cs" />
     <Compile Include="DataContracts\Communication\GetAgentDetailsContainer.cs" />
     <Compile Include="DataContracts\Communication\GetAgentsForAutoCompleteContainer.cs" />
+    <Compile Include="DataContracts\Communication\GetAgentsForCaseContainer.cs" />
     <Compile Include="DataContracts\Communication\GetReccomendedAgentsContainer.cs" />
     <Compile Include="DataContracts\Communication\GetTagsContainer.cs" />
     <Compile Include="DataContracts\Communication\CreateNewUserContainer.cs" />
     <Compile Include="DataContracts\Communication\DeviceValidationCommunicationContainer.cs" />
     <Compile Include="DataContracts\Communication\GetProfileContainer.cs" />
     <Compile Include="DataContracts\Communication\GetTagsForAutoCompleteContainer.cs" />
+    <Compile Include="DataContracts\Communication\GetUserCaseDetailContainer.cs" />
     <Compile Include="DataContracts\Communication\GetUserCasesContainer.cs" />
     <Compile Include="DataContracts\Communication\SaveNewCaseContainer.cs" />
     <Compile Include="DataContracts\Communication\UpdateProfileContainer.cs" />
+    <Compile Include="DataContracts\InApp\ContextualCaseDetails.cs" />
     <Compile Include="DataContracts\InApp\CaseDetails.cs" />
     <Compile Include="DataContracts\InApp\DeviceValidationContainer.cs" />
     <Compile Include="DataContracts\InApp\RequestContext.cs" />
@@ -127,12 +131,15 @@
     <Compile Include="ServiceLayer\BaseCommand.cs" />
     <Compile Include="ServiceLayer\CreateNewUserCommand.cs" />
     <Compile Include="ServiceLayer\DeviceValidationCommand.cs" />
+    <Compile Include="ServiceLayer\GetAgentContextCaseDetailsCommand.cs" />
     <Compile Include="ServiceLayer\GetAgentDetailsCommand.cs" />
     <Compile Include="ServiceLayer\GetAgentsForAutoCompleteCommand.cs" />
+    <Compile Include="ServiceLayer\GetAgentsForCaseCommand.cs" />
     <Compile Include="ServiceLayer\GetProfileCommand.cs" />
     <Compile Include="ServiceLayer\GetRecommendedAgentsCommand.cs" />
     <Compile Include="ServiceLayer\GetTagsCommand.cs" />
     <Compile Include="ServiceLayer\GetTagsForAutoCompleteCommand.cs" />
+    <Compile Include="ServiceLayer\GetUserCaseDetailCommand.cs" />
     <Compile Include="ServiceLayer\GetUserCasesCommand.cs" />
     <Compile Include="ServiceLayer\SaveNewCaseCommand.cs" />
     <Compile Include="ServiceLayer\UpdateUserProfileCommand.cs" />

@@ -181,5 +181,44 @@ namespace RestServiceV1
             BodyStyle = WebMessageBodyStyle.Bare,
             UriTemplate = "GetUserCases")]
         GetUserCasesReturnContainer GetUserCases(GetUserCasesRequestContainer contents);
+
+        /// <summary>
+        /// Gets the user case detail.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <returns>Get user case detail return container</returns>
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Bare,
+            UriTemplate = "GetUserCaseDetail")]
+        GetUserCaseDetailReturnContainer GetUserCaseDetail(GetUserCaseDetailRequestContainer contents);
+
+        /// <summary>
+        /// Gets the agents for case.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <returns>Get agents for the case return container</returns>
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Bare,
+            UriTemplate = "GetAgentsForCase")]
+        GetAgentsForCaseReturnContainer GetAgentsForCase(GetAgentsForCaseRequestContainer contents);
+
+        /// <summary>
+        /// Gets the agent context case details.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <returns>Get agent context case details return container</returns>
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Bare,
+            UriTemplate = "GetAgentContextCaseDetails")]
+        GetAgentContextCaseDetailsReturnContainer GetAgentContextCaseDetails(GetAgentContextCaseDetailsRequestContainer contents);
     }
 }
