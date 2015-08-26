@@ -4,14 +4,18 @@
     <Sites>
       <Site name="Web">
         <Bindings>
-          <Binding name="Endpoint" endpointName="Endpoint" />
+          <Binding name="HttpsIn" endpointName="HttpsIn" />
         </Bindings>
       </Site>
     </Sites>
     <ConfigurationSettings>
     </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="SSLCert" storeLocation="LocalMachine" storeName="CA" />
+    </Certificates>
     <Endpoints>
-      <InputEndpoint name="Endpoint" protocol="http" port="8080" />
+      <!--<InputEndpoint name="Endpoint" protocol="http" port="8080" />-->
+      <InputEndpoint name="HttpsIn" protocol="https" port="443" certificate="SSLCert" />
     </Endpoints>
   </WebRole>
 </ServiceDefinition>

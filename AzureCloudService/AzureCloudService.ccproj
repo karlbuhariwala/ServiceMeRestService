@@ -48,10 +48,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Profiles" />
     <Folder Include="RestServiceV1Content\" />
   </ItemGroup>
   <ItemGroup>
     <DiagnosticsConfiguration Include="RestServiceV1Content\diagnostics.wadcfgx" />
+  </ItemGroup>
+  <ItemGroup>
+    <PublishProfile Include="Profiles\ServiceMe247Prod.azurePubxml" />
+    <PublishProfile Include="Profiles\ServiceMe247Staging.azurePubxml" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>

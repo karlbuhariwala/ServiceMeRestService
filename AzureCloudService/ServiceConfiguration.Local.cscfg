@@ -4,5 +4,8 @@
     <Instances count="1" />
     <ConfigurationSettings>
     </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="SSLCert" thumbprint="000" thumbprintAlgorithm="sha1" />
+    </Certificates>
   </Role>
 </ServiceConfiguration>
