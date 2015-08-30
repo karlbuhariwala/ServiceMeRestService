@@ -43,10 +43,15 @@ namespace RestServiceV1.Providers
         /// <typeparam name="T">Provider interface type</typeparam>
         /// <returns>The instance of the provider</returns>
         /// <exception cref="ApplicationException">No setting for Provider type: + providerType.Name</exception>
-        public IProvider CreateProvider<T>()
+        public IProvider CreateProvider<T>(string providerName)
         {
             var providerType = typeof(T);
             string providerInstanceName = ConfigurationManager.AppSettings[providerType.Name];
+            if (!string.IsNullOrEmpty(providerName))
+            {
+                providerInstanceName = "RestServiceV1.Providers." + providerName;
+            }
+
             if (string.IsNullOrEmpty(providerInstanceName))
             {
                 throw new ApplicationException("No setting for Provider type:" + providerType.Name);

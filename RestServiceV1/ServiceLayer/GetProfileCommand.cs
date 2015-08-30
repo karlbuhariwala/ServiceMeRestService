@@ -24,8 +24,8 @@ namespace RestServiceV1.ServiceLayer
             GetProfileReturnContrainer returnContainer = new GetProfileReturnContrainer();
 
             // Todo: Optimize after writing query
-            ISqlProvider sqlProvider = (ISqlProvider)ProviderFactory.Instance.CreateProvider<ISqlProvider>();
-            DataSet returnedData = sqlProvider.ExecuteQuery(SqlQueries.GetUserProfileQuery);
+            ISqlProvider sqlProvider = (ISqlProvider)ProviderFactory.Instance.CreateProvider<ISqlProvider>(requestContainer.ProviderName);
+            DataSet returnedData = sqlProvider.ExecuteQuery(SqlQueries.GetUserProfileQuery, null);
             if (returnedData.Tables[0].Rows.Count == 1)
             {
                 DataRow row = returnedData.Tables[0].Rows[0];

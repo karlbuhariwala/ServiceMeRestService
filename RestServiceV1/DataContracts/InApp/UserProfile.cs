@@ -162,6 +162,8 @@ namespace RestServiceV1
 
         /// <summary>
         /// Gets or sets the favorite agents.
+        /// 
+        /// Note: Calculate limit
         /// </summary>
         /// <value>
         /// The favorite agents.

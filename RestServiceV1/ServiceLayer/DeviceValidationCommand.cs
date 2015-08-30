@@ -27,8 +27,8 @@ namespace RestServiceV1.ServiceLayer
             DateTimeOffset timestamp = DateTimeOffset.UtcNow;
 
             // Todo: Optimize this after creating sql query
-            ISqlProvider sqlProvider = (ISqlProvider)ProviderFactory.Instance.CreateProvider<ISqlProvider>();
-            DataSet returnedData = sqlProvider.ExecuteQuery(SqlQueries.RetrieveDeviceVerificationCode);
+            ISqlProvider sqlProvider = (ISqlProvider)ProviderFactory.Instance.CreateProvider<ISqlProvider>(requestContainer.ProviderName);
+            DataSet returnedData = sqlProvider.ExecuteQuery(SqlQueries.RetrieveDeviceVerificationCode, null);
             if (returnedData.Tables[0].Rows.Count == 1)
             {
                 DeviceValidationContainer deviceValidationContainer = new DeviceValidationContainer();

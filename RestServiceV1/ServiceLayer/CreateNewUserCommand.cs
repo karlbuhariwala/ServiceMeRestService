@@ -7,7 +7,9 @@ namespace RestServiceV1.ServiceLayer
     using RestServiceV1.DataContracts;
     using RestServiceV1.Providers;
     using System;
+    using System.Collections.Generic;
     using System.Data;
+    using System.Text;
 
     /// <summary>
     /// CreateNewUserCommand class
@@ -24,9 +26,21 @@ namespace RestServiceV1.ServiceLayer
             CreateNewUserRequestContainer requestContainer = context.InParam as CreateNewUserRequestContainer;
             CreateNewUserReturnContainer returnContainer = new CreateNewUserReturnContainer();
 
-            // Todo: Optimize only getting user as per query
-            ISqlProvider sqlProvider = (ISqlProvider)ProviderFactory.Instance.CreateProvider<ISqlProvider>();
-            DataSet user = sqlProvider.ExecuteQuery(SqlQueries.CheckIfPhoneNumberRegisteredQuery);
+            StringBuilder sb = new StringBuilder();
+            sb.Append("+");
+            for (int i = 0; i < requestContainer.PhoneNumber.Length; i++)
+            {
+                int temp;
+                if (int.TryParse(requestContainer.PhoneNumber[i].ToString(), out temp))
+                {
+                    sb.Append(temp);
+                }
+            }
+
+            string phoneNumber = sb.ToString();
+
+            ISqlProvider sqlProvider = (ISqlProvider)ProviderFactory.Instance.CreateProvider<ISqlProvider>(requestContainer.ProviderName);
+            DataSet user = sqlProvider.ExecuteQuery(SqlQueries.CheckIfPhoneNumberRegisteredQuery, new Dictionary<string, object>() { { "@phoneNumber", phoneNumber } });
             bool exists = false;
             string userId = string.Empty;
             if (user.Tables[0].Rows.Count == 1)
@@ -51,15 +65,28 @@ namespace RestServiceV1.ServiceLayer
                     userProfile.UserId = returnContainer.UserId;
                     userProfile.PhoneNumber = requestContainer.PhoneNumber;
 
-                    sqlProvider.ExecuteQuery(SqlQueries.CreateNewProfileQuery);
+                    Dictionary<string, object> parameters = new Dictionary<string, object>();
+                    parameters.Add("@userId", returnContainer.UserId);
+                    parameters.Add("@phoneNumber", phoneNumber);
+                    parameters.Add("@isVerified", 0);
+                    parameters.Add("@isAgent", 0);
+                    parameters.Add("@isManager", 0);
+                    parameters.Add("@deleted", 0);
+                    parameters.Add("@dateTimeCreated", DateTimeOffset.UtcNow);
+                    parameters.Add("@dateTimeUpdated", DateTimeOffset.UtcNow);
+
+                    sqlProvider.ExecuteQuery(SqlQueries.CreateNewProfileQuery, parameters);
                     returnContainer.ReturnCode = ReturnCodes.C101;
                 }
 
                 // Todo: Verification text module needs to be called.
-                DeviceValidationContainer deviceValidationContainer = new DeviceValidationContainer() { DeviceType = "Phone", UserId = returnContainer.UserId, ExpiryTime = DateTimeOffset.UtcNow.AddMinutes(5) };
-                deviceValidationContainer.VerificationCode = 1234;
 
-                sqlProvider.ExecuteQuery(SqlQueries.InsertDeviceVerificationCode);
+                Dictionary<string, object> parameters1 = new Dictionary<string, object>();
+                parameters1.Add("@userId", returnContainer.UserId);
+                parameters1.Add("@VerificationCode", 1234);
+                parameters1.Add("@TimeStamp", DateTimeOffset.UtcNow);
+                parameters1.Add("@Deleted", 0);
+                sqlProvider.ExecuteQuery(SqlQueries.InsertDeviceVerificationCode, parameters1);
             }
             else if (requestContainer.DeviceType == DeviceType.Computer.ToString())
             {
@@ -69,11 +96,15 @@ namespace RestServiceV1.ServiceLayer
 
                     // User does exist and push notification sent to phone with verification code
                     returnContainer.ReturnCode = ReturnCodes.C104;
-                    // Todo: Send notification with verification code to phone
-                    DeviceValidationContainer deviceValidationContainer = new DeviceValidationContainer() { DeviceType = "Computer", UserId = returnContainer.UserId, ExpiryTime = DateTimeOffset.UtcNow.AddMinutes(5) };
-                    deviceValidationContainer.VerificationCode = 1234;
 
-                    sqlProvider.ExecuteQuery(SqlQueries.InsertDeviceVerificationCode);
+                    // Todo: Verification text module needs to be called.
+
+                    Dictionary<string, object> parameters1 = new Dictionary<string, object>();
+                    parameters1.Add("@userId", returnContainer.UserId);
+                    parameters1.Add("@VerificationCode", 1234);
+                    parameters1.Add("@TimeStamp", DateTimeOffset.UtcNow);
+                    parameters1.Add("@Deleted", 0);
+                    sqlProvider.ExecuteQuery(SqlQueries.InsertDeviceVerificationCode, parameters1);
                 }
                 else
                 {

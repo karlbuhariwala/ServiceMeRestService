@@ -5,6 +5,7 @@
 namespace RestServiceV1.Providers
 {
     using System;
+    using System.Collections.Generic;
     using System.Data;
 
     /// <summary>
@@ -16,10 +17,11 @@ namespace RestServiceV1.Providers
         /// Executes the query.
         /// </summary>
         /// <param name="query">The query.</param>
+        /// <param name="parameters">The parameters.</param>
         /// <returns>
         /// DataSet of the query
         /// </returns>
-        DataSet ISqlProvider.ExecuteQuery(string query)
+        DataSet ISqlProvider.ExecuteQuery(string query, Dictionary<string, object> parameters)
         {
             if (query == SqlQueries.CheckIfPhoneNumberRegisteredQuery)
             {

@@ -12,6 +12,14 @@ namespace RestServiceV1.DataContracts
     [DataContract]
     public class BaseRequestContainer
     {
+        /// <summary>
+        /// Gets or sets the name of the provider.
+        /// </summary>
+        /// <value>
+        /// The name of the provider.
+        /// </value>
+        [DataMember(Name = "providerName")]
+        public string ProviderName { get; set; }
     }
 
     /// <summary>

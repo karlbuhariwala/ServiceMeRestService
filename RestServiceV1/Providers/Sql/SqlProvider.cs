@@ -5,7 +5,10 @@
 namespace RestServiceV1.Providers
 {
     using System;
+    using System.Collections.Generic;
+    using System.Configuration;
     using System.Data;
+    using System.Data.SqlClient;
 
     /// <summary>
     /// SqlProvider
@@ -27,6 +30,7 @@ namespace RestServiceV1.Providers
         /// </summary>
         public SqlProvider()
         {
+            this.connectionString = ConfigurationManager.AppSettings["SqlAzureDBConnectionString"];
         }
 
         /// <summary>
@@ -44,115 +48,41 @@ namespace RestServiceV1.Providers
         /// Executes the query.
         /// </summary>
         /// <param name="query">The query.</param>
+        /// <param name="parameters">The parameters.</param>
         /// <returns>
         /// DataSet of the query
         /// </returns>
-        /// <exception cref="NotImplementedException"></exception>
-        DataSet ISqlProvider.ExecuteQuery(string query)
+        DataSet ISqlProvider.ExecuteQuery(string query, Dictionary<string, object> parameters)
         {
-            throw new NotImplementedException();
+            SqlConnection myConnection = new SqlConnection(connectionString);
+
+            try
+            {
+                myConnection.Open();
+                SqlCommand myCommand = new SqlCommand(query, myConnection);
+                myCommand.CommandTimeout = this.commandTimeout;
+                if (parameters != null)
+                {
+                    foreach (KeyValuePair<string, object> item in parameters)
+                    {
+                        myCommand.Parameters.AddWithValue(item.Key, item.Value);
+                    }
+                }
+
+                SqlDataAdapter sqlDataAdapter = new System.Data.SqlClient.SqlDataAdapter();
+                sqlDataAdapter.SelectCommand = myCommand;
+
+                DataSet dataSet = new DataSet();
+                dataSet.Locale = System.Globalization.CultureInfo.InvariantCulture;
+
+                sqlDataAdapter.Fill(dataSet);
+
+                return dataSet;
+            }
+            finally
+            {
+                myConnection.Close();
+            }
         }
-
-        //private static string dataFolder = @"C:\Users\karlbuha\Documents\Visual Studio 2012\Projects\ServiceMe\RestServiceV1\Data";
-
-        //static SqlProvider()
-        //{
-        //    // Get from the config
-        //    SqlProvider.connectionString = "";
-        //}
-
-        ////private static SqlProvider instance;
-
-        ////public static SqlProvider Instance
-        ////{
-        ////    get
-        ////    {
-        ////        if (SqlProvider.instance == null)
-        ////        {
-        ////            SqlProvider.instance = new SqlProvider();
-        ////        }
-
-        ////        return SqlProvider.instance;
-        ////    }
-        ////}
-
-        //public DataSet ExecuteQuery1(string query)
-        //{
-        //    SqlConnection myConnection = new SqlConnection(connectionString);
-
-        //    try
-        //    {
-        //        myConnection.Open();
-        //        SqlCommand myCommand = new SqlCommand(query, myConnection);
-        //        myCommand.CommandTimeout = 300;
-        //        SqlDataAdapter sqlDataAdapter = new System.Data.SqlClient.SqlDataAdapter();
-        //        sqlDataAdapter.SelectCommand = myCommand;
-
-        //        DataSet dataSet = new DataSet();
-        //        dataSet.Locale = System.Globalization.CultureInfo.InvariantCulture;
-
-        //        sqlDataAdapter.Fill(dataSet);
-
-        //        return dataSet;
-        //    }
-        //    finally
-        //    {
-        //        myConnection.Close();
-        //    }
-        //}
-
-        //public void ExecuteQuery<T>(string query, T data)
-        //{
-        //    string fileName = query;
-        //    string dataToInsert = this.Serialize<T>(data);
-        //    File.AppendAllText(Path.Combine(dataFolder, fileName), dataToInsert);
-        //}
-
-        //public T GetData<T>(string query)
-        //{
-        //    string fileName = query;
-        //    string filePath = Path.Combine(dataFolder, fileName);
-        //    if (!File.Exists(filePath))
-        //    {
-        //        File.AppendAllText(filePath, string.Empty);
-        //    }
-
-        //    try
-        //    {
-        //        string xml = string.Format("<{0}>{1}</{0}>", "ArrayOf" + typeof(T).GenericTypeArguments[0].Name, File.ReadAllText(Path.Combine(dataFolder, fileName)));
-
-        //        return this.Deserialize<T>(xml);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        // log
-        //    }
-
-        //    return default(T);
-        //}
-
-        //private T Deserialize<T>(string xml)
-        //{
-        //    XmlSerializer deserializer = new XmlSerializer(typeof(T));
-        //    using (TextReader textReader = new StringReader(xml))
-        //    {
-        //        return (T)deserializer.Deserialize(textReader);
-        //    }
-        //}
-
-        //private string Serialize<T>(T objectToSerialize)
-        //{
-        //    XmlSerializer serializer = new XmlSerializer(typeof(T));
-        //    using (MemoryStream stream = new MemoryStream())
-        //    {
-        //        serializer.Serialize(stream, objectToSerialize);
-        //        stream.Position = 0;
-        //        using (StreamReader sr = new StreamReader(stream))
-        //        {
-        //            sr.ReadLine();
-        //            return sr.ReadToEnd();
-        //        }
-        //    }
-        //}
     }
 }

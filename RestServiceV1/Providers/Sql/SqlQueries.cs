@@ -12,12 +12,39 @@ namespace RestServiceV1.Providers
         /// <summary>
         /// The check if phone number registered query
         /// </summary>
-        public const string CheckIfPhoneNumberRegisteredQuery = "CheckIfPhoneNumberRegisteredQuery";
+        public const string CheckIfPhoneNumberRegisteredQuery = @"SELECT
+    UserId
+FROM
+    UserInfo
+WHERE
+    PhoneNumber = @phoneNumber";
 
         /// <summary>
         /// The create new profile query
         /// </summary>
-        public const string CreateNewProfileQuery = "CreateNewProfileQuery";
+        public const string CreateNewProfileQuery = @"INSERT INTO
+    UserInfo
+    (
+        UserId
+        , PhoneNumber
+        , IsVerified
+        , [IsAgent]
+        , [IsManager]
+        , Deleted
+        , [DateTimeCreated]
+        , [DateTimeUpdated]
+    )
+VALUES
+    (
+        @userId
+        , @phoneNumber
+        , @isVerified
+        , @isAgent
+        , @isManager
+        , @deleted
+        , @dateTimeCreated
+        , @dateTimeUpdated
+    )";
 
         /// <summary>
         /// The get user profile query
@@ -27,7 +54,21 @@ namespace RestServiceV1.Providers
         /// <summary>
         /// The insert device verification code
         /// </summary>
-        public const string InsertDeviceVerificationCode = "InsertDeviceVerificationCode";
+        public const string InsertDeviceVerificationCode = @"INSERT INTO
+    UserVerification
+    (
+        UserId
+        , VerificationCode
+        , [TimeStamp]
+        , Deleted
+    )
+VALUES
+    (
+        @userId
+        , @VerificationCode
+        , @TimeStamp
+        , @Deleted
+    )";
 
         /// <summary>
         /// The retrieve device verification code
