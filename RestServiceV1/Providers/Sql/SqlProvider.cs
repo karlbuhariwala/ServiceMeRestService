@@ -16,6 +16,11 @@ namespace RestServiceV1.Providers
     public class SqlProvider : ISqlProvider
     {
         /// <summary>
+        /// The size map
+        /// </summary>
+        private static Dictionary<string, int> sizeMap;
+
+        /// <summary>
         /// The connection string
         /// </summary>
         private string connectionString;
@@ -31,6 +36,7 @@ namespace RestServiceV1.Providers
         public SqlProvider()
         {
             this.connectionString = ConfigurationManager.AppSettings["SqlAzureDBConnectionString"];
+            SqlProvider.SetSizeMap(this);
         }
 
         /// <summary>
@@ -42,6 +48,37 @@ namespace RestServiceV1.Providers
         {
             this.connectionString = connectionString;
             this.commandTimeout = commandTimeout;
+            SqlProvider.SetSizeMap(this);
+        }
+
+        /// <summary>
+        /// Sets the size map.
+        /// </summary>
+        /// <param name="provider">The provider.</param>
+        /// <exception cref="System.ApplicationException">No table or rows in the GetColumnSizeInfo query.</exception>
+        private static void SetSizeMap(ISqlProvider provider)
+        {
+            // Todo: Protect with Monitor
+            if (SqlProvider.sizeMap == null)
+            {
+                SqlProvider.sizeMap = new Dictionary<string, int>();
+                DataSet result = provider.ExecuteQuery(SqlQueries.GetColumnSizeInfo, new Dictionary<string, object>() { { "@fieldType", "nvarchar" } });
+                if (result.Tables.Count == 1 && result.Tables[0].Rows.Count > 0)
+                {
+                    foreach (DataRow row in result.Tables[0].Rows)
+                    {
+                        int tempLenght;
+                        if (int.TryParse(row["Length"].ToString(), out tempLenght))
+                        {
+                            SqlProvider.sizeMap.Add(row["Field"].ToString(), tempLenght);
+                        }
+                    }
+                }
+                else
+                {
+                    throw new ApplicationException("No table or rows in the GetColumnSizeInfo query.");
+                }
+            }
         }
 
         /// <summary>
@@ -65,7 +102,11 @@ namespace RestServiceV1.Providers
                 {
                     foreach (KeyValuePair<string, object> item in parameters)
                     {
-                        myCommand.Parameters.AddWithValue(item.Key, item.Value);
+                        myCommand.Parameters.AddWithValue(item.Key, item.Value ?? DBNull.Value);
+                        if (SqlProvider.sizeMap.ContainsKey(item.Key))
+                        {
+                            myCommand.Parameters[item.Key].Size = SqlProvider.sizeMap[item.Key];
+                        }
                     }
                 }
 

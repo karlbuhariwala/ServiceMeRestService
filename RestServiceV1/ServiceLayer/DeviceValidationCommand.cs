@@ -7,6 +7,7 @@ namespace RestServiceV1.ServiceLayer
     using RestServiceV1.DataContracts;
     using RestServiceV1.Providers;
     using System;
+    using System.Collections.Generic;
     using System.Data;
 
     /// <summary>
@@ -26,14 +27,14 @@ namespace RestServiceV1.ServiceLayer
 
             DateTimeOffset timestamp = DateTimeOffset.UtcNow;
 
-            // Todo: Optimize this after creating sql query
             ISqlProvider sqlProvider = (ISqlProvider)ProviderFactory.Instance.CreateProvider<ISqlProvider>(requestContainer.ProviderName);
-            DataSet returnedData = sqlProvider.ExecuteQuery(SqlQueries.RetrieveDeviceVerificationCode, null);
+            Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@userId", requestContainer.UserId }, { "@deleted", false } };
+            DataSet returnedData = sqlProvider.ExecuteQuery(SqlQueries.RetrieveDeviceVerificationCode, parameters);
             if (returnedData.Tables[0].Rows.Count == 1)
             {
                 DeviceValidationContainer deviceValidationContainer = new DeviceValidationContainer();
                 deviceValidationContainer.VerificationCode = int.Parse(returnedData.Tables[0].Rows[0]["VerificationCode"].ToString());
-                deviceValidationContainer.ExpiryTime = DateTime.Parse(returnedData.Tables[0].Rows[0]["ExpiryTime"].ToString());
+                deviceValidationContainer.ExpiryTime = DateTime.Parse(returnedData.Tables[0].Rows[0]["TimeStamp"].ToString()).AddMinutes(5);
 
                 bool verified = (deviceValidationContainer.VerificationCode == requestContainer.ValidationCode &&
                                  deviceValidationContainer.ExpiryTime > timestamp);
@@ -41,16 +42,15 @@ namespace RestServiceV1.ServiceLayer
                 {
                     // Verified and valid
                     returnContainer.ReturnCode = ReturnCodes.C101;
-
-                    // Todo: Delete entry
+                    sqlProvider.ExecuteQuery(SqlQueries.DeleteVerificationEntry, parameters);
                 }
                 else
                 {
                     if (deviceValidationContainer.ExpiryTime < timestamp)
                     {
                         // User found and code has expired. Needs to close app and start again.
-                        // Todo: Should delete an invalid entry async.
                         returnContainer.ReturnCode = ReturnCodes.C103;
+                        sqlProvider.ExecuteQuery(SqlQueries.DeleteVerificationEntry, parameters);
                     }
                     else
                     {

@@ -17,7 +17,8 @@ namespace RestServiceV1.Providers
 FROM
     UserInfo
 WHERE
-    PhoneNumber = @phoneNumber";
+    PhoneNumber = @phoneNumber
+    AND Deleted = @deleted";
 
         /// <summary>
         /// The create new profile query
@@ -49,7 +50,27 @@ VALUES
         /// <summary>
         /// The get user profile query
         /// </summary>
-        public const string GetUserProfileQuery = "GetUserProfileQuery";
+        public const string GetUserProfileQuery = @"SELECT
+	Name
+	, PhoneNumber
+	, IsVerified
+	, ContactPref
+	, EmailAddress
+	, [Address]
+	, IsAgent
+	, IsManager
+	, LandingPage
+	, PushNotificationsUri
+	, Rating
+	, NumberOfRatings
+	, Tags
+	, AreaOfService
+	, FavoriteAgents
+FROM
+	UserInfo
+WHERE
+	UserId = @userId
+	AND Deleted = @deleted";
 
         /// <summary>
         /// The insert device verification code
@@ -73,6 +94,44 @@ VALUES
         /// <summary>
         /// The retrieve device verification code
         /// </summary>
-        public const string RetrieveDeviceVerificationCode = "RetrieveDeviceVerificationCode";
+        public const string RetrieveDeviceVerificationCode = @"SELECT
+    VerificationCode
+    , [TimeStamp]
+FROM
+    UserVerification
+WHERE
+    UserId = @userId
+    AND Deleted = @deleted";
+
+        /// <summary>
+        /// The delete verification entry
+        /// </summary>
+        public const string DeleteVerificationEntry = @"DELETE FROM UserVerification
+WHERE
+    UserId = @userId";
+
+        /// <summary>
+        /// The update user profile
+        /// </summary>
+        public const string UpdateUserProfile = @"UPDATE 
+    UserInfo
+SET
+    Name = COALESCE(@UserInfoName, Name)
+    , ContactPref = COALESCE(@UserInfoContactPref, ContactPref)
+    , EmailAddress = COALESCE(@UserInfoEmailAddress, EmailAddress)
+    , [Address] = COALESCE(@UserInfoAddress, [Address])
+WHERE
+    UserId = @userId";
+
+        /// <summary>
+        /// The get column size information
+        /// </summary>
+        public const string GetColumnSizeInfo = @"SELECT
+	'@' + TABLE_NAME + COLUMN_NAME AS [Field]
+	, CHARACTER_MAXIMUM_LENGTH AS [Length]
+FROM
+	INFORMATION_SCHEMA.COLUMNS
+WHERE 
+	DATA_TYPE = @fieldType";
     }
 }

@@ -40,7 +40,7 @@ namespace RestServiceV1.ServiceLayer
             string phoneNumber = sb.ToString();
 
             ISqlProvider sqlProvider = (ISqlProvider)ProviderFactory.Instance.CreateProvider<ISqlProvider>(requestContainer.ProviderName);
-            DataSet user = sqlProvider.ExecuteQuery(SqlQueries.CheckIfPhoneNumberRegisteredQuery, new Dictionary<string, object>() { { "@phoneNumber", phoneNumber } });
+            DataSet user = sqlProvider.ExecuteQuery(SqlQueries.CheckIfPhoneNumberRegisteredQuery, new Dictionary<string, object>() { { "@phoneNumber", phoneNumber }, { "@deleted", false } });
             bool exists = false;
             string userId = string.Empty;
             if (user.Tables[0].Rows.Count == 1)
