@@ -26,7 +26,7 @@ namespace RestServiceV1.ServiceLayer
             GetProfileRequestContainer requestContainer = context.InParam as GetProfileRequestContainer;
             GetProfileReturnContrainer returnContainer = new GetProfileReturnContrainer();
 
-            // Todo: Optimize after writing query
+            // Todo: Make lists from Json
             ISqlProvider sqlProvider = (ISqlProvider)ProviderFactory.Instance.CreateProvider<ISqlProvider>(requestContainer.ProviderName);
             Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@userId", requestContainer.UserId }, { "@deleted", false } };
             DataSet returnedData = sqlProvider.ExecuteQuery(SqlQueries.GetUserProfileQuery, parameters);

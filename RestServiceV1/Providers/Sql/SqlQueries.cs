@@ -51,26 +51,26 @@ VALUES
         /// The get user profile query
         /// </summary>
         public const string GetUserProfileQuery = @"SELECT
-	Name
-	, PhoneNumber
-	, IsVerified
-	, ContactPref
-	, EmailAddress
-	, [Address]
-	, IsAgent
-	, IsManager
-	, LandingPage
-	, PushNotificationsUri
-	, Rating
-	, NumberOfRatings
-	, Tags
-	, AreaOfService
-	, FavoriteAgents
+    Name
+    , PhoneNumber
+    , IsVerified
+    , ContactPref
+    , EmailAddress
+    , [Address]
+    , IsAgent
+    , IsManager
+    , LandingPage
+    , PushNotificationsUri
+    , Rating
+    , NumberOfRatings
+    , Tags
+    , AreaOfService
+    , FavoriteAgents
 FROM
-	UserInfo
+    UserInfo
 WHERE
-	UserId = @userId
-	AND Deleted = @deleted";
+    UserId = @userId
+    AND Deleted = @deleted";
 
         /// <summary>
         /// The insert device verification code
@@ -127,11 +127,19 @@ WHERE
         /// The get column size information
         /// </summary>
         public const string GetColumnSizeInfo = @"SELECT
-	'@' + TABLE_NAME + COLUMN_NAME AS [Field]
-	, CHARACTER_MAXIMUM_LENGTH AS [Length]
+    '@' + TABLE_NAME + COLUMN_NAME AS [Field]
+    , CHARACTER_MAXIMUM_LENGTH AS [Length]
 FROM
-	INFORMATION_SCHEMA.COLUMNS
+    INFORMATION_SCHEMA.COLUMNS
 WHERE 
-	DATA_TYPE = @fieldType";
+    DATA_TYPE = @fieldType";
+
+        public const string GetTagKeywordMap = @"SELECT 
+    Tag
+    , Keyword
+FROM 
+    [TagKeywordMap]
+WHERE
+    Deleted = @deleted";
     }
 }

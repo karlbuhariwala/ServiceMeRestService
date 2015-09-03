@@ -5,7 +5,9 @@
 namespace RestServiceV1.ServiceLayer
 {
     using RestServiceV1.DataContracts;
+    using RestServiceV1.Providers;
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Get Tags Command
@@ -22,14 +24,17 @@ namespace RestServiceV1.ServiceLayer
             GetTagsRequestContainer requestContainer = context.InParam as GetTagsRequestContainer;
             GetTagsReturnContainer returnContainer = new GetTagsReturnContainer();
 
-            returnContainer.Tags = new List<string>()
+            INlpProvider nlpProvider = (INlpProvider)ProviderFactory.Instance.CreateProvider<INlpProvider>(null);
+            Dictionary<string, IEnumerable<string>> keywordsCollection = (Dictionary<string, IEnumerable<string>>)nlpProvider.GetRelevantTerms(requestContainer.CaseDetails.RequestDetails);
+            List<string> keywords = new List<string>();
+            foreach (var keywordCollection in keywordsCollection)
             {
-                "Flowers",
-                "TagWithAVeryLongNameThatKeepsOnGoingAndGoing",
-            };
+                keywords.AddRange(keywordCollection.Value);
+            }
 
+            IKeywordProcessorProvider keywordProcessorProvider = (IKeywordProcessorProvider)ProviderFactory.Instance.CreateProvider<IKeywordProcessorProvider>(null);
+            returnContainer.Tags = keywordProcessorProvider.GetTags(keywords).Take(5).ToList<string>();
             returnContainer.ReturnCode = ReturnCodes.C101;
-
             return returnContainer;
         }
     }
