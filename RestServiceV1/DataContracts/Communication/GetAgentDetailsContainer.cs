@@ -20,6 +20,15 @@ namespace RestServiceV1.DataContracts
         /// </value>
         [DataMember(Name = "agentId")]
         public string AgentId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user identifier.
+        /// </summary>
+        /// <value>
+        /// The user identifier.
+        /// </value>
+        [DataMember(Name = "userId")]
+        public string UserId { get; set; }
     }
 
     /// <summary>

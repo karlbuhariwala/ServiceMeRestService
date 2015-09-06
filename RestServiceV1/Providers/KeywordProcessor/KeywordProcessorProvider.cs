@@ -67,7 +67,7 @@ namespace RestServiceV1.Providers
         private void InitializeKeywordTagMap(Dictionary<string, List<string>> dictionary)
         {
             // Todo: Remove the param
-            ISqlProvider sqlProvider = (ISqlProvider)ProviderFactory.Instance.CreateProvider<ISqlProvider>("SqlProvider");
+            ISqlProvider sqlProvider = (ISqlProvider)ProviderFactory.Instance.CreateProvider<ISqlProvider>(null);
             DataSet result = sqlProvider.ExecuteQuery(SqlQueries.GetTagKeywordMap, new Dictionary<string, object>() { { "@deleted", 0 } });
 
             if (result.Tables.Count == 1 && result.Tables[0].Rows.Count > 0)

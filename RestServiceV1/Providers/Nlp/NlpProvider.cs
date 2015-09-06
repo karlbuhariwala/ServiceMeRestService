@@ -43,7 +43,8 @@ namespace RestServiceV1.Providers
             if (pipeline == null)
             {
                 // Todo: How to get this ourselves
-                var jarRoot = @"C:\Users\karlbuha\Documents\Visual Studio 2012\Projects\ServiceMe\RestServiceV1\NLPModules\";
+                //var jarRoot = @"C:\Users\karlbuha\Documents\Visual Studio 2012\Projects\ServiceMe\RestServiceV1\NLPModules\";
+                var jarRoot = @"F:\sitesroot\0\bin\NlpModules\";
 
                 // Annotation pipeline configuration
                 var props = new Properties();

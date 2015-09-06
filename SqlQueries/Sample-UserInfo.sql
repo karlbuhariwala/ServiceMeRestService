@@ -50,3 +50,19 @@ SET
 	, [Address] = COALESCE('Toots place', Name)
 WHERE
 	UserId = '8D126288-81BD-4EE4-BF61-0930CEB551C6'
+
+-- Find agents
+SELECT
+	UserId
+	, Name
+	, Rating
+	, NumberOfRatings
+	, AreaOfService
+	, Tags
+	, FavoriteAgents
+FROM
+	UserInfo
+WHERE
+	UserId IN ('63C184E8-C428-426C-ADE2-31D05515CA28')
+
+-- Find agents for autocomplete

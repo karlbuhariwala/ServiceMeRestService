@@ -14,8 +14,8 @@
       <Certificate name="SSLCert" storeLocation="LocalMachine" storeName="CA" />
     </Certificates>
     <Endpoints>
-      <!--<InputEndpoint name="Endpoint" protocol="http" port="8080" />-->
-      <InputEndpoint name="HttpsIn" protocol="https" port="443" certificate="SSLCert" />
+      <InputEndpoint name="HttpsIn" protocol="http" port="8080" />
+      <!--<InputEndpoint name="HttpsIn" protocol="https" port="443" certificate="SSLCert" />-->
     </Endpoints>
   </WebRole>
 </ServiceDefinition>

@@ -2,6 +2,8 @@
 // ServiceMe App
 // FileName = SqlQueries.cs
 
+using java.lang;
+using System.Collections.Generic;
 namespace RestServiceV1.Providers
 {
     /// <summary>
@@ -134,6 +136,9 @@ FROM
 WHERE 
     DATA_TYPE = @fieldType";
 
+        /// <summary>
+        /// The get tag keyword map
+        /// </summary>
         public const string GetTagKeywordMap = @"SELECT 
     Tag
     , Keyword
@@ -141,5 +146,64 @@ FROM
     [TagKeywordMap]
 WHERE
     Deleted = @deleted";
+
+        /// <summary>
+        /// The get agents by ids
+        /// </summary>
+        private const string GetAgentsByIds = @"SELECT
+    UserId
+    , Name
+    , Rating
+    , NumberOfRatings
+    , AreaOfService
+    , Tags
+    , FavoriteAgents
+FROM
+    UserInfo
+WHERE
+    UserId IN ({0})";
+
+        /// <summary>
+        /// The get agents for tag
+        /// </summary>
+        private const string GetAgentsForTag = @"SELECT
+    AgentIdGroup1
+    , AgentIdGroup2
+FROM
+    TagAgentMap
+WHERE
+    Tag in ({0})";
+
+        /// <summary>
+        /// Gets the agents for tag query.
+        /// </summary>
+        /// <param name="tags">The tags.</param>
+        /// <returns>Query with correct length of tags</returns>
+        public static string GetAgentsForTagQuery(List<string> tags)
+        {
+            List<string> parameterNames = new List<string>();
+            for (int i = 0; i < tags.Count; i++)
+            {
+                parameterNames.Add("@tag" + i);
+            }
+
+            return string.Format(SqlQueries.GetAgentsForTag, string.Join(",", parameterNames));
+        }
+
+        /// <summary>
+        /// Gets the agents by ids query.
+        /// </summary>
+        /// <param name="userIds">The user ids.</param>
+        /// <returns>Query with correct length of userIds</returns>
+        public static string GetAgentsByIdsQuery(List<string> userIds)
+        {
+            List<string> parameterNames = new List<string>();
+            for (int i = 0; i < userIds.Count; i++)
+            {
+                parameterNames.Add("@userId" + i);
+            }
+
+            return string.Format(SqlQueries.GetAgentsByIds, string.Join(",", parameterNames));
+        }
     }
 }
