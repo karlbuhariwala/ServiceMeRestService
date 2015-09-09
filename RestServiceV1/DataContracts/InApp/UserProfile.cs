@@ -113,7 +113,7 @@ namespace RestServiceV1
         /// The landing page.
         /// </value>
         [DataMember(Name = "landingPage")]
-        public string LandingPage { get; set; }
+        public int LandingPage { get; set; }
 
         /// <summary>
         /// Gets or sets the push notification URI.

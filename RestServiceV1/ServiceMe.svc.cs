@@ -304,6 +304,44 @@ namespace RestServiceV1
         }
 
         /// <summary>
+        /// Sets the agent tags.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <returns>
+        /// Add agent tags return container
+        /// </returns>
+        AddAgentTagsReturnContainer IServiceMe.SetAgentTags(AddAgentTagsRequestContainer contents)
+        {
+            try
+            {
+                return (AddAgentTagsReturnContainer)this.RunCommand(new AddAgentTagsCommand(), contents);
+            }
+            catch (Exception)
+            {
+                return new AddAgentTagsReturnContainer() { ReturnCode = ReturnCodes.GenericExceptionErrorCode };
+            }
+        }
+
+        /// <summary>
+        /// Gets the agent cases.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <returns>
+        /// Get agent cases request container
+        /// </returns>
+        GetAgentCasesReturnContainer IServiceMe.GetAgentCases(GetAgentCasesRequestContainer contents)
+        {
+            try
+            {
+                return (GetAgentCasesReturnContainer)this.RunCommand(new GetAgentCasesCommand(), contents);
+            }
+            catch (Exception)
+            {
+                return new GetAgentCasesReturnContainer() { ReturnCode = ReturnCodes.GenericExceptionErrorCode };
+            }
+        }
+
+        /// <summary>
         /// Runs the command.
         /// </summary>
         /// <param name="command">The command.</param>

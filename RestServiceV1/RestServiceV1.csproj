@@ -235,8 +235,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContracts\Communication\AddAgentTagsContainer.cs" />
     <Compile Include="DataContracts\Communication\BaseContainer.cs" />
     <Compile Include="DataContracts\Communication\CaseOverviewForUserContainer.cs" />
+    <Compile Include="DataContracts\Communication\GetAgentCasesContainer.cs" />
     <Compile Include="DataContracts\Communication\GetAgentContextCaseDetailsContainer.cs" />
     <Compile Include="DataContracts\Communication\GetAgentDetailsContainer.cs" />
     <Compile Include="DataContracts\Communication\GetAgentsForAutoCompleteContainer.cs" />
@@ -254,6 +256,7 @@
     <Compile Include="DataContracts\InApp\ContextualCaseDetails.cs" />
     <Compile Include="DataContracts\InApp\CaseDetails.cs" />
     <Compile Include="DataContracts\InApp\DeviceValidationContainer.cs" />
+    <Compile Include="DataContracts\InApp\MyKeyValuePair.cs" />
     <Compile Include="DataContracts\InApp\RequestContext.cs" />
     <Compile Include="DataContracts\InApp\UserProfile.cs" />
     <Compile Include="DataContracts\TestDataClass.cs" />
@@ -268,9 +271,11 @@
     <Compile Include="Providers\Sql\ISqlProvider.cs" />
     <Compile Include="Providers\Sql\SqlProvider.cs" />
     <Compile Include="Providers\Sql\SqlTestProvider.cs" />
+    <Compile Include="ServiceLayer\AddAgentTagsCommand.cs" />
     <Compile Include="ServiceLayer\BaseCommand.cs" />
     <Compile Include="ServiceLayer\CreateNewUserCommand.cs" />
     <Compile Include="ServiceLayer\DeviceValidationCommand.cs" />
+    <Compile Include="ServiceLayer\GetAgentCasesCommand.cs" />
     <Compile Include="ServiceLayer\GetAgentContextCaseDetailsCommand.cs" />
     <Compile Include="ServiceLayer\GetAgentDetailsCommand.cs" />
     <Compile Include="ServiceLayer\GetAgentsForAutoCompleteCommand.cs" />

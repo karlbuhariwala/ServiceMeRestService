@@ -66,18 +66,35 @@ namespace RestServiceV1.ServiceLayer
                 {
                     // Todo: Log
                 }
-                userProfile.LandingPage = row["LandingPage"].ToString();
+
+                int tempInt;
+                if (int.TryParse(row["LandingPage"].ToString(), out tempInt))
+                {
+                    userProfile.LandingPage = tempInt;
+                }
+                else
+                {
+                    // Todo: log
+                }
+
                 userProfile.PushNotificationUri = row["PushNotificationsUri"].ToString();
                 double tempDouble;
                 if (double.TryParse(row["Rating"].ToString(), out tempDouble))
                 {
                     userProfile.Rating = tempDouble;
                 }
+                else
+                {
+                    // Todo: log
+                }
 
-                int tempInt;
                 if (int.TryParse(row["NumberOfRatings"].ToString(), out tempInt))
                 {
                     userProfile.NumberOfRatings = tempInt;
+                }
+                else
+                {
+                    // Todo: log
                 }
 
                 userProfile.Tags = row["Tags"].ToString().Split(new string[] { Constants.QuerySeparator }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();

@@ -28,5 +28,13 @@ namespace RestServiceV1.DataContracts
     [DataContract]
     public class UpdateProfileReturnContainer : BaseReturnContainer
     {
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is agent.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is agent; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember(Name = "isAgent")]
+        public bool IsAgent { get; set; }
     }
 }

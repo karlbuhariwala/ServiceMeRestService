@@ -122,6 +122,9 @@ SET
     , ContactPref = COALESCE(@UserInfoContactPref, ContactPref)
     , EmailAddress = COALESCE(@UserInfoEmailAddress, EmailAddress)
     , [Address] = COALESCE(@UserInfoAddress, [Address])
+    , [IsAgent] = COALESCE(@IsAgent, [IsAgent])
+    , [IsManager] = COALESCE(@IsManager, [IsManager])
+    , [LandingPage] = COALESCE(@LandingPage, [LandingPage])
 WHERE
     UserId = @userId";
 

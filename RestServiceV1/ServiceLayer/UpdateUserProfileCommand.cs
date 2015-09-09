@@ -31,9 +31,13 @@ namespace RestServiceV1.ServiceLayer
             parameters.Add("@UserInfoContactPref", string.Join(Constants.QuerySeparator, requestContainer.UserProfile.ContactPreference));
             parameters.Add("@UserInfoEmailAddress", requestContainer.UserProfile.EmailAddress);
             parameters.Add("@UserInfoAddress", requestContainer.UserProfile.Address);
+            parameters.Add("@IsAgent", requestContainer.UserProfile.IsAgent);
+            parameters.Add("@IsManager", requestContainer.UserProfile.IsManager);
+            parameters.Add("@LandingPage", requestContainer.UserProfile.LandingPage);
             parameters.Add("@userId", requestContainer.UserProfile.UserId);
             sqlProvider.ExecuteQuery(SqlQueries.UpdateUserProfile, parameters);
 
+            returnContainer.IsAgent = requestContainer.UserProfile.IsAgent;
             returnContainer.ReturnCode = ReturnCodes.C101;
 
             return returnContainer;

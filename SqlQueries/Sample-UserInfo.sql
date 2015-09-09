@@ -44,10 +44,13 @@ WHERE
 UPDATE 
 	UserInfo
 SET
-	Name = COALESCE('Testname1', Name)
-	, ContactPref = COALESCE('contact pref', Name)
-	, EmailAddress = COALESCE(NULL, Name)
-	, [Address] = COALESCE('Toots place', Name)
+    Name = COALESCE(@UserInfoName, Name)
+    , ContactPref = COALESCE(@UserInfoContactPref, ContactPref)
+    , EmailAddress = COALESCE(@UserInfoEmailAddress, EmailAddress)
+    , [Address] = COALESCE(@UserInfoAddress, [Address])
+    , [IsAgent] = COALESCE(@IsAgent, [IsAgent])
+    , [IsManager] = COALESCE(@UserInfoAddress, [IsManager])
+    , [LandingPage] = COALESCE(@UserInfoAddress, [LandingPage])
 WHERE
 	UserId = '8D126288-81BD-4EE4-BF61-0930CEB551C6'
 

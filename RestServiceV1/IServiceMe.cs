@@ -220,5 +220,31 @@ namespace RestServiceV1
             BodyStyle = WebMessageBodyStyle.Bare,
             UriTemplate = "GetAgentContextCaseDetails")]
         GetAgentContextCaseDetailsReturnContainer GetAgentContextCaseDetails(GetAgentContextCaseDetailsRequestContainer contents);
+
+        /// <summary>
+        /// Sets the agent tags.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <returns>Add agent tags return container</returns>
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Bare,
+            UriTemplate = "SetAgentTags")]
+        AddAgentTagsReturnContainer SetAgentTags(AddAgentTagsRequestContainer contents);
+
+        /// <summary>
+        /// Gets the agent cases.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <returns>Get agent cases request container</returns>
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Bare,
+            UriTemplate = "GetAgentCases")]
+        GetAgentCasesReturnContainer GetAgentCases(GetAgentCasesRequestContainer contents);
     }
 }

@@ -53,6 +53,14 @@ namespace RestServiceV1.DataContracts
         public string UserId { get; set; }
 
         /// <summary>
+        /// Gets or sets the name of the user.
+        /// </summary>
+        /// <value>
+        /// The name of the user.
+        /// </value>
+        public string UserName { get; set; }
+
+        /// <summary>
         /// Gets or sets the title.
         /// </summary>
         /// <value>
@@ -149,6 +157,14 @@ namespace RestServiceV1.DataContracts
         /// The name of the assigned agent.
         /// </value>
         public string AssignedAgentName { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is enterprise tag.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is enterprise tag; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsEnterpriseTag { get; set; }
 
         /// <summary>
         /// Gets or sets the last update date time.
