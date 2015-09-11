@@ -238,6 +238,7 @@
     <Compile Include="DataContracts\Communication\AddAgentTagsContainer.cs" />
     <Compile Include="DataContracts\Communication\BaseContainer.cs" />
     <Compile Include="DataContracts\Communication\CaseOverviewForUserContainer.cs" />
+    <Compile Include="DataContracts\Communication\GetAgentCaseDetailsContainer.cs" />
     <Compile Include="DataContracts\Communication\GetAgentCasesContainer.cs" />
     <Compile Include="DataContracts\Communication\GetAgentContextCaseDetailsContainer.cs" />
     <Compile Include="DataContracts\Communication\GetAgentDetailsContainer.cs" />
@@ -275,6 +276,7 @@
     <Compile Include="ServiceLayer\BaseCommand.cs" />
     <Compile Include="ServiceLayer\CreateNewUserCommand.cs" />
     <Compile Include="ServiceLayer\DeviceValidationCommand.cs" />
+    <Compile Include="ServiceLayer\GetAgentCaseDetailsCommand.cs" />
     <Compile Include="ServiceLayer\GetAgentCasesCommand.cs" />
     <Compile Include="ServiceLayer\GetAgentContextCaseDetailsCommand.cs" />
     <Compile Include="ServiceLayer\GetAgentDetailsCommand.cs" />

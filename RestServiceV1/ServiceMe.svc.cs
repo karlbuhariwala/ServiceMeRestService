@@ -341,6 +341,18 @@ namespace RestServiceV1
             }
         }
 
+        GetAgentCaseDetailsReturnContainer IServiceMe.GetAgentCaseDetails(GetAgentCaseDetailsRequestContainer contents)
+        {
+            try
+            {
+                return (GetAgentCaseDetailsReturnContainer)this.RunCommand(new GetAgentCaseDetailsCommand(), contents);
+            }
+            catch (Exception)
+            {
+                return new GetAgentCaseDetailsReturnContainer() { ReturnCode = ReturnCodes.GenericExceptionErrorCode };
+            }
+        }
+
         /// <summary>
         /// Runs the command.
         /// </summary>

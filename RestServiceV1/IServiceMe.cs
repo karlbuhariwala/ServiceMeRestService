@@ -246,5 +246,18 @@ namespace RestServiceV1
             BodyStyle = WebMessageBodyStyle.Bare,
             UriTemplate = "GetAgentCases")]
         GetAgentCasesReturnContainer GetAgentCases(GetAgentCasesRequestContainer contents);
+
+        /// <summary>
+        /// Gets the agent case details.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <returns>Get agent case details return container</returns>
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Bare,
+            UriTemplate = "GetAgentCaseDetails")]
+        GetAgentCaseDetailsReturnContainer GetAgentCaseDetails(GetAgentCaseDetailsRequestContainer contents);
     }
 }

@@ -49,6 +49,15 @@ namespace RestServiceV1
         public bool IsVerified { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this instance is email verified.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is email verified; otherwise, <c>false</c>.
+        /// </value>
+        [DataMember(Name = "isEmailVerified")]
+        public bool IsEmailVerified { get; set; }
+
+        /// <summary>
         /// Gets or sets the contact preference.
         /// </summary>
         /// <value>

@@ -12,6 +12,22 @@ namespace RestServiceV1.DataContracts
     public class ContextualCaseDetails
     {
         /// <summary>
+        /// Gets or sets the context identifier.
+        /// </summary>
+        /// <value>
+        /// The context identifier.
+        /// </value>
+        public string ContextId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the case identifier.
+        /// </summary>
+        /// <value>
+        /// The case identifier.
+        /// </value>
+        public string CaseId { get; set; }
+
+        /// <summary>
         /// Gets or sets the user identifier.
         /// </summary>
         /// <value>
@@ -90,5 +106,13 @@ namespace RestServiceV1.DataContracts
         /// The agent notes.
         /// </value>
         public string AgentNotes { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="ContextualCaseDetails"/> is deleted.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if deleted; otherwise, <c>false</c>.
+        /// </value>
+        public bool Deleted { get; set; }
     }
 }

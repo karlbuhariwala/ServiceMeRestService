@@ -167,6 +167,14 @@ namespace RestServiceV1.DataContracts
         public bool IsEnterpriseTag { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this instance is metadata complete.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is metadata complete; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsMetadataComplete { get; set; }
+
+        /// <summary>
         /// Gets or sets the last update date time.
         /// </summary>
         /// <value>
