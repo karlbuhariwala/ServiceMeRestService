@@ -21,6 +21,7 @@ namespace RestServiceV1.ServiceLayer
             SaveNewCaseRequestContainer requestContainer = context.InParam as SaveNewCaseRequestContainer;
             SaveNewCaseReturnContainer returnContainer = new SaveNewCaseReturnContainer();
 
+            // Todo: Duplicate tags
             returnContainer.ReturnCode = ReturnCodes.C101;
 
             return returnContainer;

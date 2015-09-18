@@ -10,6 +10,7 @@ namespace RestServiceV1.Providers
     using java.util;
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.IO;
 
     /// <summary>
@@ -44,7 +45,8 @@ namespace RestServiceV1.Providers
             {
                 // Todo: How to get this ourselves
                 //var jarRoot = @"C:\Users\karlbuha\Documents\Visual Studio 2012\Projects\ServiceMe\RestServiceV1\NLPModules\";
-                var jarRoot = @"F:\sitesroot\0\bin\NlpModules\";
+                var jarRoot = ConfigurationManager.AppSettings["NlpModulePath"];
+                //var jarRoot = @"F:\sitesroot\0\bin\NlpModules\";
 
                 // Annotation pipeline configuration
                 var props = new Properties();

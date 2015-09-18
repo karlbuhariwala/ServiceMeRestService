@@ -36,5 +36,15 @@ namespace RestServiceV1.DataContracts
         /// </value>
         [DataMember(Name = "caseDetails")]
         public CaseDetails CaseDetails { get; set; }
+
+        /// <summary>
+        /// Gets or sets the contextual case details.
+        /// </summary>
+        /// <value>
+        /// The contextual case details.
+        /// </value>
+        [DataMember(Name = "contextualCaseDetails")]
+        public ContextualCaseDetails ContextualCaseDetails { get; set; }
+
     }
 }

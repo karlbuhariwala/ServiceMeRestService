@@ -25,6 +25,7 @@ namespace RestServiceV1.ServiceLayer
             AddAgentTagsRequestContainer requestContainer = context.InParam as AddAgentTagsRequestContainer;
             AddAgentTagsReturnContainer returnContainer = new AddAgentTagsReturnContainer();
 
+            // Todo: Duplicate tags
             returnContainer.TagsThatNeedCodes = new List<string>()
             {
                 "Test3",
