@@ -341,6 +341,13 @@ namespace RestServiceV1
             }
         }
 
+        /// <summary>
+        /// Gets the agent case details.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <returns>
+        /// Get agent case details return container
+        /// </returns>
         GetAgentCaseDetailsReturnContainer IServiceMe.GetAgentCaseDetails(GetAgentCaseDetailsRequestContainer contents)
         {
             try
@@ -350,6 +357,25 @@ namespace RestServiceV1
             catch (Exception)
             {
                 return new GetAgentCaseDetailsReturnContainer() { ReturnCode = ReturnCodes.GenericExceptionErrorCode };
+            }
+        }
+
+        /// <summary>
+        /// Gets the popular request.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <returns>
+        /// Get popular requests return container
+        /// </returns>
+        GetPopularRequestsReturnContainer IServiceMe.GetPopularRequest(GetPopularRequestsRequestContainer contents)
+        {
+            try
+            {
+                return (GetPopularRequestsReturnContainer)this.RunCommand(new GetPopularRequestsCommand(), contents);
+            }
+            catch (Exception)
+            {
+                return new GetPopularRequestsReturnContainer() { ReturnCode = ReturnCodes.GenericExceptionErrorCode };
             }
         }
 

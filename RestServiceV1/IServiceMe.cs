@@ -259,5 +259,18 @@ namespace RestServiceV1
             BodyStyle = WebMessageBodyStyle.Bare,
             UriTemplate = "GetAgentCaseDetails")]
         GetAgentCaseDetailsReturnContainer GetAgentCaseDetails(GetAgentCaseDetailsRequestContainer contents);
+
+        /// <summary>
+        /// Gets the popular request.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <returns>Get popular requests return container</returns>
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Bare,
+            UriTemplate = "GetPopularRequest")]
+        GetPopularRequestsReturnContainer GetPopularRequest(GetPopularRequestsRequestContainer contents);
     }
 }

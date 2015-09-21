@@ -245,6 +245,7 @@
     <Compile Include="DataContracts\Communication\GetAgentDetailsContainer.cs" />
     <Compile Include="DataContracts\Communication\GetAgentsForAutoCompleteContainer.cs" />
     <Compile Include="DataContracts\Communication\GetAgentsForCaseContainer.cs" />
+    <Compile Include="DataContracts\Communication\GetPopularRequestsContainer.cs" />
     <Compile Include="DataContracts\Communication\GetReccomendedAgentsContainer.cs" />
     <Compile Include="DataContracts\Communication\GetTagsContainer.cs" />
     <Compile Include="DataContracts\Communication\CreateNewUserContainer.cs" />
@@ -283,6 +284,7 @@
     <Compile Include="ServiceLayer\GetAgentDetailsCommand.cs" />
     <Compile Include="ServiceLayer\GetAgentsForAutoCompleteCommand.cs" />
     <Compile Include="ServiceLayer\GetAgentsForCaseCommand.cs" />
+    <Compile Include="ServiceLayer\GetPopularRequestsCommand.cs" />
     <Compile Include="ServiceLayer\GetProfileCommand.cs" />
     <Compile Include="ServiceLayer\GetRecommendedAgentsCommand.cs" />
     <Compile Include="ServiceLayer\GetTagsCommand.cs" />

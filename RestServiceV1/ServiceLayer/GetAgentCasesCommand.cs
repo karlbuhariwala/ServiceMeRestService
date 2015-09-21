@@ -29,7 +29,7 @@ namespace RestServiceV1.ServiceLayer
                 new CaseDetails()
                 {
                     CaseId = Guid.NewGuid().ToString(),
-                    Title = "Get me flowers",
+                    Title = "Get me flowers and this is a very long title for a case, but I can handle it.",
                     NewEmail = false,
                     NewMessage = true,
                     NewPhoneCall = true,
