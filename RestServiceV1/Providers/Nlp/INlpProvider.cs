@@ -9,7 +9,7 @@ namespace RestServiceV1.Providers
     /// <summary>
     /// Interface for the nlp provider
     /// </summary>
-    interface INlpProvider : IProvider
+    public interface INlpProvider : IProvider
     {
         /// <summary>
         /// Gets the relevant terms.

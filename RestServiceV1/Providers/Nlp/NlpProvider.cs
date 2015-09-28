@@ -63,7 +63,9 @@ namespace RestServiceV1.Providers
                 NlpProvider.relevantPos = new List<string>()
                 {
                     "NN",
+                    "NNS",
                     "NNP",
+                    "NNPS",
                     "VB",
                 };
             }

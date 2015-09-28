@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B9D38DCB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandTests", "CommandTests\CommandTests.csproj", "{34B4AAD3-ED43-44E4-9AEF-F65E44DC9593}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagTrainer", "TagTrainer\TagTrainer.csproj", "{FC62E148-A5D1-4D8C-B49A-5E61C3790951}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{34B4AAD3-ED43-44E4-9AEF-F65E44DC9593}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34B4AAD3-ED43-44E4-9AEF-F65E44DC9593}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34B4AAD3-ED43-44E4-9AEF-F65E44DC9593}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC62E148-A5D1-4D8C-B49A-5E61C3790951}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC62E148-A5D1-4D8C-B49A-5E61C3790951}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC62E148-A5D1-4D8C-B49A-5E61C3790951}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC62E148-A5D1-4D8C-B49A-5E61C3790951}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
