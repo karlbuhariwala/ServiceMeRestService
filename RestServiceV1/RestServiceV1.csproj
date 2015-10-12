@@ -237,6 +237,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContracts\Communication\AddAgentTagsContainer.cs" />
+    <Compile Include="DataContracts\Communication\AddNotificationInfoToUserContainer.cs" />
     <Compile Include="DataContracts\Communication\BaseContainer.cs" />
     <Compile Include="DataContracts\Communication\CaseOverviewForUserContainer.cs" />
     <Compile Include="DataContracts\Communication\GetAgentCaseDetailsContainer.cs" />
@@ -245,6 +246,7 @@
     <Compile Include="DataContracts\Communication\GetAgentDetailsContainer.cs" />
     <Compile Include="DataContracts\Communication\GetAgentsForAutoCompleteContainer.cs" />
     <Compile Include="DataContracts\Communication\GetAgentsForCaseContainer.cs" />
+    <Compile Include="DataContracts\Communication\GetChatRoomDetailsContainer.cs" />
     <Compile Include="DataContracts\Communication\GetPopularRequestsContainer.cs" />
     <Compile Include="DataContracts\Communication\GetReccomendedAgentsContainer.cs" />
     <Compile Include="DataContracts\Communication\GetTagsContainer.cs" />
@@ -259,6 +261,7 @@
     <Compile Include="DataContracts\InApp\ContextualCaseDetails.cs" />
     <Compile Include="DataContracts\InApp\CaseDetails.cs" />
     <Compile Include="DataContracts\InApp\DeviceValidationContainer.cs" />
+    <Compile Include="DataContracts\InApp\GcmContainer.cs" />
     <Compile Include="DataContracts\InApp\MyKeyValuePair.cs" />
     <Compile Include="DataContracts\InApp\RequestContext.cs" />
     <Compile Include="DataContracts\InApp\UserProfile.cs" />
@@ -275,6 +278,7 @@
     <Compile Include="Providers\Sql\SqlProvider.cs" />
     <Compile Include="Providers\Sql\SqlTestProvider.cs" />
     <Compile Include="ServiceLayer\AddAgentTagsCommand.cs" />
+    <Compile Include="ServiceLayer\AddNotificationInfoToUserCommand.cs" />
     <Compile Include="ServiceLayer\BaseCommand.cs" />
     <Compile Include="ServiceLayer\CreateNewUserCommand.cs" />
     <Compile Include="ServiceLayer\DeviceValidationCommand.cs" />
@@ -284,6 +288,7 @@
     <Compile Include="ServiceLayer\GetAgentDetailsCommand.cs" />
     <Compile Include="ServiceLayer\GetAgentsForAutoCompleteCommand.cs" />
     <Compile Include="ServiceLayer\GetAgentsForCaseCommand.cs" />
+    <Compile Include="ServiceLayer\GetChatRoomDetailsCommand.cs" />
     <Compile Include="ServiceLayer\GetPopularRequestsCommand.cs" />
     <Compile Include="ServiceLayer\GetProfileCommand.cs" />
     <Compile Include="ServiceLayer\GetRecommendedAgentsCommand.cs" />

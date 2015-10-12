@@ -380,6 +380,44 @@ namespace RestServiceV1
         }
 
         /// <summary>
+        /// Updates the user notification information.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <returns>
+        /// Add notification info to user return container
+        /// </returns>
+        AddNotificationInfoToUserReturnContainer IServiceMe.UpdateUserNotificationInfo(AddNotificationInfoToUserRequestContainer contents)
+        {
+            try
+            {
+                return (AddNotificationInfoToUserReturnContainer)this.RunCommand(new AddNotificationInfoToUserCommand(), contents);
+            }
+            catch (Exception)
+            {
+                return new AddNotificationInfoToUserReturnContainer() { ReturnCode = ReturnCodes.GenericExceptionErrorCode };
+            }
+        }
+
+        /// <summary>
+        /// Gets the chat room details.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <returns>
+        /// Get chat room details return container
+        /// </returns>
+        GetChatRoomDetailsReturnContainer IServiceMe.GetChatRoomDetails(GetChatRoomDetailsRequestContainer contents)
+        {
+            try
+            {
+                return (GetChatRoomDetailsReturnContainer)this.RunCommand(new GetChatRoomDetailsCommand(), contents);
+            }
+            catch (Exception)
+            {
+                return new GetChatRoomDetailsReturnContainer() { ReturnCode = ReturnCodes.GenericExceptionErrorCode };
+            }
+        }
+
+        /// <summary>
         /// Runs the command.
         /// </summary>
         /// <param name="command">The command.</param>

@@ -12,6 +12,7 @@ namespace RestServiceV1.Providers
     using System.Collections.Generic;
     using System.Configuration;
     using System.IO;
+    using System.Linq;
 
     /// <summary>
     /// Class for the NlpProvider 
@@ -60,14 +61,7 @@ namespace RestServiceV1.Providers
                 NlpProvider.pipeline = new StanfordCoreNLP(props);
                 Directory.SetCurrentDirectory(curDir);
 
-                NlpProvider.relevantPos = new List<string>()
-                {
-                    "NN",
-                    "NNS",
-                    "NNP",
-                    "NNPS",
-                    "VB",
-                };
+                NlpProvider.relevantPos = ConfigurationManager.AppSettings["NlpFos"].Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries).ToList();
             }
         }
 

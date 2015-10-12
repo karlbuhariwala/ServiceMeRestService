@@ -272,5 +272,31 @@ namespace RestServiceV1
             BodyStyle = WebMessageBodyStyle.Bare,
             UriTemplate = "GetPopularRequest")]
         GetPopularRequestsReturnContainer GetPopularRequest(GetPopularRequestsRequestContainer contents);
+
+        /// <summary>
+        /// Updates the user notification information.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <returns>Add notification info to user return container</returns>
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Bare,
+            UriTemplate = "UpdateUserNotificationInfo")]
+        AddNotificationInfoToUserReturnContainer UpdateUserNotificationInfo(AddNotificationInfoToUserRequestContainer contents);
+
+        /// <summary>
+        /// Gets the chat room details.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <returns>Get chat room details return container</returns>
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Bare,
+            UriTemplate = "GetChatRoomDetails")]
+        GetChatRoomDetailsReturnContainer GetChatRoomDetails(GetChatRoomDetailsRequestContainer contents);
     }
 }

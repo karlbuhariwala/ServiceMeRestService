@@ -4,6 +4,7 @@ namespace TagTrainer
     using RestServiceV1.Providers;
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.IO;
     using System.Linq;
     using System.Runtime.Serialization.Json;
@@ -13,7 +14,7 @@ namespace TagTrainer
     {
         private const string FileVersion = "1.0";
         private const string SoftwareVersion = "1.0";
-        private const string FileName = "TestData.txt";
+        private static string fileName = ConfigurationManager.AppSettings["FilePath"];
 
         private static Dictionary<string, List<string>> keywordToTagMap;
 
@@ -174,7 +175,7 @@ namespace TagTrainer
             FileStream fileStream = null;
             try
             {
-                fileStream = new FileStream(TagTrainer.FileName, FileMode.Create);
+                fileStream = new FileStream(TagTrainer.fileName, FileMode.Create);
                 DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(DataContainer));
                 serializer.WriteObject(fileStream, TagTrainer.dataContainer);
             }
@@ -189,12 +190,12 @@ namespace TagTrainer
 
         private void LoadFromFile()
         {
-            if (File.Exists(TagTrainer.FileName))
+            if (File.Exists(TagTrainer.fileName))
             {
                 FileStream fileStream = null;
                 try
                 {
-                    fileStream = new FileStream(TagTrainer.FileName, FileMode.Open);
+                    fileStream = new FileStream(TagTrainer.fileName, FileMode.Open);
                     DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(DataContainer));
                     TagTrainer.dataContainer = (DataContainer)serializer.ReadObject(fileStream);
 
@@ -204,7 +205,7 @@ namespace TagTrainer
                         tagComboBox.Items.Add(key);
                     }
 
-                    fileNameLabel.Text = new FileInfo(TagTrainer.FileName).FullName;
+                    fileNameLabel.Text = new FileInfo(TagTrainer.fileName).FullName;
                     fileVersionLabel.Text = TagTrainer.dataContainer.Version;
                 }
                 finally
@@ -217,7 +218,7 @@ namespace TagTrainer
             }
             else
             {
-                MessageBox.Show("No file found named " + TagTrainer.FileName);
+                MessageBox.Show("No file found named " + TagTrainer.fileName);
             }
         } 
         #endregion
