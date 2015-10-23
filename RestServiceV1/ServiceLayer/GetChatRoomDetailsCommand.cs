@@ -31,6 +31,9 @@ namespace RestServiceV1.ServiceLayer
             returnContainer.UserIdNamePairs.Add(new MyKeyValuePair<string, string>(Guid.NewGuid().ToString(), "Kevin Termur"));
             returnContainer.UserIdNamePairs.Add(new MyKeyValuePair<string, string>(Guid.NewGuid().ToString(), "Hasting Implante"));
 
+            returnContainer.ChatRoomTitle = "Kevin, Hasting";
+            returnContainer.UserType = 0;
+
             returnContainer.ReturnCode = ReturnCodes.C101;
             return returnContainer;
         }

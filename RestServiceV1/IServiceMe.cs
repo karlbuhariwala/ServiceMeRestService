@@ -298,5 +298,18 @@ namespace RestServiceV1
             BodyStyle = WebMessageBodyStyle.Bare,
             UriTemplate = "GetChatRoomDetails")]
         GetChatRoomDetailsReturnContainer GetChatRoomDetails(GetChatRoomDetailsRequestContainer contents);
+
+        /// <summary>
+        /// Sends the chat message.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <returns>Send chat message return container</returns>
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Bare,
+            UriTemplate = "SendChatMessage")]
+        SendChatMessageReturnContainer SendChatMessage(SendChatMessageRequestContainer contents);
     }
 }

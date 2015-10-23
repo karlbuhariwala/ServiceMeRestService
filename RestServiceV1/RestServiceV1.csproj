@@ -257,6 +257,7 @@
     <Compile Include="DataContracts\Communication\GetUserCaseDetailContainer.cs" />
     <Compile Include="DataContracts\Communication\GetUserCasesContainer.cs" />
     <Compile Include="DataContracts\Communication\SaveNewCaseContainer.cs" />
+    <Compile Include="DataContracts\Communication\SendChatMessageContainer.cs" />
     <Compile Include="DataContracts\Communication\UpdateProfileContainer.cs" />
     <Compile Include="DataContracts\InApp\ContextualCaseDetails.cs" />
     <Compile Include="DataContracts\InApp\CaseDetails.cs" />
@@ -297,6 +298,7 @@
     <Compile Include="ServiceLayer\GetUserCaseDetailCommand.cs" />
     <Compile Include="ServiceLayer\GetUserCasesCommand.cs" />
     <Compile Include="ServiceLayer\SaveNewCaseCommand.cs" />
+    <Compile Include="ServiceLayer\SendChatMessageCommand.cs" />
     <Compile Include="ServiceLayer\UpdateUserProfileCommand.cs" />
     <Compile Include="ServiceMe.svc.cs">
       <DependentUpon>ServiceMe.svc</DependentUpon>

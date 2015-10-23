@@ -48,6 +48,51 @@ namespace RestServiceV1.DataContracts
         public string Message { get; set; }
 
         /// <summary>
+        /// Gets or sets the case identifier.
+        /// </summary>
+        /// <value>
+        /// The case identifier.
+        /// </value>
+        [DataMember(Name = "caseId")]
+        public string CaseId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of message.
+        /// </summary>
+        /// <value>
+        /// The type of message.
+        /// </value>
+        [DataMember(Name = "typeOfMessage")]
+        public int TypeOfMessage { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sender identifier.
+        /// </summary>
+        /// <value>
+        /// The sender identifier.
+        /// </value>
+        [DataMember(Name = "senderId")]
+        public string SenderId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the sender.
+        /// </summary>
+        /// <value>
+        /// The name of the sender.
+        /// </value>
+        [DataMember(Name = "senderName")]
+        public string SenderName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the message identifier.
+        /// </summary>
+        /// <value>
+        /// The message identifier.
+        /// </value>
+        [DataMember(Name = "messageId")]
+        public string MessageId { get; set; }
+
+        /// <summary>
         /// Gets or sets the registration ids.
         /// </summary>
         /// <value>

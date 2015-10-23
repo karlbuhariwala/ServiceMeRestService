@@ -418,6 +418,27 @@ namespace RestServiceV1
         }
 
         /// <summary>
+        /// Sends the chat message.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <returns>
+        /// Send chat message return container
+        /// </returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        SendChatMessageReturnContainer IServiceMe.SendChatMessage(SendChatMessageRequestContainer contents)
+        {
+            try
+            {
+                return (SendChatMessageReturnContainer)this.RunCommand(new SendChatMessageCommand(), contents);
+            }
+            catch (Exception)
+            {
+                return new SendChatMessageReturnContainer() { ReturnCode = ReturnCodes.GenericExceptionErrorCode };
+            }
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Runs the command.
         /// </summary>
         /// <param name="command">The command.</param>

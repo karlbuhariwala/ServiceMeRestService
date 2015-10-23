@@ -151,6 +151,16 @@ WHERE
     Deleted = @deleted";
 
         /// <summary>
+        /// The update notification token for user
+        /// </summary>
+        public const string UpdateNotificationTokenForUser = @"UPDATE 
+    UserInfo
+SET
+    PushNotificationsUri = COALESCE(@notificationToken, ContactPref)
+WHERE
+    UserId = @userId";
+
+        /// <summary>
         /// The get agents by ids
         /// </summary>
         private const string GetAgentsByIds = @"SELECT

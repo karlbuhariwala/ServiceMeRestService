@@ -55,5 +55,23 @@ namespace RestServiceV1.DataContracts
         /// </value>
         [DataMember(Name = "userIdNamePairs")]
         public List<MyKeyValuePair<string, string>> UserIdNamePairs { get; set; }
+
+        /// <summary>
+        /// Gets or sets the chat room title.
+        /// </summary>
+        /// <value>
+        /// The chat room title.
+        /// </value>
+        [DataMember(Name = "chatRoomTitle")]
+        public string ChatRoomTitle { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of the user.
+        /// </summary>
+        /// <value>
+        /// The type of the user.
+        /// </value>
+        [DataMember(Name = "userType")]
+        public int UserType { get; set; }
     }
 }
