@@ -5,10 +5,12 @@
 namespace RestServiceV1.ServiceLayer
 {
     using RestServiceV1.DataContracts;
+    using Providers;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web;
+    using System.Data;
 
     public class GetAgentCaseDetailsCommand : BaseCommand
     {
@@ -22,28 +24,40 @@ namespace RestServiceV1.ServiceLayer
             GetAgentCaseDetailsRequestContainer requestContainer = context.InParam as GetAgentCaseDetailsRequestContainer;
             GetAgentCaseDetailsReturnContainer returnContainer = new GetAgentCaseDetailsReturnContainer();
 
-            returnContainer.CaseInfo = new CaseDetails()
-            {
-                CaseId = Guid.NewGuid().ToString(),
-                Title = "I want to get flowers delivered",
-                RequestDetails = "Please could you deliver flowers to my friend. It is his birthday.",
-                Budget = 400,
-                ContactPreference = new List<string>()
-                {
-                    "Chat",
-                },
-            };
+            ISqlProvider sqlProvider = (ISqlProvider)ProviderFactory.Instance.CreateProvider<ISqlProvider>(requestContainer.ProviderName);
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("@deleted", false);
+            parameters.Add("@caseId", requestContainer.CaseId);
+            parameters.Add("@agentId", requestContainer.AgentId);
 
-            returnContainer.ContextualCaseDetails = new ContextualCaseDetails()
+            DataSet result = sqlProvider.ExecuteQuery(SqlQueries.GetAgentCaseDetails, parameters);
+
+            if(result.Tables.Count < 1 && result.Tables[0].Rows.Count != 1)
             {
-                ContextId = Guid.NewGuid().ToString(),
-                UserId = Guid.NewGuid().ToString(),
-                AgentId = Guid.NewGuid().ToString(),
-                AgentNotes = "This customer is awesome",
-                Quote = "200",
-                Timeline = "2 hours",
-                PaymentStatus = "Not paid",
-            };
+                throw new ApplicationException("Query error");
+            }
+
+            DataRow row = result.Tables[0].Rows[0];
+
+            returnContainer.CaseInfo = new CaseDetails();
+            returnContainer.CaseInfo.CaseId = row["CaseId"].ToString();
+            returnContainer.CaseInfo.Title = row["Title"].ToString();
+            returnContainer.CaseInfo.RequestDetails = row["RequestDetails"].ToString();
+
+            int tempInt = 0;
+            int.TryParse(row["Budget"].ToString(), out tempInt);
+            returnContainer.CaseInfo.Budget = tempInt;
+
+            returnContainer.CaseInfo.ContactPreference = row["ContactPref"].ToString().Split(new string[] { Constants.QuerySeparator }, StringSplitOptions.RemoveEmptyEntries).ToList();
+
+            returnContainer.ContextualCaseDetails = new ContextualCaseDetails();
+            returnContainer.ContextualCaseDetails.ContextId = row["ContextId"].ToString();
+            returnContainer.ContextualCaseDetails.UserId = row["UserId"].ToString();
+            returnContainer.ContextualCaseDetails.AgentId = row["AgentId"].ToString();
+            returnContainer.ContextualCaseDetails.AgentNotes = row["AgentNotes"].ToString();
+            returnContainer.ContextualCaseDetails.Timeline = row["Timeline"].ToString();
+            returnContainer.ContextualCaseDetails.PaymentStatus = row["PaymentStatus"].ToString();
+            returnContainer.ContextualCaseDetails.Quote = row["Quote"].ToString();
 
             returnContainer.ReturnCode = ReturnCodes.C101;
             return returnContainer;

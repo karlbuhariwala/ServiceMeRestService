@@ -36,4 +36,4 @@ WHERE
 -- Delete an entry
 DELETE FROM UserVerification
 WHERE
-	UserId = 'E6BB8248-9AC5-4CC5-8FC3-DA70D0943D59'
+	UserId LIKE '%'

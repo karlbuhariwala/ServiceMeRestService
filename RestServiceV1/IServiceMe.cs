@@ -311,5 +311,18 @@ namespace RestServiceV1
             BodyStyle = WebMessageBodyStyle.Bare,
             UriTemplate = "SendChatMessage")]
         SendChatMessageReturnContainer SendChatMessage(SendChatMessageRequestContainer contents);
+
+        /// <summary>
+        /// Assigns the agent to case.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <returns>Assigned case return container</returns>
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Bare,
+            UriTemplate = "AssignAgentToCase")]
+        AssignCaseReturnContainer AssignAgentToCase(AssignCaseRequestContainer contents);
     }
 }

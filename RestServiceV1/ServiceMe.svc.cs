@@ -424,7 +424,6 @@ namespace RestServiceV1
         /// <returns>
         /// Send chat message return container
         /// </returns>
-        /// <exception cref="System.NotImplementedException"></exception>
         SendChatMessageReturnContainer IServiceMe.SendChatMessage(SendChatMessageRequestContainer contents)
         {
             try
@@ -435,7 +434,25 @@ namespace RestServiceV1
             {
                 return new SendChatMessageReturnContainer() { ReturnCode = ReturnCodes.GenericExceptionErrorCode };
             }
-            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Assigns the agent to case.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <returns>
+        /// Assigned case return container
+        /// </returns>
+        AssignCaseReturnContainer IServiceMe.AssignAgentToCase(AssignCaseRequestContainer contents)
+        {
+            try
+            {
+                return (AssignCaseReturnContainer)this.RunCommand(new AssignAgentToCaseCommand(), contents);
+            }
+            catch (Exception)
+            {
+                return new AssignCaseReturnContainer() { ReturnCode = ReturnCodes.GenericExceptionErrorCode };
+            }
         }
 
         /// <summary>

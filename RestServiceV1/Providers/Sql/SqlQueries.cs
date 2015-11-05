@@ -146,7 +146,7 @@ WHERE
     Tag
     , Keyword
 FROM 
-    [TagKeywordMap]
+    [TagInfo]
 WHERE
     Deleted = @deleted";
 
@@ -161,9 +161,283 @@ WHERE
     UserId = @userId";
 
         /// <summary>
+        /// The create new case
+        /// </summary>
+        public const string CreateNewCase = @"INSERT INTO
+    [CaseInfo]
+    (
+        CaseId
+        , UserId
+        , UserName
+        , Title
+        , ContactPref
+        , Tags
+        , RequestDetails
+        , Budget
+        , Address
+        , AnotherAddress
+        , IsEnterpriseTag
+        , Deleted
+        , [DateTimeCreated]
+        , [DateTimeUpdated]
+    )
+VALUES
+    (
+        @caseId
+        , @userId
+        , @userName
+        , @title
+        , @contactPref
+        , @tags
+        , @requestDetails
+        , @budget
+        , @address
+        , @anotherAddress
+        , @isEnterpriseTag
+        , @deleted
+        , @dateTimeCreated
+        , @dateTimeUpdated
+    )";
+
+        /// <summary>
+        /// The add to agent case map
+        /// </summary>
+        public const string AddToAgentCaseMap = @"INSERT INTO
+    [AgentCaseMap]
+    (
+        CaseId
+        , AgentId
+        , Blocked
+        , Deleted
+        , [DateTimeCreated]
+        , [DateTimeUpdated]
+    )
+VALUES
+    (
+        @caseId
+        , @agentId
+        , @blocked
+        , @deleted
+        , @dateTimeCreated
+        , @dateTimeUpdated
+    )";
+
+        /// <summary>
+        /// The get user cases query
+        /// </summary>
+        public const string GetUserCasesQuery = @"SELECT
+    CaseId
+    , Title
+    , NewMessage
+    , AssignedAgentId
+    , AssignedAgentName
+    , DateTimeUpdated
+FROM
+    [CaseInfo]
+WHERE
+    UserId = @userId
+    AND Deleted = @deleted";
+
+        /// <summary>
+        /// The get user case details query
+        /// </summary>
+        public const string GetUserCaseDetailsQuery = @"SELECT
+    CaseId
+    , Title
+    , RequestDetails
+    , Budget
+    , AssignedAgentId
+FROM
+    [CaseInfo]
+WHERE
+    CaseId = @caseId
+    AND Deleted = @deleted";
+
+        /// <summary>
+        /// The get agent contextual information for user case
+        /// </summary>
+        public const string GetAgentContextualInfoForUserCase = @"SELECT
+    ContextualCaseDetails.ContextId
+    , ContextualCaseDetails.UserId
+    , ContextualCaseDetails.AgentId
+    , AgentInfo.Name AS AgentName
+    , ContextualCaseDetails.UserNotes
+    , ContextualCaseDetails.Quote
+    , ContextualCaseDetails.Timeline
+    , ContextualCaseDetails.PaymentStatus
+FROM
+    [ContextualCaseDetails] AS ContextualCaseDetails
+    LEFT JOIN UserInfo AS AgentInfo ON ContextualCaseDetails.UserId = AgentInfo.UserId
+    LEFT JOIN CaseInfo AS CaseInfo ON ContextualCaseDetails.CaseId = CaseInfo.CaseId
+WHERE
+    ContextualCaseDetails.CaseId = @caseId
+    AND ContextualCaseDetails.AgentId = @agentId
+    AND ContextualCaseDetails.Deleted = @deleted";
+
+        /// <summary>
+        /// The get agents for user case
+        /// </summary>
+        public const string GetAgentsForUserCase = @"SELECT
+    AgentCaseMap.AgentId
+    , UserInfo.Name
+    , UserInfo.Rating
+    , UserInfo.NumberOfRatings
+FROM
+    [AgentCaseMap] AS AgentCaseMap 
+    LEFT JOIN [UserInfo] AS UserInfo ON AgentCaseMap.AgentId = UserInfo.UserId
+WHERE
+    AgentCaseMap.CaseId = @caseId
+    AND AgentCaseMap.Deleted = @deleted
+    AND AgentCaseMap.Blocked = @blocked";
+
+        /// <summary>
+        /// The get cases assigned to agent query
+        /// </summary>
+        public const string GetAgentCaseDetails = @"SELECT
+    CaseInfo.CaseId
+    , CaseInfo.Title
+    , CaseInfo.RequestDetails
+    , CaseInfo.Budget
+    , CaseInfo.ContactPref
+    , ContextualCaseDetails.ContextId
+    , ContextualCaseDetails.UserId
+    , ContextualCaseDetails.AgentId
+    , ContextualCaseDetails.AgentNotes
+    , ContextualCaseDetails.Quote
+    , ContextualCaseDetails.Timeline
+    , ContextualCaseDetails.PaymentStatus
+FROM
+    [CaseInfo] as CaseInfo
+    LEFT JOIN ContextualCaseDetails AS ContextualCaseDetails ON CaseInfo.CaseId = ContextualCaseDetails.CaseId
+WHERE
+    CaseInfo.CaseId = @caseId
+    AND ContextualCaseDetails.AgentId = @agentId
+    AND ContextualCaseDetails.Deleted = @deleted
+    AND CaseInfo.Deleted = @deleted";
+
+        /// <summary>
+        /// The get agent cases
+        /// </summary>
+        public const string GetAgentCases = @"SELECT
+    ContextualCaseDetails.CaseId
+    , ContextualCaseDetails.NewMessage
+    , ContextualCaseDetails.DateTimeUpdated
+    , CaseInfo.Title
+    , CaseInfo.AssignedAgentId
+    , CaseInfo.AssignedAgentName
+    , CaseInfo.IsEnterpriseTag
+    , CaseInfo.UserName
+FROM
+    ContextualCaseDetails as ContextualCaseDetails
+    LEFT JOIN CaseInfo as CaseInfo ON ContextualCaseDetails.CaseId = CaseInfo.CaseId
+WHERE
+    AgentId = @agentId
+    AND Deleted = @deleted";
+
+        /// <summary>
+        /// The insert case context details
+        /// </summary>
+        public const string InsertCaseContextDetails = @"INSERT INTO
+    [ContextualCaseDetails]
+    (
+        ContextId
+        , CaseId
+        , UserId
+        , AgentId
+        , Blocked
+        , Deleted
+        , [DateTimeCreated]
+        , [DateTimeUpdated]
+    )
+VALUES
+    (
+        @contextId
+        , @caseId
+        , @userId
+        , @agentId
+        , @blocked
+        , @deleted
+        , @dateTimeCreated
+        , @dateTimeUpdated
+    )";
+
+        /// <summary>
+        /// The assign case to agent
+        /// </summary>
+        public const string AssignCaseToAgent = @"UPDATE 
+    [CaseInfo]
+SET
+    AssignedAgentId = COALESCE(@assignedAgentId, AssignedAgentId)
+WHERE
+    CaseId = @caseId";
+
+        /// <summary>
+        /// The get chat room details
+        /// </summary>
+        public const string GetChatRoomDetails = @"SELECT
+    ParticipantsAgents
+    , ParticipantsUsers
+    , ChatId
+    , CaseId
+FROM
+    ChatRoomInfo
+WHERE
+    CaseId = @caseId";
+
+        /// <summary>
+        /// The insert chat room details
+        /// </summary>
+        public const string InsertChatRoomDetails = @"INSERT INTO
+    [ChatRoomInfo]
+    (
+        CaseId
+        , ChatId
+        , ParticipantsAgents
+        , ParticipantsUsers
+        , Deleted
+        , [DateTimeCreated]
+        , [DateTimeUpdated]
+    )
+VALUES
+    (
+        @caseId
+        , @chatId
+        , @agents
+        , @users
+        , @deleted
+        , @dateTimeCreated
+        , @dateTimeUpdated
+    )";
+
+        /// <summary>
+        /// The update tag with information
+        /// </summary>
+        public const string UpdateTagWithInfo = @"UPDATE
+    TagInfo
+SET
+    AgentIdGroup1 = COALESCE(@userIds, AgentIdGroup1)
+WHERE
+    Tag = @tag";
+
+        /// <summary>
+        /// The get tag information for adding new tag to agent
+        /// </summary>
+        private const string GetTagInfoForAddingNewTagToAgent = @"SELECT
+    Tag
+    , IsEnterpriseTag
+    , DateTimeTagCode
+    , Code
+    , AgentIdGroup1
+FROM
+    TagInfo
+WHERE
+    Tag in ({0})
+    AND Deleted = @deleted";
+
+        /// <summary>
         /// The get agents by ids
         /// </summary>
-        private const string GetAgentsByIds = @"SELECT
+        private const string GetUsersByIds = @"SELECT
     UserId
     , Name
     , Rating
@@ -171,6 +445,7 @@ WHERE
     , AreaOfService
     , Tags
     , FavoriteAgents
+    , PushNotificationsUri
 FROM
     UserInfo
 WHERE
@@ -183,7 +458,7 @@ WHERE
     AgentIdGroup1
     , AgentIdGroup2
 FROM
-    TagAgentMap
+    TagInfo
 WHERE
     Tag in ({0})";
 
@@ -208,7 +483,7 @@ WHERE
         /// </summary>
         /// <param name="userIds">The user ids.</param>
         /// <returns>Query with correct length of userIds</returns>
-        public static string GetAgentsByIdsQuery(List<string> userIds)
+        public static string GetUsersByIdsQuery(List<string> userIds)
         {
             List<string> parameterNames = new List<string>();
             for (int i = 0; i < userIds.Count; i++)
@@ -216,7 +491,23 @@ WHERE
                 parameterNames.Add("@userId" + i);
             }
 
-            return string.Format(SqlQueries.GetAgentsByIds, string.Join(",", parameterNames));
+            return string.Format(SqlQueries.GetUsersByIds, string.Join(",", parameterNames));
+        }
+
+        /// <summary>
+        /// Gets the tag information for adding new tag to agent query.
+        /// </summary>
+        /// <param name="tags">The tags.</param>
+        /// <returns></returns>
+        public static string GetTagInfoForAddingNewTagToAgentQuery(List<string> tags)
+        {
+            List<string> parameterNames = new List<string>();
+            for (int i = 0; i < tags.Count; i++)
+            {
+                parameterNames.Add("@tag" + i);
+            }
+
+            return string.Format(SqlQueries.GetTagInfoForAddingNewTagToAgent, string.Join(",", parameterNames));
         }
     }
 }

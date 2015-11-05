@@ -56,7 +56,7 @@ namespace RestServiceV1.ServiceLayer
                 parameters.Add("@userId" + i, agentIds[i]);
             }
 
-            DataSet agentInfoResult = sqlProvider.ExecuteQuery(SqlQueries.GetAgentsByIdsQuery(agentIds.Take(maxAgentCount).ToList<string>()), parameters);
+            DataSet agentInfoResult = sqlProvider.ExecuteQuery(SqlQueries.GetUsersByIdsQuery(agentIds.Take(maxAgentCount).ToList<string>()), parameters);
 
             List<UserProfile> agentProfiles = new List<UserProfile>();
             if (agentInfoResult.Tables.Count > 0 && agentInfoResult.Tables[0].Rows.Count > 0)

@@ -36,7 +36,7 @@ namespace RestServiceV1.ServiceLayer
             }
 
             ISqlProvider sqlProvider = (ISqlProvider)ProviderFactory.Instance.CreateProvider<ISqlProvider>(requestContainer.ProviderName);
-            DataSet agentInfoResult = sqlProvider.ExecuteQuery(SqlQueries.GetAgentsByIdsQuery(usersToQuery), parameters);
+            DataSet agentInfoResult = sqlProvider.ExecuteQuery(SqlQueries.GetUsersByIdsQuery(usersToQuery), parameters);
 
             if (agentInfoResult.Tables.Count > 0 && agentInfoResult.Tables[0].Rows.Count == 2)
             {

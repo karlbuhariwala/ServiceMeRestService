@@ -238,6 +238,7 @@
   <ItemGroup>
     <Compile Include="DataContracts\Communication\AddAgentTagsContainer.cs" />
     <Compile Include="DataContracts\Communication\AddNotificationInfoToUserContainer.cs" />
+    <Compile Include="DataContracts\Communication\AssignCaseContainer.cs" />
     <Compile Include="DataContracts\Communication\BaseContainer.cs" />
     <Compile Include="DataContracts\Communication\CaseOverviewForUserContainer.cs" />
     <Compile Include="DataContracts\Communication\GetAgentCaseDetailsContainer.cs" />
@@ -269,6 +270,8 @@
     <Compile Include="DataContracts\TestDataClass.cs" />
     <Compile Include="IServiceMe.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\Gcm\GcmProvider.cs" />
+    <Compile Include="Providers\Gcm\IGcmProvider.cs" />
     <Compile Include="Providers\IProvider.cs" />
     <Compile Include="Providers\KeywordProcessor\IKeywordProcessorProvider.cs" />
     <Compile Include="Providers\KeywordProcessor\KeywordProcessorProvider.cs" />
@@ -280,6 +283,7 @@
     <Compile Include="Providers\Sql\SqlTestProvider.cs" />
     <Compile Include="ServiceLayer\AddAgentTagsCommand.cs" />
     <Compile Include="ServiceLayer\AddNotificationInfoToUserCommand.cs" />
+    <Compile Include="ServiceLayer\AssignAgentToCaseCommand.cs" />
     <Compile Include="ServiceLayer\BaseCommand.cs" />
     <Compile Include="ServiceLayer\CreateNewUserCommand.cs" />
     <Compile Include="ServiceLayer\DeviceValidationCommand.cs" />

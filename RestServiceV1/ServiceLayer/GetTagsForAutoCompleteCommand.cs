@@ -28,7 +28,7 @@ namespace RestServiceV1.ServiceLayer
                 "bTest133333333333333333333333333333355555555555555555555555333",
                 "bTest122",
                 "Test2",
-                "Test3",
+                "DJ",
                 "Test14",
             };
 

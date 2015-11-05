@@ -5,10 +5,12 @@
 namespace RestServiceV1.ServiceLayer
 {
     using RestServiceV1.DataContracts;
+    using Providers;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web;
+    using System.Data;
 
     /// <summary>
     /// Get agents for case command
@@ -25,32 +27,38 @@ namespace RestServiceV1.ServiceLayer
             GetAgentsForCaseRequestContainer requestContainer = context.InParam as GetAgentsForCaseRequestContainer;
             GetAgentsForCaseReturnContainer returnContainer = new GetAgentsForCaseReturnContainer();
 
-            returnContainer.ReturnCode = ReturnCodes.C101;
-            returnContainer.Agents = new List<UserProfile>()
-            {
-                new UserProfile()
-                {
-                    UserId = Guid.NewGuid().ToString(),
-                    Name = "Raj Jackmar",
-                    Rating = 4.5,
-                    NumberOfRatings = 273,
-                },
-                new UserProfile()
-                {
-                    UserId = Guid.NewGuid().ToString(),
-                    Name = "Peter Thum",
-                    Rating = 3.1,
-                    NumberOfRatings = 326,
-                },
-                new UserProfile()
-                {
-                    UserId = Guid.NewGuid().ToString(),
-                    Name = "Sita Gills",
-                    Rating = 4.8,
-                    NumberOfRatings = 65,
-                },
-            };
+            ISqlProvider sqlProvider = (ISqlProvider)ProviderFactory.Instance.CreateProvider<ISqlProvider>(requestContainer.ProviderName);
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("@caseId", requestContainer.CaseId);
+            parameters.Add("@deleted", false);
+            parameters.Add("@blocked", false);
 
+            DataSet result = sqlProvider.ExecuteQuery(SqlQueries.GetAgentsForUserCase, parameters);
+            if (result.Tables.Count < 1)
+            {
+                throw new ApplicationException("Query failed");
+            }
+
+            returnContainer.Agents = new List<UserProfile>();
+            foreach (DataRow row in result.Tables[0].Rows)
+            {
+                UserProfile userProfile = new UserProfile();
+                userProfile.UserId = row["AgentId"].ToString();
+                userProfile.Name = row["Name"].ToString();
+
+                double tempDouble = 0;
+                double.TryParse(row["Rating"].ToString(), out tempDouble);
+                userProfile.Rating = tempDouble;
+
+                int tempInt = 0;
+                int.TryParse(row["NumberOfRatings"].ToString(), out tempInt);
+                userProfile.NumberOfRatings = tempInt;
+
+                returnContainer.Agents.Add(userProfile);
+            }
+
+            // Todo: Locality and order
+            returnContainer.ReturnCode = ReturnCodes.C101;
             return returnContainer;
         }
     }

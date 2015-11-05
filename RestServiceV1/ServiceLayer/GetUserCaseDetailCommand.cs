@@ -5,7 +5,10 @@
 namespace RestServiceV1.ServiceLayer
 {
     using RestServiceV1.DataContracts;
+    using Providers;
     using System;
+    using System.Collections.Generic;
+    using System.Data;
 
     /// <summary>
     /// Get user case detail command
@@ -22,29 +25,66 @@ namespace RestServiceV1.ServiceLayer
             GetUserCaseDetailRequestContainer requestContainer = context.InParam as GetUserCaseDetailRequestContainer;
             GetUserCaseDetailReturnContainer returnContainer = new GetUserCaseDetailReturnContainer();
 
-            returnContainer.CaseDetails = new CaseDetails()
-            {
-                CaseId = Guid.NewGuid().ToString(),
-                Title = "Get me some chocolate to eat",
-                RequestDetails = "I would like to eat some cake from this bakery down at patia lane. Can you come deliver it to me?",
-                Budget = 450,
-                AssignedAgentId = Guid.NewGuid().ToString(),
-            };
+            ISqlProvider sqlProvider = (ISqlProvider)ProviderFactory.Instance.CreateProvider<ISqlProvider>(requestContainer.ProviderName);
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("@caseId", requestContainer.CaseId);
+            parameters.Add("@deleted", false);
 
-            returnContainer.ContextualCaseDetails = new ContextualCaseDetails()
+            DataSet result = sqlProvider.ExecuteQuery(SqlQueries.GetUserCaseDetailsQuery, parameters);
+
+            if (result.Tables.Count < 1)
             {
-                ContextId = Guid.NewGuid().ToString(),
-                UserId = Guid.NewGuid().ToString(),
-                AgentName = "Tempar Chandani",
-                AgentId = Guid.NewGuid().ToString(),
-                AgentNotes = "This customer is awesome",
-                Quote = "200",
-                Timeline = "2 hours",
-                PaymentStatus = "Not paid",
-            };
+                throw new ApplicationException("Query failed");
+            }
+
+            if (result.Tables[0].Rows.Count != 1)
+            {
+                throw new ApplicationException("Query failed");
+            }
+
+            DataRow row = result.Tables[0].Rows[0];
+
+            returnContainer.CaseDetails = new CaseDetails();
+            returnContainer.CaseDetails.CaseId = row["CaseId"].ToString();
+            returnContainer.CaseDetails.Title = row["Title"].ToString();
+            returnContainer.CaseDetails.RequestDetails = row["RequestDetails"].ToString();
+            int tempInt = 0;
+            int.TryParse(row["Budget"].ToString(), out tempInt);
+            returnContainer.CaseDetails.Budget = tempInt;
+            returnContainer.CaseDetails.AssignedAgentId = row["AssignedAgentId"].ToString();
+
+            // Todo: We can get this in a single join
+            if(!string.IsNullOrEmpty(returnContainer.CaseDetails.AssignedAgentId))
+            {
+                parameters = new Dictionary<string, object>();
+                parameters.Add("@agentId", returnContainer.CaseDetails.AssignedAgentId);
+                parameters.Add("@caseId", requestContainer.CaseId);
+                parameters.Add("@deleted", false);
+
+                 result = sqlProvider.ExecuteQuery(SqlQueries.GetAgentContextualInfoForUserCase, parameters);
+                if (result.Tables.Count < 1)
+                {
+                    throw new ApplicationException("Query failed");
+                }
+
+                if (result.Tables[0].Rows.Count != 1)
+                {
+                    throw new ApplicationException("Query failed");
+                }
+
+                row = result.Tables[0].Rows[0];
+                returnContainer.ContextualCaseDetails = new ContextualCaseDetails();
+                returnContainer.ContextualCaseDetails.ContextId = row["ContextId"].ToString();
+                returnContainer.ContextualCaseDetails.UserId = row["UserId"].ToString();
+                returnContainer.ContextualCaseDetails.AgentId = row["AgentId"].ToString();
+                returnContainer.ContextualCaseDetails.AgentName = row["AgentName"].ToString();
+                returnContainer.ContextualCaseDetails.UserNotes = row["UserNotes"].ToString();
+                returnContainer.ContextualCaseDetails.Quote = row["Quote"].ToString();
+                returnContainer.ContextualCaseDetails.Timeline = row["Timeline"].ToString();
+                returnContainer.ContextualCaseDetails.PaymentStatus = row["PaymentStatus"].ToString();
+            }
 
             returnContainer.ReturnCode = ReturnCodes.C101;
-
             return returnContainer;
         }
     }

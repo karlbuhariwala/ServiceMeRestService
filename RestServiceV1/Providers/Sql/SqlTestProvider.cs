@@ -40,19 +40,308 @@ namespace RestServiceV1.Providers
             {
                 return SqlTestProvider.GetTagKeywordMap();
             }
-            else if (query == SqlQueries.GetAgentsByIdsQuery(new List<string>(parameters.Where(x => x.Key.Contains("userId")).Select(x => x.Key).ToList<string>())))
+            else if (query == SqlQueries.GetUsersByIdsQuery(new List<string>(parameters.Where(x => x.Key.Contains("userId")).Select(x => x.Key).ToList<string>())))
             {
-                return SqlTestProvider.GetAgentsByIdsQuery(parameters.Where(x => x.Key.Contains("userId")).Select(x => x.Value.ToString()).ToList<string>());
+                return SqlTestProvider.GetUsersByIdsQuery(parameters.Where(x => x.Key.Contains("userId")).Select(x => x.Value.ToString()).ToList<string>());
+            }
+            else if (query == SqlQueries.GetUserCasesQuery)
+            {
+                return SqlTestProvider.GetUserCasesQuery();
+            }
+            else if (query == SqlQueries.GetUserCaseDetailsQuery)
+            {
+                return SqlTestProvider.GetUserCaseDetailsQuery();
+            }
+            else if (query == SqlQueries.GetAgentContextualInfoForUserCase)
+            {
+                return SqlTestProvider.GetUserCaseForAgentContext();
+            }
+            else if (query == SqlQueries.GetAgentsForUserCase)
+            {
+                return SqlTestProvider.GetAgentsForUserCase();
+            }
+            else if (query == SqlQueries.GetTagInfoForAddingNewTagToAgentQuery(new List<string>(parameters.Where(x => x.Key.Contains("tag")).Select(x => x.Key).ToList<string>())))
+            {
+                return SqlTestProvider.GetTagInfoForAddingNewTagToAgentQuery(parameters.Where(x => x.Key.Contains("tag")).Select(x => x.Value.ToString()).ToList<string>());
+            }
+            else if (query == SqlQueries.GetAgentCaseDetails)
+            {
+                return SqlTestProvider.GetAgentCaseDetails();
+            }
+            else if (query == SqlQueries.GetAgentCases)
+            {
+                return SqlTestProvider.GetAgentCases();
+            }
+            else if (query == SqlQueries.GetChatRoomDetails)
+            {
+                return SqlTestProvider.GetChatRoomDetails();
             }
 
             return null;
+        }
+
+        private static DataSet GetChatRoomDetails()
+        {
+            DataSet returnData = new DataSet();
+            DataTable table = new DataTable("InfoTable");
+            table.Columns.Add("CaseId");
+            table.Columns.Add("ChatId");
+            table.Columns.Add("ParticipantsUsers");
+            table.Columns.Add("ParticipantsAgents");
+
+            DataRow row1 = table.NewRow();
+            row1["CaseId"] = Guid.NewGuid().ToString();
+            row1["ChatId"] = Guid.NewGuid().ToString();
+            row1["ParticipantsUsers"] = "User";
+            row1["ParticipantsAgents"] = "Agents";
+            table.Rows.Add(row1);
+
+            returnData.Tables.Add(table);
+            return returnData;
+        }
+
+        private static DataSet GetAgentCases()
+        {
+            DataSet returnData = new DataSet();
+            DataTable table = new DataTable("InfoTable");
+            table.Columns.Add("CaseId");
+            table.Columns.Add("Title");
+            table.Columns.Add("NewMessage");
+            table.Columns.Add("IsEnterpriseTag");
+            table.Columns.Add("AssignedAgentId");
+            table.Columns.Add("AssignedAgentName");
+            table.Columns.Add("UserName");
+            table.Columns.Add("DateTimeUpdated");
+
+            DataRow row1 = table.NewRow();
+            row1["CaseId"] = Guid.NewGuid().ToString();
+            row1["Title"] = "Get me flowers";
+            row1["NewMessage"] = true;
+            row1["IsEnterpriseTag"] = true;
+            row1["AssignedAgentId"] = Guid.NewGuid().ToString();
+            row1["AssignedAgentName"] = "Iyer Thanupatil";
+            row1["UserName"] = "Borat Sigh";
+            row1["DateTimeUpdated"] = DateTimeOffset.Now;
+            table.Rows.Add(row1);
+
+            DataRow row2 = table.NewRow();
+            row2["CaseId"] = Guid.NewGuid().ToString();
+            row2["Title"] = "Plan a party";
+            row2["NewMessage"] = true;
+            row1["IsEnterpriseTag"] = false;
+            row2["AssignedAgentId"] = string.Empty;
+            row2["AssignedAgentName"] = string.Empty;
+            row1["UserName"] = "Ravi Gita Sigh";
+            row2["DateTimeUpdated"] = DateTimeOffset.Now.AddDays(-1);
+            table.Rows.Add(row2);
+
+            DataRow row3 = table.NewRow();
+            row3["CaseId"] = Guid.NewGuid().ToString();
+            row3["Title"] = "Help with my math HW";
+            row3["NewMessage"] = false;
+            row1["IsEnterpriseTag"] = true;
+            row3["AssignedAgentId"] = Guid.NewGuid().ToString();
+            row3["AssignedAgentName"] = "Karpi Manjunath";
+            row1["UserName"] = "Sita Panchantagali";
+            row3["DateTimeUpdated"] = DateTimeOffset.Now;
+            table.Rows.Add(row3);
+
+            returnData.Tables.Add(table);
+            return returnData;
+        }
+
+        private static DataSet GetAgentCaseDetails()
+        {
+            DataSet returnData = new DataSet();
+            DataTable table = new DataTable("InfoTable");
+            table.Columns.Add("CaseId");
+            table.Columns.Add("Title");
+            table.Columns.Add("RequestDetails");
+            table.Columns.Add("Budget");
+            table.Columns.Add("ContactPref");
+            table.Columns.Add("ContextId");
+            table.Columns.Add("UserId");
+            table.Columns.Add("AgentId");
+            table.Columns.Add("AgentNotes");
+            table.Columns.Add("Quote");
+            table.Columns.Add("Timeline");
+            table.Columns.Add("PaymentStatus");
+
+            DataRow row1 = table.NewRow();
+            row1["CaseId"] = Guid.NewGuid().ToString();
+            row1["Title"] = "I want to get flowers delivered";
+            row1["RequestDetails"] = "Please could you deliver flowers to my friend. It is his birthday.";
+            row1["Budget"] = 400;
+            row1["ContactPref"] = "Chat" + Constants.QuerySeparator + "Email";
+            row1["ContextId"] = Guid.NewGuid().ToString();
+            row1["UserId"] = Guid.NewGuid().ToString();
+            row1["AgentId"] = Guid.NewGuid().ToString();
+            row1["AgentNotes"] = "This customer is awesome";
+            row1["Quote"] = "200";
+            row1["Timeline"] = "2 hours";
+            row1["PaymentStatus"] = "Not paid";
+            table.Rows.Add(row1);
+
+            returnData.Tables.Add(table);
+            return returnData;
+        }
+
+        private static DataSet GetTagInfoForAddingNewTagToAgentQuery(List<string> tags)
+        {
+            DataSet returnData = new DataSet();
+            DataTable table = new DataTable("InfoTable");
+            table.Columns.Add("Tag");
+            table.Columns.Add("IsEnterpriseTag");
+            table.Columns.Add("DateTimeTagCode");
+            table.Columns.Add("Code");
+            table.Columns.Add("AgentIdGroup1");
+
+            if (tags.Count == 1)
+            {
+                DataRow row1 = table.NewRow();
+                row1["Tag"] = tags[0];
+                row1["IsEnterpriseTag"] = true;
+                row1["DateTimeTagCode"] = DateTimeOffset.UtcNow.AddMinutes(5);
+                row1["Code"] = 1234;
+                row1["AgentIdGroup1"] = "Test";
+                table.Rows.Add(row1);
+            }
+
+            returnData.Tables.Add(table);
+            return returnData;
+        }
+
+        private static DataSet GetAgentsForUserCase()
+        {
+            DataSet returnData = new DataSet();
+            DataTable table = new DataTable("InfoTable");
+            table.Columns.Add("AgentId");
+            table.Columns.Add("Name");
+            table.Columns.Add("Rating");
+            table.Columns.Add("NumberOfRatings");
+
+            DataRow row1 = table.NewRow();
+            row1["AgentId"] = Guid.NewGuid().ToString();
+            row1["Name"] = "Raj Jackmar";
+            row1["Rating"] = 4.5;
+            row1["NumberOfRatings"] = 273;
+            table.Rows.Add(row1);
+
+            DataRow row2 = table.NewRow();
+            row2["AgentId"] = Guid.NewGuid().ToString();
+            row2["Name"] = "Peter Thum";
+            row2["Rating"] = 3.1;
+            row2["NumberOfRatings"] = 326;
+            table.Rows.Add(row2);
+
+            DataRow row3 = table.NewRow();
+            row3["AgentId"] = Guid.NewGuid().ToString();
+            row3["Name"] = "Sita Gills";
+            row3["Rating"] = 4.8;
+            row3["NumberOfRatings"] = 65;
+            table.Rows.Add(row3);
+
+            returnData.Tables.Add(table);
+            return returnData;
+        }
+
+        private static DataSet GetUserCaseForAgentContext()
+        {
+            DataSet returnData = new DataSet();
+            DataTable table = new DataTable("InfoTable");
+            table.Columns.Add("ContextId");
+            table.Columns.Add("UserId");
+            table.Columns.Add("AgentId");
+            table.Columns.Add("AgentName");
+            table.Columns.Add("UserNotes");
+            table.Columns.Add("Quote");
+            table.Columns.Add("Timeline");
+            table.Columns.Add("PaymentStatus");
+
+            DataRow row1 = table.NewRow();
+            row1["ContextId"] = Guid.NewGuid().ToString();
+            row1["UserId"] = Guid.NewGuid().ToString();
+            row1["AgentId"] = Guid.NewGuid().ToString();
+            row1["AgentName"] = "Tempar Chandani";
+            row1["UserNotes"] = "This agent is awesome";
+            row1["Quote"] = 200;
+            row1["Timeline"] = "2 hours";
+            row1["PaymentStatus"] = "Not paid";
+            table.Rows.Add(row1);
+
+            returnData.Tables.Add(table);
+            return returnData;
+        }
+
+        private static DataSet GetUserCaseDetailsQuery()
+        {
+            DataSet returnData = new DataSet();
+            DataTable table = new DataTable("InfoTable");
+            table.Columns.Add("CaseId");
+            table.Columns.Add("Title");
+            table.Columns.Add("RequestDetails");
+            table.Columns.Add("Budget");
+            table.Columns.Add("AssignedAgentId");
+
+            DataRow row1 = table.NewRow();
+            row1["CaseId"] = Guid.NewGuid().ToString();
+            row1["Title"] = "Get me some chocolate to eat";
+            row1["RequestDetails"] = "I would like to eat some cake from this bakery down at patia lane. Can you come deliver it to me?";
+            row1["Budget"] = 450;
+            row1["AssignedAgentId"] = Guid.NewGuid().ToString();
+            table.Rows.Add(row1);
+
+            returnData.Tables.Add(table);
+            return returnData;
+        }
+
+        private static DataSet GetUserCasesQuery()
+        {
+            DataSet returnData = new DataSet();
+            DataTable table = new DataTable("InfoTable");
+            table.Columns.Add("CaseId");
+            table.Columns.Add("Title");
+            table.Columns.Add("NewMessage");
+            table.Columns.Add("AssignedAgentId");
+            table.Columns.Add("AssignedAgentName");
+            table.Columns.Add("DateTimeUpdated");
+
+            DataRow row1 = table.NewRow();
+            row1["CaseId"] = Guid.NewGuid().ToString();
+            row1["Title"] = "Get me flowers";
+            row1["NewMessage"] = true;
+            row1["AssignedAgentId"] = Guid.NewGuid().ToString();
+            row1["AssignedAgentName"] = "Iyer Thanupatil";
+            row1["DateTimeUpdated"] = DateTimeOffset.Now;
+            table.Rows.Add(row1);
+
+            DataRow row2 = table.NewRow();
+            row2["CaseId"] = Guid.NewGuid().ToString();
+            row2["Title"] = "Plan a party";
+            row2["NewMessage"] = true;
+            row2["AssignedAgentId"] = string.Empty;
+            row2["AssignedAgentName"] = string.Empty;
+            row2["DateTimeUpdated"] = DateTimeOffset.Now.AddDays(-1);
+            table.Rows.Add(row2);
+
+            DataRow row3 = table.NewRow();
+            row3["CaseId"] = Guid.NewGuid().ToString();
+            row3["Title"] = "Help with my math HW";
+            row3["NewMessage"] = false;
+            row3["AssignedAgentId"] = Guid.NewGuid().ToString();
+            row3["AssignedAgentName"] = "Karpi Manjunath";
+            row3["DateTimeUpdated"] = DateTimeOffset.Now;
+            table.Rows.Add(row3);
+
+            returnData.Tables.Add(table);
+            return returnData;
         }
 
         /// <summary>
         /// Gets the agents by ids query.
         /// </summary>
         /// <returns></returns>
-        private static DataSet GetAgentsByIdsQuery(List<string> userIds)
+        private static DataSet GetUsersByIdsQuery(List<string> userIds)
         {
             DataSet returnData = new DataSet();
             DataTable table = new DataTable("InfoTable");
@@ -63,6 +352,7 @@ namespace RestServiceV1.Providers
             table.Columns.Add("AreaOfService");
             table.Columns.Add("Tags");
             table.Columns.Add("FavoriteAgents");
+            table.Columns.Add("PushNotificationsUri");
 
             DataRow row1 = table.NewRow();
             row1["UserId"] = userIds[0];
@@ -72,6 +362,7 @@ namespace RestServiceV1.Providers
             row1["AreaOfService"] = "Mumbai";
             row1["Tags"] = "PartyPlaning|$|CabService|$|Balloons";
             row1["FavoriteAgents"] = Guid.NewGuid().ToString() + "|$|" + Guid.NewGuid().ToString();
+            row1["PushNotificationsUri"] = "Teststring";
             table.Rows.Add(row1);
 
             DataRow row2 = table.NewRow();
@@ -82,6 +373,7 @@ namespace RestServiceV1.Providers
             row2["AreaOfService"] = "Delhi";
             row2["Tags"] = "DJ|$|Music";
             row2["FavoriteAgents"] = Guid.NewGuid().ToString();
+            row1["PushNotificationsUri"] = "Teststring";
             table.Rows.Add(row2);
 
             if (userIds.Count > 2)
@@ -95,6 +387,7 @@ namespace RestServiceV1.Providers
                 row3["AreaOfService"] = "South Mumbai";
                 row3["Tags"] = "Flowers";
                 row3["FavoriteAgents"] = string.Empty;
+            row1["PushNotificationsUri"] = "Teststring";
                 table.Rows.Add(row3);
             }
 

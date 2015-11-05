@@ -21,6 +21,24 @@ namespace RestServiceV1.DataContracts
         /// </value>
         [DataMember(Name = "caseId")]
         public string CaseId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user identifier.
+        /// </summary>
+        /// <value>
+        /// The user identifier.
+        /// </value>
+        [DataMember(Name = "userId")]
+        public string UserId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the agent identifier.
+        /// </summary>
+        /// <value>
+        /// The agent identifier.
+        /// </value>
+        [DataMember(Name = "agentId")]
+        public string AgentId { get; set; }
     }
 
     /// <summary>
@@ -37,6 +55,15 @@ namespace RestServiceV1.DataContracts
         /// </value>
         [DataMember(Name = "caseId")]
         public string CaseId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the chat identifier.
+        /// </summary>
+        /// <value>
+        /// The chat identifier.
+        /// </value>
+        [DataMember(Name = "chatId")]
+        public string ChatId { get; set; }
 
         /// <summary>
         /// Gets or sets the participants information.
