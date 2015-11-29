@@ -5,8 +5,10 @@
 namespace RestServiceV1.ServiceLayer
 {
     using RestServiceV1.DataContracts;
+    using Providers;
     using System;
     using System.Collections.Generic;
+    using System.Data;
 
     /// <summary>
     /// Command to get the agents for autocomplete
@@ -23,44 +25,34 @@ namespace RestServiceV1.ServiceLayer
             GetAgentsForAutoCompleteRequestContainer requestContainer = context.InParam as GetAgentsForAutoCompleteRequestContainer;
             GetAgentsForAutoCompleteReturnContainer returnContainer = new GetAgentsForAutoCompleteReturnContainer();
 
-            returnContainer.ReturnCode = ReturnCodes.C101;
+            ISqlProvider sqlProvider = (ISqlProvider)ProviderFactory.Instance.CreateProvider<ISqlProvider>(requestContainer.ProviderName);
+            Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@deleted", false } };
+            parameters.Add("@name", string.Format("%{0}%", requestContainer.Text));
 
-            returnContainer.Agents = new List<UserProfile>()
+            DataSet result = sqlProvider.ExecuteQuery(SqlQueries.GetAgentForAutoComplete, parameters);
+
+            returnContainer.Agents = new List<UserProfile>();
+            if (result.Tables.Count > 0)
             {
-                new UserProfile()
+                foreach (DataRow row in result.Tables[0].Rows)
                 {
-                    Name = "Karl Potter",
-                    UserId = Guid.NewGuid().ToString(),
-                    PhoneNumber = "+9145683948398",
-                    Rating = 2.3,
-                    NumberOfRatings = 134,
-                },
-                new UserProfile()
-                {
-                    Name = "Karan Polopkar",
-                    UserId = Guid.NewGuid().ToString(),
-                    PhoneNumber = "+545448131564",
-                    Rating = 3,
-                    NumberOfRatings = 64,
-                },
-                new UserProfile()
-                {
-                    Name = "Kari Bubanjart",
-                    UserId = Guid.NewGuid().ToString(),
-                    PhoneNumber = "+54464168",
-                    Rating = 1.2,
-                    NumberOfRatings = 11,
-                },
-                new UserProfile()
-                {
-                    Name = "Karmeshwar Punawala",
-                    UserId = Guid.NewGuid().ToString(),
-                    PhoneNumber = "+65464655456",
-                    Rating = 4.1,
-                    NumberOfRatings = 99,
-                },
-            };
+                    UserProfile agent = new UserProfile();
+                    agent.Name = row["Name"].ToString();
+                    agent.UserId = row["UserId"].ToString();
+                    agent.PhoneNumber = row["PhoneNumber"].ToString();
+                    double tempDouble;
+                    double.TryParse(row["Rating"].ToString(), out tempDouble);
+                    agent.Rating = tempDouble;
 
+                    int tempInt;
+                    int.TryParse(row["NumberOfRatings"].ToString(), out tempInt);
+                    agent.NumberOfRatings = tempInt;
+
+                    returnContainer.Agents.Add(agent);
+                }
+            }
+
+            returnContainer.ReturnCode = ReturnCodes.C101;
             return returnContainer;
         }
     }

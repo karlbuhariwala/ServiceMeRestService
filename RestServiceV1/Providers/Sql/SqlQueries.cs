@@ -125,6 +125,7 @@ SET
     , [IsAgent] = COALESCE(@IsAgent, [IsAgent])
     , [IsManager] = COALESCE(@IsManager, [IsManager])
     , [LandingPage] = COALESCE(@LandingPage, [LandingPage])
+    , [Tags] = COALESCE(@Tags, [Tags])
 WHERE
     UserId = @userId";
 
@@ -223,20 +224,44 @@ VALUES
     )";
 
         /// <summary>
+        /// The add to tag case map
+        /// </summary>
+        public const string AddToTagCaseMap = @"INSERT INTO
+    [TagCaseMap]
+    (
+        CaseId
+        , Tag
+        , Closed
+        , Deleted
+        , [DateTimeCreated]
+        , [DateTimeUpdated]
+    )
+VALUES
+    (
+        @caseId
+        , @tag
+        , @closed
+        , @deleted
+        , @dateTimeCreated
+        , @dateTimeUpdated
+    )";
+
+        /// <summary>
         /// The get user cases query
         /// </summary>
         public const string GetUserCasesQuery = @"SELECT
-    CaseId
-    , Title
-    , NewMessage
-    , AssignedAgentId
-    , AssignedAgentName
-    , DateTimeUpdated
+    CaseInfo.CaseId
+    , CaseInfo.Title
+    , CaseInfo.NewMessage
+    , CaseInfo.AssignedAgentId
+    , AgentInfo.Name
+    , CaseInfo.DateTimeUpdated
 FROM
-    [CaseInfo]
+    [CaseInfo] AS CaseInfo 
+    LEFT JOIN UserInfo AS AgentInfo ON AgentInfo.UserId = CaseInfo.AssignedAgentId
 WHERE
-    UserId = @userId
-    AND Deleted = @deleted";
+    CaseInfo.UserId = @userId
+    AND CaseInfo.Deleted = @deleted";
 
         /// <summary>
         /// The get user case details query
@@ -418,6 +443,32 @@ SET
     AgentIdGroup1 = COALESCE(@userIds, AgentIdGroup1)
 WHERE
     Tag = @tag";
+
+        /// <summary>
+        /// The get tags for automatic complete
+        /// </summary>
+        public const string GetTagsForAutoComplete = @"SELECT
+    Tag
+FROM
+    TagInfo
+WHERE
+    Tag LIKE @tag";
+
+        /// <summary>
+        /// The get agent for automatic complete
+        /// </summary>
+        public const string GetAgentForAutoComplete = @"SELECT
+    Name
+    , UserId
+    , PhoneNumber
+    , Rating
+    , NumberOfRatings
+FROM
+    UserInfo
+WHERE
+    Name LIKE @name
+    AND IsAgent = 1
+    AND Deleted = 0";
 
         /// <summary>
         /// The get tag information for adding new tag to agent

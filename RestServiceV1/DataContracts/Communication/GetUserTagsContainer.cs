@@ -1,16 +1,17 @@
 ﻿// Copyright = Karl Buhariwala
 // ServiceMe App
-// FileName = GetProfileContainer.cs
+// FileName = GetUserTagsContainer.cs
 
 namespace RestServiceV1.DataContracts
 {
+    using System.Collections.Generic;
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Get profile request container
+    /// Get user tags request container
     /// </summary>
     [DataContract]
-    public class GetProfileRequestContainer : BaseRequestContainer
+    public class GetUserTagsRequestContainer : BaseRequestContainer
     {
         /// <summary>
         /// Gets or sets the user identifier.
@@ -23,18 +24,18 @@ namespace RestServiceV1.DataContracts
     }
 
     /// <summary>
-    /// Get profile return container
+    /// Get user tags return container
     /// </summary>
     [DataContract]
-    public class GetProfileReturnContrainer : BaseReturnContainer
+    public class GetUserTagsReturnContainer : BaseReturnContainer
     {
         /// <summary>
-        /// Gets or sets the user.
+        /// Gets or sets the tags.
         /// </summary>
         /// <value>
-        /// The user.
+        /// The tags.
         /// </value>
-        [DataMember(Name = "userInfo")]
-        public UserProfile UserInfo { get; set; }
+        [DataMember(Name = "tags")]
+        public List<string> Tags { get; set; }
     }
 }

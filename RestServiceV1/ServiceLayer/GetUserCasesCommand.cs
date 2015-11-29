@@ -58,7 +58,7 @@ namespace RestServiceV1.ServiceLayer
                     caseDetails.AssignedAgentId = string.Empty;
                 }
 
-                tempString = row["AssignedAgentName"].ToString();
+                tempString = row["Name"].ToString();
                 if (tempString != DBNull.Value.ToString())
                 {
                     caseDetails.AssignedAgentName = tempString;

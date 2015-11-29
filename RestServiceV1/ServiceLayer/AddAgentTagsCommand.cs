@@ -47,12 +47,20 @@ namespace RestServiceV1.ServiceLayer
 
             Dictionary<string, string> tagsUserMap = new Dictionary<string, string>();
 
+            // Todo: Need to check if user already on the tag and not repeat.
             returnContainer.TagsThatNeedCodes = new List<string>();
             foreach (DataRow row in result.Tables[0].Rows)
             {
                 string tag = row["Tag"].ToString();
                 bool tempBool = false;
                 bool.TryParse(row["IsEnterpriseTag"].ToString(), out tempBool);
+                List<string> userIds = row["AgentIdGroup1"].ToString().Split(new string[] { Constants.QuerySeparator }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                if(userIds.Contains(requestContainer.AgentId, StringComparer.OrdinalIgnoreCase))
+                {
+                    tagsUserMap.Add(tag, row["AgentIdGroup1"].ToString());
+                    continue;
+                }
+
                 if (tempBool)
                 {
                     DateTimeOffset tempDateTimeOffset = new DateTimeOffset(new DateTime(1900, 1, 1));
@@ -87,6 +95,7 @@ namespace RestServiceV1.ServiceLayer
             // Make this concurrent and is not thread safe.
             if (returnContainer.ReturnCode == ReturnCodes.C101)
             {
+                List<string> tagsToAdd = new List<string>();
                 for (int i = 0; i < requestContainer.TagCodeList.Count && i < maxTagsCount; i++)
                 {
                     Dictionary<string, object> parametersForUpdate = new Dictionary<string, object>();
@@ -94,7 +103,21 @@ namespace RestServiceV1.ServiceLayer
                     parametersForUpdate.Add("@userIds", tagsUserMap[requestContainer.TagCodeList[i].First]);
 
                     sqlProvider.ExecuteQuery(SqlQueries.UpdateTagWithInfo, parametersForUpdate);
+
+                    tagsToAdd.Add(requestContainer.TagCodeList[i].First);
                 }
+
+                Dictionary<string, object> parametersForProfile = new Dictionary<string, object>();
+                parametersForProfile.Add("@UserInfoName", null);
+                parametersForProfile.Add("@UserInfoContactPref", null);
+                parametersForProfile.Add("@UserInfoEmailAddress", null);
+                parametersForProfile.Add("@UserInfoAddress", null);
+                parametersForProfile.Add("@IsAgent", null);
+                parametersForProfile.Add("@IsManager", null);
+                parametersForProfile.Add("@LandingPage", null);
+                parametersForProfile.Add("@Tags", string.Join(Constants.QuerySeparator, tagsToAdd));
+                parametersForProfile.Add("@userId", requestContainer.AgentId);
+                sqlProvider.ExecuteQuery(SqlQueries.UpdateUserProfile, parametersForProfile);
             }
 
             return returnContainer;

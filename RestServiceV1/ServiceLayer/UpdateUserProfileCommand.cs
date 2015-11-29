@@ -34,6 +34,7 @@ namespace RestServiceV1.ServiceLayer
             parameters.Add("@IsAgent", requestContainer.UserProfile.IsAgent);
             parameters.Add("@IsManager", requestContainer.UserProfile.IsManager);
             parameters.Add("@LandingPage", requestContainer.UserProfile.LandingPage);
+            parameters.Add("@Tags", null);
             parameters.Add("@userId", requestContainer.UserProfile.UserId);
             sqlProvider.ExecuteQuery(SqlQueries.UpdateUserProfile, parameters);
 

@@ -59,8 +59,20 @@ namespace RestServiceV1.ServiceLayer
                 sqlProvider.ExecuteQuery(SqlQueries.AddToAgentCaseMap, parameters);
             }
 
-            // add to tags map
+            foreach (var tag in requestContainer.CaseInfo.Tags)
+            {
+                parameters = new Dictionary<string, object>();
+                parameters.Add("@caseId", caseId);
+                parameters.Add("@tag", tag);
+                parameters.Add("@closed", false);
+                parameters.Add("@deleted", false);
+                parameters.Add("@dateTimeCreated", DateTimeOffset.UtcNow);
+                parameters.Add("@dateTimeUpdated", DateTimeOffset.UtcNow);
+                sqlProvider.ExecuteQuery(SqlQueries.AddToTagCaseMap, parameters);
+            }
+
             // Add to user prefered requests
+
             returnContainer.ReturnCode = ReturnCodes.C101;
 
             return returnContainer;

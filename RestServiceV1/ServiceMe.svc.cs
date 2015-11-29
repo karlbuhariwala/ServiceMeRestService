@@ -456,6 +456,25 @@ namespace RestServiceV1
         }
 
         /// <summary>
+        /// Gets the user tags.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <returns>
+        /// Get user tags return container
+        /// </returns>
+        GetUserTagsReturnContainer IServiceMe.GetUserTags(GetUserTagsRequestContainer contents)
+        {
+            try
+            {
+                return (GetUserTagsReturnContainer)this.RunCommand(new GetUserTagsCommand(), contents);
+            }
+            catch (Exception)
+            {
+                return new GetUserTagsReturnContainer() { ReturnCode = ReturnCodes.GenericExceptionErrorCode };
+            }
+        }
+
+        /// <summary>
         /// Runs the command.
         /// </summary>
         /// <param name="command">The command.</param>

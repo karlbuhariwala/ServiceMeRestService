@@ -324,5 +324,18 @@ namespace RestServiceV1
             BodyStyle = WebMessageBodyStyle.Bare,
             UriTemplate = "AssignAgentToCase")]
         AssignCaseReturnContainer AssignAgentToCase(AssignCaseRequestContainer contents);
+
+        /// <summary>
+        /// Gets the user tags.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <returns>Get user tags return container</returns>
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Bare,
+            UriTemplate = "GetUserTags")]
+        GetUserTagsReturnContainer GetUserTags(GetUserTagsRequestContainer contents);
     }
 }

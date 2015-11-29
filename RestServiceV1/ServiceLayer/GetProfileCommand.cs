@@ -30,7 +30,7 @@ namespace RestServiceV1.ServiceLayer
             ISqlProvider sqlProvider = (ISqlProvider)ProviderFactory.Instance.CreateProvider<ISqlProvider>(requestContainer.ProviderName);
             Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@userId", requestContainer.UserId }, { "@deleted", false } };
             DataSet returnedData = sqlProvider.ExecuteQuery(SqlQueries.GetUserProfileQuery, parameters);
-            if (returnedData.Tables[0].Rows.Count == 1)
+            if (returnedData.Tables.Count > 0 && returnedData.Tables[0].Rows.Count == 1)
             {
                 DataRow row = returnedData.Tables[0].Rows[0];
                 UserProfile userProfile = new UserProfile();
@@ -103,7 +103,7 @@ namespace RestServiceV1.ServiceLayer
 
                 // Found user and returning it
                 returnContainer.ReturnCode = ReturnCodes.C101;
-                returnContainer.User = userProfile;
+                returnContainer.UserInfo = userProfile;
             }
             else
             {

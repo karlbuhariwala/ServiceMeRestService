@@ -5,7 +5,9 @@
 namespace RestServiceV1.ServiceLayer
 {
     using RestServiceV1.DataContracts;
+    using Providers;
     using System.Collections.Generic;
+    using System.Data;
 
     /// <summary>
     /// Command to get the tags for autocomplete
@@ -22,15 +24,20 @@ namespace RestServiceV1.ServiceLayer
             GetTagsForAutoCompleteRequestContainer requestContainer = context.InParam as GetTagsForAutoCompleteRequestContainer;
             GetTagsForAutoCompleteReturnContainer returnContainer = new GetTagsForAutoCompleteReturnContainer();
 
-            returnContainer.SuggestedTags = new List<string>()
+            ISqlProvider sqlProvider = (ISqlProvider)ProviderFactory.Instance.CreateProvider<ISqlProvider>(requestContainer.ProviderName);
+            Dictionary<string, object> parameters = new Dictionary<string, object>() { { "@deleted", false } };
+            parameters.Add("@tag", string.Format("%{0}%", requestContainer.Text));
+
+            DataSet result = sqlProvider.ExecuteQuery(SqlQueries.GetTagsForAutoComplete, parameters);
+
+            returnContainer.SuggestedTags = new List<string>();
+            if (result.Tables.Count > 0)
             {
-                "Test1",
-                "bTest133333333333333333333333333333355555555555555555555555333",
-                "bTest122",
-                "Test2",
-                "DJ",
-                "Test14",
-            };
+                foreach (DataRow row in result.Tables[0].Rows)
+                {
+                    returnContainer.SuggestedTags.Add(row["Tag"].ToString());
+                }
+            }
 
             returnContainer.ReturnCode = ReturnCodes.C101;
 
