@@ -49,6 +49,9 @@ namespace RestServiceV1.ServiceLayer
             returnContainer.CaseInfo.Budget = tempInt;
 
             returnContainer.CaseInfo.ContactPreference = row["ContactPref"].ToString().Split(new string[] { Constants.QuerySeparator }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            bool tempBool = false;
+            bool.TryParse(row["IsEnterpriseTag"].ToString(), out tempBool);
+            returnContainer.CaseInfo.IsEnterpriseTag = tempBool;
 
             returnContainer.ContextualCaseDetails = new ContextualCaseDetails();
             returnContainer.ContextualCaseDetails.ContextId = row["ContextId"].ToString();

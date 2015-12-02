@@ -55,18 +55,18 @@ namespace RestServiceV1.ServiceLayer
                 bool.TryParse(row["IsEnterpriseTag"].ToString(), out tempBool);
                 caseDetails.IsEnterpriseTag = tempBool;
 
+                string tempString = row["AssignedAgentId"].ToString();
+                if (tempString != DBNull.Value.ToString())
+                {
+                    caseDetails.AssignedAgentId = tempString;
+                }
+                else
+                {
+                    caseDetails.AssignedAgentId = null;
+                }
+
                 if (caseDetails.IsEnterpriseTag)
                 {
-                    string tempString = row["AssignedAgentId"].ToString();
-                    if (tempString != DBNull.Value.ToString())
-                    {
-                        caseDetails.AssignedAgentId = tempString;
-                    }
-                    else
-                    {
-                        caseDetails.AssignedAgentId = string.Empty;
-                    }
-
                     tempString = row["AssignedAgentName"].ToString();
                     if (tempString != DBNull.Value.ToString())
                     {

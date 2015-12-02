@@ -324,6 +324,7 @@ WHERE
     , CaseInfo.RequestDetails
     , CaseInfo.Budget
     , CaseInfo.ContactPref
+    , CaseInfo.IsEnterpriseTag
     , ContextualCaseDetails.ContextId
     , ContextualCaseDetails.UserId
     , ContextualCaseDetails.AgentId
@@ -357,7 +358,7 @@ FROM
     LEFT JOIN CaseInfo as CaseInfo ON ContextualCaseDetails.CaseId = CaseInfo.CaseId
 WHERE
     AgentId = @agentId
-    AND Deleted = @deleted";
+    AND ContextualCaseDetails.Deleted = @deleted";
 
         /// <summary>
         /// The insert case context details
