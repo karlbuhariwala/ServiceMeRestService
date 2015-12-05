@@ -63,8 +63,10 @@ VALUES
     , IsManager
     , LandingPage
     , PushNotificationsUri
-    , Rating
-    , NumberOfRatings
+    , AgentRating
+    , AgentRatingCount
+    , UserRating
+    , UserRatingCount
     , Tags
     , AreaOfService
     , FavoriteAgents
@@ -305,8 +307,8 @@ WHERE
         public const string GetAgentsForUserCase = @"SELECT
     AgentCaseMap.AgentId
     , UserInfo.Name
-    , UserInfo.Rating
-    , UserInfo.NumberOfRatings
+    , UserInfo.AgentRating
+    , UserInfo.AgentRatingCount
 FROM
     [AgentCaseMap] AS AgentCaseMap 
     LEFT JOIN [UserInfo] AS UserInfo ON AgentCaseMap.AgentId = UserInfo.UserId
@@ -462,8 +464,8 @@ WHERE
     Name
     , UserId
     , PhoneNumber
-    , Rating
-    , NumberOfRatings
+    , AgentRating
+    , AgentRatingCount
 FROM
     UserInfo
 WHERE
@@ -492,8 +494,8 @@ WHERE
         private const string GetUsersByIds = @"SELECT
     UserId
     , Name
-    , Rating
-    , NumberOfRatings
+    , AgentRating
+    , AgentRatingCount
     , AreaOfService
     , Tags
     , FavoriteAgents
@@ -513,6 +515,89 @@ FROM
     TagInfo
 WHERE
     Tag in ({0})";
+
+        /// <summary>
+        /// The get user ratings from contextual information
+        /// </summary>
+        private const string GetUserRatingsFromContextualInfo = @"SELECT
+    UserInfo.{0}Rating AS Rating
+    , UserInfo.{0}RatingCount AS UserInfoTableRatingCount
+    , ContextCaseInfo.{0}RatingCount AS ContextualDetailsRatingCount
+FROM
+    ContextualCaseDetails AS ContextCaseInfo
+    LEFT JOIN UserInfo AS UserInfo ON UserInfo.UserId = ContextCaseInfo.{0}Id
+WHERE
+    ContextCaseInfo.{0}Id = @userId
+    AND ContextCaseInfo.CaseId = @caseId
+    AND ContextCaseInfo.deleted = @deleted";
+
+        /// <summary>
+        /// The update user information with rating
+        /// </summary>
+        private const string UpdateUserInfoWithRating = @"UPDATE 
+    UserInfo
+SET
+    {0}Rating = COALESCE(@rating, {0}Rating)
+    , {0}RatingCount = COALESCE(@ratingCount, {0}RatingCount)
+WHERE
+    UserId = @userId";
+
+        private const string UpdateContextualDetailsWithRating = @"UPDATE 
+    ContextualCaseDetails
+SET
+    {0}Rating = COALESCE(@rating, {0}Rating)
+    , {0}RatingCount = COALESCE(@ratingCount, {0}RatingCount)
+WHERE
+    {0}Id = @userId
+    AND CaseId = @caseId";
+
+        /// <summary>
+        /// Updates the user information with rating query.
+        /// </summary>
+        /// <param name="isAgent">if set to <c>true</c> [is agent].</param>
+        /// <returns>Update contextual details with rating</returns>
+        public static string UpdateContextualDetailsWithRatingQuery(bool isAgent)
+        {
+            string userString = "User";
+            if (isAgent)
+            {
+                userString = "Agent";
+            }
+
+            return string.Format(SqlQueries.UpdateContextualDetailsWithRating, userString);
+        }
+
+        /// <summary>
+        /// Updates the user information with rating query.
+        /// </summary>
+        /// <param name="isAgent">if set to <c>true</c> [is agent].</param>
+        /// <returns>Update agent rating query</returns>
+        public static string UpdateUserInfoWithRatingQuery(bool isAgent)
+        {
+            string userString = "User";
+            if (isAgent)
+            {
+                userString = "Agent";
+            }
+
+            return string.Format(SqlQueries.UpdateUserInfoWithRating, userString);
+        }
+
+        /// <summary>
+        /// Gets the user ratings from contextual information query.
+        /// </summary>
+        /// <param name="isAgent">if set to <c>true</c> [is agent].</param>
+        /// <returns></returns>
+        public static string GetUserRatingsFromContextualInfoQuery(bool isAgent)
+        {
+            string userString = "User";
+            if(isAgent)
+            {
+                userString = "Agent";
+            }
+
+            return string.Format(SqlQueries.GetUserRatingsFromContextualInfo, userString);
+        }
 
         /// <summary>
         /// Gets the agents for tag query.

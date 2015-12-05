@@ -475,6 +475,25 @@ namespace RestServiceV1
         }
 
         /// <summary>
+        /// Rates the user.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <returns>
+        /// Rate user return container
+        /// </returns>
+        RateUserReturnContainer IServiceMe.RateUser(RateUserRequestContainer contents)
+        {
+            try
+            {
+                return (RateUserReturnContainer)this.RunCommand(new RateUserCommand(), contents);
+            }
+            catch (Exception)
+            {
+                return new RateUserReturnContainer() { ReturnCode = ReturnCodes.GenericExceptionErrorCode };
+            }
+        }
+
+        /// <summary>
         /// Runs the command.
         /// </summary>
         /// <param name="command">The command.</param>

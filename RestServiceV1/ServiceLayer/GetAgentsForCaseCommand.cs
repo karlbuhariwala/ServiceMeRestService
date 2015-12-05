@@ -47,12 +47,12 @@ namespace RestServiceV1.ServiceLayer
                 userProfile.Name = row["Name"].ToString();
 
                 double tempDouble = 0;
-                double.TryParse(row["Rating"].ToString(), out tempDouble);
-                userProfile.Rating = tempDouble;
+                double.TryParse(row["AgentRating"].ToString(), out tempDouble);
+                userProfile.AgentRating = tempDouble;
 
                 int tempInt = 0;
-                int.TryParse(row["NumberOfRatings"].ToString(), out tempInt);
-                userProfile.NumberOfRatings = tempInt;
+                int.TryParse(row["AgentRatingCount"].ToString(), out tempInt);
+                userProfile.AgentRatingCount = tempInt;
 
                 returnContainer.Agents.Add(userProfile);
             }

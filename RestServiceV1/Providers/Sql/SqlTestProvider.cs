@@ -217,28 +217,28 @@ namespace RestServiceV1.Providers
             DataTable table = new DataTable("InfoTable");
             table.Columns.Add("AgentId");
             table.Columns.Add("Name");
-            table.Columns.Add("Rating");
-            table.Columns.Add("NumberOfRatings");
+            table.Columns.Add("AgentRating");
+            table.Columns.Add("AgentRatingCount");
 
             DataRow row1 = table.NewRow();
             row1["AgentId"] = Guid.NewGuid().ToString();
             row1["Name"] = "Raj Jackmar";
-            row1["Rating"] = 4.5;
-            row1["NumberOfRatings"] = 273;
+            row1["AgentRating"] = 4.5;
+            row1["AgentRatingCount"] = 273;
             table.Rows.Add(row1);
 
             DataRow row2 = table.NewRow();
             row2["AgentId"] = Guid.NewGuid().ToString();
             row2["Name"] = "Peter Thum";
-            row2["Rating"] = 3.1;
-            row2["NumberOfRatings"] = 326;
+            row2["AgentRating"] = 3.1;
+            row2["AgentRatingCount"] = 326;
             table.Rows.Add(row2);
 
             DataRow row3 = table.NewRow();
             row3["AgentId"] = Guid.NewGuid().ToString();
             row3["Name"] = "Sita Gills";
-            row3["Rating"] = 4.8;
-            row3["NumberOfRatings"] = 65;
+            row3["AgentRating"] = 4.8;
+            row3["AgentRatingCount"] = 65;
             table.Rows.Add(row3);
 
             returnData.Tables.Add(table);
@@ -347,9 +347,8 @@ namespace RestServiceV1.Providers
             DataTable table = new DataTable("InfoTable");
             table.Columns.Add("UserId");
             table.Columns.Add("Name");
-            table.Columns.Add("Rating");
-            table.Columns.Add("NumberOfRatings");
-            table.Columns.Add("AreaOfService");
+            table.Columns.Add("AgentRating");
+            table.Columns.Add("AgentRatingCount");
             table.Columns.Add("Tags");
             table.Columns.Add("FavoriteAgents");
             table.Columns.Add("PushNotificationsUri");
@@ -357,8 +356,8 @@ namespace RestServiceV1.Providers
             DataRow row1 = table.NewRow();
             row1["UserId"] = userIds[0];
             row1["Name"] = "Raj Jackmar";
-            row1["Rating"] = 4.5;
-            row1["NumberOfRatings"] = 273;
+            row1["AgentRating"] = 4.5;
+            row1["AgentRatingCount"] = 273;
             row1["AreaOfService"] = "Mumbai";
             row1["Tags"] = "PartyPlaning|$|CabService|$|Balloons";
             row1["FavoriteAgents"] = Guid.NewGuid().ToString() + "|$|" + Guid.NewGuid().ToString();
@@ -368,8 +367,8 @@ namespace RestServiceV1.Providers
             DataRow row2 = table.NewRow();
             row2["UserId"] = userIds[1];
             row2["Name"] = "Peter Thum";
-            row2["Rating"] = 3.1;
-            row2["NumberOfRatings"] = 326;
+            row2["AgentRating"] = 3.1;
+            row2["AgentRatingCount"] = 326;
             row2["AreaOfService"] = "Delhi";
             row2["Tags"] = "DJ|$|Music";
             row2["FavoriteAgents"] = Guid.NewGuid().ToString();
@@ -382,8 +381,8 @@ namespace RestServiceV1.Providers
                 DataRow row3 = table.NewRow();
                 row3["UserId"] = Guid.NewGuid().ToString();
                 row3["Name"] = "Sita Gills";
-                row3["Rating"] = 4.8;
-                row3["NumberOfRatings"] = 65;
+                row3["AgentRating"] = 4.8;
+                row3["AgentRatingCount"] = 65;
                 row3["AreaOfService"] = "South Mumbai";
                 row3["Tags"] = "Flowers";
                 row3["FavoriteAgents"] = string.Empty;
@@ -485,7 +484,7 @@ namespace RestServiceV1.Providers
             table.Columns.Add("IsManager");
             table.Columns.Add("LandingPage");
             table.Columns.Add("PushNotificationUri");
-            table.Columns.Add("Rating");
+            table.Columns.Add("AgentRating");
 
             // Exactly one day
             DataRow row1 = table.NewRow();

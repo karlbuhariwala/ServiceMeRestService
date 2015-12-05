@@ -258,6 +258,7 @@
     <Compile Include="DataContracts\Communication\GetUserCaseDetailContainer.cs" />
     <Compile Include="DataContracts\Communication\GetUserCasesContainer.cs" />
     <Compile Include="DataContracts\Communication\GetUserTagsContainer.cs" />
+    <Compile Include="DataContracts\Communication\RateUserContainer.cs" />
     <Compile Include="DataContracts\Communication\SaveNewCaseContainer.cs" />
     <Compile Include="DataContracts\Communication\SendChatMessageContainer.cs" />
     <Compile Include="DataContracts\Communication\UpdateProfileContainer.cs" />
@@ -303,6 +304,7 @@
     <Compile Include="ServiceLayer\GetUserCaseDetailCommand.cs" />
     <Compile Include="ServiceLayer\GetUserCasesCommand.cs" />
     <Compile Include="ServiceLayer\GetUserTagsCommand.cs" />
+    <Compile Include="ServiceLayer\RateUserCommand.cs" />
     <Compile Include="ServiceLayer\SaveNewCaseCommand.cs" />
     <Compile Include="ServiceLayer\SendChatMessageCommand.cs" />
     <Compile Include="ServiceLayer\UpdateUserProfileCommand.cs" />

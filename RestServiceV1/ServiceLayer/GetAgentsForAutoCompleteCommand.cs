@@ -41,12 +41,12 @@ namespace RestServiceV1.ServiceLayer
                     agent.UserId = row["UserId"].ToString();
                     agent.PhoneNumber = row["PhoneNumber"].ToString();
                     double tempDouble;
-                    double.TryParse(row["Rating"].ToString(), out tempDouble);
-                    agent.Rating = tempDouble;
+                    double.TryParse(row["AgentRating"].ToString(), out tempDouble);
+                    agent.AgentRating = tempDouble;
 
                     int tempInt;
-                    int.TryParse(row["NumberOfRatings"].ToString(), out tempInt);
-                    agent.NumberOfRatings = tempInt;
+                    int.TryParse(row["AgentRatingCount"].ToString(), out tempInt);
+                    agent.AgentRatingCount = tempInt;
 
                     returnContainer.Agents.Add(agent);
                 }

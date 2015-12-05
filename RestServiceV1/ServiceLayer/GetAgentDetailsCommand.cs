@@ -51,9 +51,9 @@ namespace RestServiceV1.ServiceLayer
                         agentProfile.UserId = row["UserId"].ToString();
                         agentProfile.Name = row["Name"].ToString();
                         double tempDouble;
-                        if (double.TryParse(row["Rating"].ToString(), out tempDouble))
+                        if (double.TryParse(row["AgentRating"].ToString(), out tempDouble))
                         {
-                            agentProfile.Rating = tempDouble;
+                            agentProfile.AgentRating = tempDouble;
                         }
                         else
                         {
@@ -61,9 +61,9 @@ namespace RestServiceV1.ServiceLayer
                         }
 
                         int tempInt;
-                        if (int.TryParse(row["NumberOfRatings"].ToString(), out tempInt))
+                        if (int.TryParse(row["AgentRatingCount"].ToString(), out tempInt))
                         {
-                            agentProfile.NumberOfRatings = tempInt;
+                            agentProfile.AgentRatingCount = tempInt;
                         }
                         else
                         {

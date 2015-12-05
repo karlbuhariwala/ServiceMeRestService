@@ -139,8 +139,17 @@ namespace RestServiceV1
         /// <value>
         /// The rating.
         /// </value>
-        [DataMember(Name = "rating")]
-        public double Rating { get; set; }
+        [DataMember(Name = "agentRating")]
+        public double AgentRating { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user rating.
+        /// </summary>
+        /// <value>
+        /// The user rating.
+        /// </value>
+        [DataMember(Name = "userRating")]
+        public double UserRating { get; set; }
 
         /// <summary>
         /// Gets or sets the number of ratings.
@@ -148,8 +157,17 @@ namespace RestServiceV1
         /// <value>
         /// The number of ratings.
         /// </value>
-        [DataMember(Name = "numberOfRatings")]
-        public int NumberOfRatings { get; set; }
+        [DataMember(Name = "agentRatingCount")]
+        public int AgentRatingCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user rating count.
+        /// </summary>
+        /// <value>
+        /// The user rating count.
+        /// </value>
+        [DataMember(Name = "userRatingCount")]
+        public int UserRatingCount { get; set; }
 
         /// <summary>
         /// Gets or sets the tags.

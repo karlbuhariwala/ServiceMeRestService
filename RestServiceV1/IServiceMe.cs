@@ -337,5 +337,18 @@ namespace RestServiceV1
             BodyStyle = WebMessageBodyStyle.Bare,
             UriTemplate = "GetUserTags")]
         GetUserTagsReturnContainer GetUserTags(GetUserTagsRequestContainer contents);
+
+        /// <summary>
+        /// Rates the user.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <returns>Rate user return container</returns>
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.Bare,
+            UriTemplate = "RateUser")]
+        RateUserReturnContainer RateUser(RateUserRequestContainer contents);
     }
 }

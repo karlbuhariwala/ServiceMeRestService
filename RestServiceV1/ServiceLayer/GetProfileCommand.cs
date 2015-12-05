@@ -79,18 +79,18 @@ namespace RestServiceV1.ServiceLayer
 
                 userProfile.PushNotificationUri = row["PushNotificationsUri"].ToString();
                 double tempDouble;
-                if (double.TryParse(row["Rating"].ToString(), out tempDouble))
+                if (double.TryParse(row["AgentRating"].ToString(), out tempDouble))
                 {
-                    userProfile.Rating = tempDouble;
+                    userProfile.AgentRating = tempDouble;
                 }
                 else
                 {
                     // Todo: log
                 }
 
-                if (int.TryParse(row["NumberOfRatings"].ToString(), out tempInt))
+                if (int.TryParse(row["AgentRatingCount"].ToString(), out tempInt))
                 {
-                    userProfile.NumberOfRatings = tempInt;
+                    userProfile.AgentRatingCount = tempInt;
                 }
                 else
                 {
