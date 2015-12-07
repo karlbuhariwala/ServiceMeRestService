@@ -84,7 +84,7 @@ namespace RestServiceV1
         /// The address.
         /// </value>
         [DataMember(Name = "address")]
-        public string Address { get; set; }
+        public AddressContainer Address { get; set; }
 
         /// <summary>
         /// Gets or sets the payment details.

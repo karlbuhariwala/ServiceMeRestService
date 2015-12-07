@@ -126,6 +126,8 @@ SET
     , [Address] = COALESCE(@UserInfoAddress, [Address])
     , [IsAgent] = COALESCE(@IsAgent, [IsAgent])
     , [IsManager] = COALESCE(@IsManager, [IsManager])
+    , [Longitude] = COALESCE(@Longitude, [Longitude])
+    , [Lattitude] = COALESCE(@Lattitude, [Lattitude])
     , [LandingPage] = COALESCE(@LandingPage, [LandingPage])
     , [Tags] = COALESCE(@Tags, [Tags])
 WHERE

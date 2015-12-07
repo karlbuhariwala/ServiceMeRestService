@@ -262,10 +262,13 @@
     <Compile Include="DataContracts\Communication\SaveNewCaseContainer.cs" />
     <Compile Include="DataContracts\Communication\SendChatMessageContainer.cs" />
     <Compile Include="DataContracts\Communication\UpdateProfileContainer.cs" />
+    <Compile Include="DataContracts\InApp\AddressContainer.cs" />
     <Compile Include="DataContracts\InApp\ContextualCaseDetails.cs" />
     <Compile Include="DataContracts\InApp\CaseDetails.cs" />
+    <Compile Include="DataContracts\InApp\Coordinates.cs" />
     <Compile Include="DataContracts\InApp\DeviceValidationContainer.cs" />
     <Compile Include="DataContracts\InApp\GcmContainer.cs" />
+    <Compile Include="DataContracts\InApp\GoogleApiGeocodeContainer.cs" />
     <Compile Include="DataContracts\InApp\MyKeyValuePair.cs" />
     <Compile Include="DataContracts\InApp\RequestContext.cs" />
     <Compile Include="DataContracts\InApp\UserProfile.cs" />
@@ -274,6 +277,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\Gcm\GcmProvider.cs" />
     <Compile Include="Providers\Gcm\IGcmProvider.cs" />
+    <Compile Include="Providers\Geolocation\GeolocationProvider.cs" />
+    <Compile Include="Providers\Geolocation\IGeolocationProvider.cs" />
     <Compile Include="Providers\IProvider.cs" />
     <Compile Include="Providers\KeywordProcessor\IKeywordProcessorProvider.cs" />
     <Compile Include="Providers\KeywordProcessor\KeywordProcessorProvider.cs" />

@@ -6,6 +6,7 @@
     [AgentIdGroup2] NVARCHAR(4000),
     [Keyword] NVARCHAR(4000),
     [IsEnterpriseTag] BIT NOT NULL,
+    [LocalitySpecificTag] BIT NOT NULL,
     [DateTimeTagCode] DATETIMEOFFSET, 
     [Code] INT,
     [Deleted] BIT NOT NULL,

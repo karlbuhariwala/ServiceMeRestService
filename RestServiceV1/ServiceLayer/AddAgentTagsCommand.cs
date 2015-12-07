@@ -115,6 +115,8 @@ namespace RestServiceV1.ServiceLayer
                 parametersForProfile.Add("@IsAgent", null);
                 parametersForProfile.Add("@IsManager", null);
                 parametersForProfile.Add("@LandingPage", null);
+                parametersForProfile.Add("@Longitude", null);
+                parametersForProfile.Add("@Lattitude", null);
                 parametersForProfile.Add("@Tags", string.Join(Constants.QuerySeparator, tagsToAdd));
                 parametersForProfile.Add("@userId", requestContainer.AgentId);
                 sqlProvider.ExecuteQuery(SqlQueries.UpdateUserProfile, parametersForProfile);

@@ -21,13 +21,12 @@ namespace RestServiceV1.Providers
         /// </summary>
         /// <param name="notificationId">The notification identifier.</param>
         /// <param name="message">The message.</param>
-        /// <exception cref="System.NotImplementedException"></exception>
         void IGcmProvider.SendMessage(GcmContainer message)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(ConfigurationManager.AppSettings["GcmEndpoint"]);
             request.Method = "POST";
             request.ContentType = "application/json";
-            request.Headers.Add("Authorization", ConfigurationManager.AppSettings["GcmEndpointAuthorizationKey"]);
+            request.Headers.Add("Authorization", ConfigurationManager.AppSettings["GoogleEndpointAuthorizationKey"]);
 
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(GcmContainer));
 

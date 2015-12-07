@@ -10,6 +10,8 @@ namespace RestServiceV1.ServiceLayer
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
+    using System.Runtime.Serialization.Json;
+    using System.Web.Script.Serialization;
 
     /// <summary>
     /// Command to get the profile of the user
@@ -48,7 +50,8 @@ namespace RestServiceV1.ServiceLayer
 
                 userProfile.ContactPreference = row["ContactPref"].ToString().Split(new string[] { Constants.QuerySeparator }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
                 userProfile.EmailAddress = row["EmailAddress"].ToString();
-                userProfile.Address = row["Address"].ToString();
+
+                userProfile.Address = new JavaScriptSerializer().Deserialize<AddressContainer>(row["Address"].ToString());
                 if (bool.TryParse(row["IsAgent"].ToString(), out tempBool))
                 {
                     userProfile.IsAgent = tempBool;
