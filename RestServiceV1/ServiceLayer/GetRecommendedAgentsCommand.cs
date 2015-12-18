@@ -6,10 +6,12 @@ namespace RestServiceV1.ServiceLayer
 {
     using RestServiceV1.DataContracts;
     using RestServiceV1.Providers;
+    using Providers.GeoLocation;
     using System;
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
+    using DataContracts.InApp;
 
     /// <summary>
     /// Command to get the reccomended agents for a new case
@@ -55,6 +57,11 @@ namespace RestServiceV1.ServiceLayer
             {
                 parameters.Add("@userId" + i, agentIds[i]);
             }
+
+            IGeolocationProvider geolocationProvider = (IGeolocationProvider)ProviderFactory.Instance.CreateProvider<IGeolocationProvider>(null);
+            Coordinates coordinates = geolocationProvider.GetCoordinates(requestContainer.CaseDetails.AnotherAddress);
+            parameters.Add("@Lat", coordinates.Lattitude);
+            parameters.Add("@Lng", coordinates.Longitude);
 
             DataSet agentInfoResult = sqlProvider.ExecuteQuery(SqlQueries.GetUsersByIdsQuery(agentIds.Take(maxAgentCount).ToList<string>()), parameters);
 

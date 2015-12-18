@@ -106,7 +106,7 @@ namespace RestServiceV1.DataContracts
         /// <value>
         /// The user address.
         /// </value>
-        public string UserAddress { get; set; }
+        public AddressContainer UserAddress { get; set; }
 
         /// <summary>
         /// Gets or sets another address.
@@ -114,7 +114,7 @@ namespace RestServiceV1.DataContracts
         /// <value>
         /// Another address.
         /// </value>
-        public string AnotherAddress { get; set; }
+        public AddressContainer AnotherAddress { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [new message].

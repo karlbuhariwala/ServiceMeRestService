@@ -505,7 +505,8 @@ WHERE
 FROM
     UserInfo
 WHERE
-    UserId IN ({0})";
+    UserId IN ({0})
+    {1}";
 
         /// <summary>
         /// The get agents for tag
@@ -622,12 +623,19 @@ WHERE
         /// </summary>
         /// <param name="userIds">The user ids.</param>
         /// <returns>Query with correct length of userIds</returns>
-        public static string GetUsersByIdsQuery(List<string> userIds)
+        public static string GetUsersByIdsQuery(List<string> userIds, double longitude = 0, double lattitude = 0 )
         {
             List<string> parameterNames = new List<string>();
             for (int i = 0; i < userIds.Count; i++)
             {
                 parameterNames.Add("@userId" + i);
+            }
+
+            string latLngString = string.Empty;
+            if(longitude != 0 || longitude != 0)
+            {
+                // Do between
+                latLngString = @"AND "
             }
 
             return string.Format(SqlQueries.GetUsersByIds, string.Join(",", parameterNames));
