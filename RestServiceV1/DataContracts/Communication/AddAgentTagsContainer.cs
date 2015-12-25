@@ -23,13 +23,13 @@ namespace RestServiceV1.DataContracts
         public List<MyKeyValuePair<string, int>> TagCodeList { get; set; }
 
         /// <summary>
-        /// Gets or sets the agent identifier.
+        /// Gets or sets the agent profile.
         /// </summary>
         /// <value>
-        /// The agent identifier.
+        /// The agent profile.
         /// </value>
-        [DataMember(Name = "agentId")]
-        public string AgentId { get; set; }
+        [DataMember(Name = "agentProfile")]
+        public UserProfile AgentProfile { get; set; }
     }
 
     /// <summary>

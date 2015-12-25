@@ -8,7 +8,7 @@ namespace RestServiceV1.Providers
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
-
+    using System.Web.Script.Serialization;
     /// <summary>
     /// Test provider for the ISqlProvider interface
     /// </summary>
@@ -76,8 +76,177 @@ namespace RestServiceV1.Providers
             {
                 return SqlTestProvider.GetChatRoomDetails();
             }
+            else if (query == SqlQueries.GetUserProfileQuery)
+            {
+                return SqlTestProvider.GetUserProfile();
+            }
+            else if (query == SqlQueries.GetTagsForAutoComplete)
+            {
+                return SqlTestProvider.GetTagsForAutoComplete();
+            }
+            else if (query == SqlQueries.GetAgentForAutoComplete)
+            {
+                return SqlTestProvider.GetAgentForAutoComplete();
+            }
+            else if (query == SqlQueries.GetUserRatingsFromContextualInfoQuery(true) || query == SqlQueries.GetUserRatingsFromContextualInfoQuery(false))
+            {
+                return SqlTestProvider.GetUserRatingsFromContextualInfoQuery();
+            }
 
             return null;
+        }
+
+        private static DataSet GetUserRatingsFromContextualInfoQuery()
+        {
+            DataSet returnData = new DataSet();
+            DataTable table = new DataTable("InfoTable");
+            table.Columns.Add("Rating");
+            table.Columns.Add("UserInfoTableRatingCount");
+            table.Columns.Add("ContextualDetailsRatingCount");
+
+            DataRow row1 = table.NewRow();
+            row1["Rating"] = 3;
+            row1["UserInfoTableRatingCount"] = 234;
+            row1["ContextualDetailsRatingCount"] = 0;
+            table.Rows.Add(row1);
+
+            returnData.Tables.Add(table);
+            return returnData;
+        }
+
+        private static DataSet GetAgentForAutoComplete()
+        {
+            DataSet returnData = new DataSet();
+            DataTable table = new DataTable("InfoTable");
+            table.Columns.Add("Name");
+            table.Columns.Add("UserId");
+            table.Columns.Add("PhoneNumber");
+            table.Columns.Add("AgentRating");
+            table.Columns.Add("AgentRatingCount");
+
+            DataRow row1 = table.NewRow();
+            row1["Name"] = "Jay Hastel";
+            row1["UserId"] = Guid.NewGuid().ToString();
+            row1["PhoneNumber"] = "+2134565739";
+            row1["AgentRating"] = 2.3;
+            row1["AgentRatingCount"] = 46;
+            table.Rows.Add(row1);
+
+            DataRow row2 = table.NewRow();
+            row2["Name"] = "Polo Hasting";
+            row2["UserId"] = Guid.NewGuid().ToString();
+            row2["PhoneNumber"] = "+873263287";
+            row2["AgentRating"] = 3.2;
+            row2["AgentRatingCount"] = 576;
+            table.Rows.Add(row2);
+
+            DataRow row3 = table.NewRow();
+            row3["Name"] = "Kavita Matlani";
+            row3["UserId"] = Guid.NewGuid().ToString();
+            row3["PhoneNumber"] = "+8973278656";
+            row3["AgentRating"] = 4.3;
+            row3["AgentRatingCount"] = 432;
+            table.Rows.Add(row3);
+
+            DataRow row4 = table.NewRow();
+            row4["Name"] = "Bitty Jindal";
+            row4["UserId"] = Guid.NewGuid().ToString();
+            row4["PhoneNumber"] = "+876456";
+            row4["AgentRating"] = 3.8;
+            row4["AgentRatingCount"] = 312;
+            table.Rows.Add(row4);
+
+            DataRow row5 = table.NewRow();
+            row5["Name"] = "Nima Jason";
+            row5["UserId"] = Guid.NewGuid().ToString();
+            row5["PhoneNumber"] = "+76764546579";
+            row5["AgentRating"] = 2.7;
+            row5["AgentRatingCount"] = 23;
+            table.Rows.Add(row5);
+
+            returnData.Tables.Add(table);
+            return returnData;
+        }
+
+        private static DataSet GetTagsForAutoComplete()
+        {
+            DataSet returnData = new DataSet();
+            DataTable table = new DataTable("InfoTable");
+            table.Columns.Add("Tag");
+
+            DataRow row = table.NewRow();
+            row["Tag"] = "Test1";
+            table.Rows.Add(row);
+
+            DataRow row2 = table.NewRow();
+            row2["Tag"] = "Test2";
+            table.Rows.Add(row2);
+
+            DataRow row3 = table.NewRow();
+            row3["Tag"] = "Test3";
+            table.Rows.Add(row3);
+
+            DataRow row4 = table.NewRow();
+            row4["Tag"] = "Test11111111111111111111111111111";
+            table.Rows.Add(row4);
+
+            DataRow row5 = table.NewRow();
+            row5["Tag"] = "Test23";
+            table.Rows.Add(row5);
+
+            returnData.Tables.Add(table);
+            return returnData;
+        }
+
+        private static DataSet GetUserProfile()
+        {
+            DataSet returnData = new DataSet();
+            DataTable table = new DataTable("InfoTable");
+            table.Columns.Add("Name");
+            table.Columns.Add("PhoneNumber");
+            table.Columns.Add("IsVerified");
+            table.Columns.Add("ContactPref");
+            table.Columns.Add("EmailAddress");
+            table.Columns.Add("Address");
+            table.Columns.Add("IsAgent");
+            table.Columns.Add("IsManager");
+            table.Columns.Add("LandingPage");
+            table.Columns.Add("PushNotificationsUri");
+            table.Columns.Add("AgentRating");
+            table.Columns.Add("AgentRatingCount");
+            table.Columns.Add("UserRating");
+            table.Columns.Add("UserRatingCount");
+            table.Columns.Add("Tags");
+            table.Columns.Add("AreaofService");
+            table.Columns.Add("FavoriteAgents");
+
+            DataRow row1 = table.NewRow();
+            row1["Name"] = "Rittu Jain";
+            row1["PhoneNumber"] = "+919867856543";
+            row1["IsVerified"] = true;
+            row1["ContactPref"] = "Chat" + Constants.QuerySeparator + "Email"; ;
+            row1["EmailAddress"] = "Rittu@Jain.com";
+            AddressContainer addressContainer = new AddressContainer();
+            addressContainer.AddressLine1 = "1000 Having St";
+            addressContainer.City = "Hasting";
+            addressContainer.PostalCode = "40001";
+            addressContainer.Country = "USA";
+            row1["Address"] = new JavaScriptSerializer().Serialize(addressContainer);
+            row1["IsAgent"] = true;
+            row1["IsManager"] = true;
+            row1["LandingPage"] = "Agent";
+            row1["PushNotificationsUri"] = "Junk";
+            row1["AgentRating"] = 4.5;
+            row1["AgentRatingCount"] = 56;
+            row1["UserRating"] = 4.5;
+            row1["UserRatingCount"] = 56;
+            row1["Tags"] = "PartyPlaning|$|CabService|$|Balloons";
+            row1["AreaOfService"] = 20.0;
+            row1["FavoriteAgents"] = null;
+            table.Rows.Add(row1);
+
+            returnData.Tables.Add(table);
+            return returnData;
         }
 
         private static DataSet GetChatRoomDetails()
@@ -358,7 +527,7 @@ namespace RestServiceV1.Providers
             row1["Name"] = "Raj Jackmar";
             row1["AgentRating"] = 4.5;
             row1["AgentRatingCount"] = 273;
-            row1["AreaOfService"] = "Mumbai";
+            row1["AreaOfService"] = 20;
             row1["Tags"] = "PartyPlaning|$|CabService|$|Balloons";
             row1["FavoriteAgents"] = Guid.NewGuid().ToString() + "|$|" + Guid.NewGuid().ToString();
             row1["PushNotificationsUri"] = "Teststring";
@@ -369,7 +538,7 @@ namespace RestServiceV1.Providers
             row2["Name"] = "Peter Thum";
             row2["AgentRating"] = 3.1;
             row2["AgentRatingCount"] = 326;
-            row2["AreaOfService"] = "Delhi";
+            row2["AreaOfService"] = 25;
             row2["Tags"] = "DJ|$|Music";
             row2["FavoriteAgents"] = Guid.NewGuid().ToString();
             row1["PushNotificationsUri"] = "Teststring";
@@ -383,7 +552,7 @@ namespace RestServiceV1.Providers
                 row3["Name"] = "Sita Gills";
                 row3["AgentRating"] = 4.8;
                 row3["AgentRatingCount"] = 65;
-                row3["AreaOfService"] = "South Mumbai";
+                row3["AreaOfService"] = 5;
                 row3["Tags"] = "Flowers";
                 row3["FavoriteAgents"] = string.Empty;
             row1["PushNotificationsUri"] = "Teststring";

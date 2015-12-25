@@ -92,13 +92,13 @@ namespace RestServiceV1.DataContracts.InApp
     public class LocationContainer
     {
         /// <summary>
-        /// Gets or sets the lattitude.
+        /// Gets or sets the latitude.
         /// </summary>
         /// <value>
-        /// The lattitude.
+        /// The latitude.
         /// </value>
         [DataMember(Name = "lat")]
-        public double Lattitude { get; set; }
+        public double Latitude { get; set; }
 
         /// <summary>
         /// Gets or sets the longitude.

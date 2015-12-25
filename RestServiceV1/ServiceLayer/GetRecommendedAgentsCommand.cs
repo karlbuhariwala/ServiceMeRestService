@@ -4,14 +4,13 @@
 
 namespace RestServiceV1.ServiceLayer
 {
+    using DataContracts.InApp;
     using RestServiceV1.DataContracts;
     using RestServiceV1.Providers;
-    using Providers.GeoLocation;
     using System;
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
-    using DataContracts.InApp;
 
     /// <summary>
     /// Command to get the reccomended agents for a new case
@@ -58,12 +57,17 @@ namespace RestServiceV1.ServiceLayer
                 parameters.Add("@userId" + i, agentIds[i]);
             }
 
-            IGeolocationProvider geolocationProvider = (IGeolocationProvider)ProviderFactory.Instance.CreateProvider<IGeolocationProvider>(null);
-            Coordinates coordinates = geolocationProvider.GetCoordinates(requestContainer.CaseDetails.AnotherAddress);
-            parameters.Add("@Lat", coordinates.Lattitude);
+            Coordinates coordinates = new Coordinates(requestContainer.UserProfile.UserLatitude, requestContainer.UserProfile.UserLongitude);
+            if (requestContainer.CaseDetails.AnotherAddress != null)
+            {
+                IGeolocationProvider geolocationProvider = (IGeolocationProvider)ProviderFactory.Instance.CreateProvider<IGeolocationProvider>(null);
+                coordinates = geolocationProvider.GetCoordinates(requestContainer.CaseDetails.AnotherAddress);
+            }
+
+            parameters.Add("@Lat", coordinates.Latitude);
             parameters.Add("@Lng", coordinates.Longitude);
 
-            DataSet agentInfoResult = sqlProvider.ExecuteQuery(SqlQueries.GetUsersByIdsQuery(agentIds.Take(maxAgentCount).ToList<string>()), parameters);
+            DataSet agentInfoResult = sqlProvider.ExecuteQuery(SqlQueries.GetUsersByIdsQuery(agentIds.Take(maxAgentCount).ToList<string>(), coordinates), parameters);
 
             List<UserProfile> agentProfiles = new List<UserProfile>();
             if (agentInfoResult.Tables.Count > 0 && agentInfoResult.Tables[0].Rows.Count > 0)
@@ -97,6 +101,8 @@ namespace RestServiceV1.ServiceLayer
                     agentProfiles.Add(agentProfile);
                 }
             }
+
+            // Todo: Arrange in order of rating and take top x.
 
             returnContainer.RecommendedAgents = agentProfiles;
             returnContainer.ReturnCode = ReturnCodes.C101;

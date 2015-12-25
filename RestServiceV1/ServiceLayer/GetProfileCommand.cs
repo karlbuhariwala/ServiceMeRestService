@@ -101,7 +101,10 @@ namespace RestServiceV1.ServiceLayer
                 }
 
                 userProfile.Tags = row["Tags"].ToString().Split(new string[] { Constants.QuerySeparator }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
-                userProfile.AreaOfService = row["AreaOfService"].ToString();
+
+                double.TryParse(row["AreaOfService"].ToString(), out tempDouble);
+                userProfile.AreaOfService = tempDouble;
+
                 userProfile.FavoriteAgents = row["FavoriteAgents"].ToString().Split(new string[] { Constants.QuerySeparator }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
 
                 // Found user and returning it

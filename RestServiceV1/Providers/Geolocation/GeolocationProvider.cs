@@ -5,7 +5,6 @@
 namespace RestServiceV1.Providers
 {
     using DataContracts;
-    using GeoLocation;
     using DataContracts.InApp;
     using System;
     using System.Configuration;
@@ -57,7 +56,7 @@ namespace RestServiceV1.Providers
                         if (result.Status == "OK")
                         {
                             Coordinates coordinates = new Coordinates();
-                            coordinates.Lattitude = result.Results[0].Geometry.Location.Lattitude;
+                            coordinates.Latitude = result.Results[0].Geometry.Location.Latitude;
                             coordinates.Longitude = result.Results[0].Geometry.Location.Longitude;
                             return coordinates;
                         }

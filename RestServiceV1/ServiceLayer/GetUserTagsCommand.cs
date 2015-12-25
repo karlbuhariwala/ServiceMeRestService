@@ -34,6 +34,9 @@ namespace RestServiceV1.ServiceLayer
             {
                 DataRow row = returnedData.Tables[0].Rows[0];
                 returnContainer.Tags = row["Tags"].ToString().Split(new string[] { Constants.QuerySeparator }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
+                double tempDouble;
+                double.TryParse(row["AreaOfService"].ToString(), out tempDouble);
+                returnContainer.AreaOfService = tempDouble;
                 returnContainer.ReturnCode = ReturnCodes.C101;
             }
             else

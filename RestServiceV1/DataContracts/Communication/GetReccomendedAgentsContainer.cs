@@ -21,6 +21,15 @@ namespace RestServiceV1.DataContracts
         /// </value>
         [DataMember(Name = "caseDetails")]
         public CaseDetails CaseDetails { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user profile.
+        /// </summary>
+        /// <value>
+        /// The user profile.
+        /// </value>
+        [DataMember(Name = "userProfile")]
+        public UserProfile UserProfile { get; set; }
     }
 
     /// <summary>

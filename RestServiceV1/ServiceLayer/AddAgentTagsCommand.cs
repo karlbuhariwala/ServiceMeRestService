@@ -11,7 +11,7 @@ namespace RestServiceV1.ServiceLayer
     using System.Linq;
     using System.Web;
     using System.Data;
-
+    using DataContracts.InApp;
     /// <summary>
     /// Add agent tags command class
     /// </summary>
@@ -55,7 +55,7 @@ namespace RestServiceV1.ServiceLayer
                 bool tempBool = false;
                 bool.TryParse(row["IsEnterpriseTag"].ToString(), out tempBool);
                 List<string> userIds = row["AgentIdGroup1"].ToString().Split(new string[] { Constants.QuerySeparator }, StringSplitOptions.RemoveEmptyEntries).ToList();
-                if(userIds.Contains(requestContainer.AgentId, StringComparer.OrdinalIgnoreCase))
+                if(userIds.Contains(requestContainer.AgentProfile.UserId, StringComparer.OrdinalIgnoreCase))
                 {
                     tagsUserMap.Add(tag, row["AgentIdGroup1"].ToString());
                     continue;
@@ -77,7 +77,7 @@ namespace RestServiceV1.ServiceLayer
                         }
                         else
                         {
-                            tagsUserMap.Add(tag, row["AgentIdGroup1"].ToString() + Constants.QuerySeparator + requestContainer.AgentId);
+                            tagsUserMap.Add(tag, row["AgentIdGroup1"].ToString() + Constants.QuerySeparator + requestContainer.AgentProfile.UserId);
                         }
                     }
                     else
@@ -88,9 +88,14 @@ namespace RestServiceV1.ServiceLayer
                 }
                 else
                 {
-                    tagsUserMap.Add(tag, row["AgentIdGroup1"].ToString() + Constants.QuerySeparator + requestContainer.AgentId);
+                    tagsUserMap.Add(tag, row["AgentIdGroup1"].ToString() + Constants.QuerySeparator + requestContainer.AgentProfile.UserId);
                 }
             }
+
+            Coordinates topLeft;
+            Coordinates bottomRight;
+            IGeoAreaProvider geoAreaProvider = (IGeoAreaProvider)ProviderFactory.Instance.CreateProvider<IGeoAreaProvider>(null);
+            geoAreaProvider.GetBoundary(new Coordinates(requestContainer.AgentProfile.UserLatitude, requestContainer.AgentProfile.UserLongitude), requestContainer.AgentProfile.AreaOfService, out topLeft, out bottomRight);
 
             // Make this concurrent and is not thread safe.
             if (returnContainer.ReturnCode == ReturnCodes.C101)
@@ -116,9 +121,14 @@ namespace RestServiceV1.ServiceLayer
                 parametersForProfile.Add("@IsManager", null);
                 parametersForProfile.Add("@LandingPage", null);
                 parametersForProfile.Add("@Longitude", null);
-                parametersForProfile.Add("@Lattitude", null);
+                parametersForProfile.Add("@Latitude", null);
+                parametersForProfile.Add("@AreaOfService", requestContainer.AgentProfile.AreaOfService);
+                parametersForProfile.Add("@AreaOfServiceTopLeftLat", topLeft.Latitude);
+                parametersForProfile.Add("@AreaOfServiceTopLeftLng", topLeft.Longitude);
+                parametersForProfile.Add("@AreaOfServiceBottomRightLat", bottomRight.Latitude);
+                parametersForProfile.Add("@AreaOfServiceBottomRightLng", bottomRight.Longitude);
                 parametersForProfile.Add("@Tags", string.Join(Constants.QuerySeparator, tagsToAdd));
-                parametersForProfile.Add("@userId", requestContainer.AgentId);
+                parametersForProfile.Add("@userId", requestContainer.AgentProfile.UserId);
                 sqlProvider.ExecuteQuery(SqlQueries.UpdateUserProfile, parametersForProfile);
             }
 

@@ -185,7 +185,7 @@ namespace RestServiceV1
         /// The area of service.
         /// </value>
         [DataMember(Name = "areaOfService")]
-        public string AreaOfService { get; set; }
+        public double AreaOfService { get; set; }
 
         /// <summary>
         /// Gets or sets the favorite agents.
@@ -197,5 +197,23 @@ namespace RestServiceV1
         /// </value>
         [DataMember(Name = "favoriteAgents")]
         public List<string> FavoriteAgents { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user latitude.
+        /// </summary>
+        /// <value>
+        /// The user latitude.
+        /// </value>
+        [DataMember(Name = "userLatitude")]
+        public double UserLatitude { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user longitude.
+        /// </summary>
+        /// <value>
+        /// The user longitude.
+        /// </value>
+        [DataMember(Name = "userLongitude")]
+        public double UserLongitude { get; set; }
     }
 }

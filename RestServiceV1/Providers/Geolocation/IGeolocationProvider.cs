@@ -2,7 +2,7 @@
 // ServiceMe App
 // FileName = IGeolocationProvider.cs
 
-namespace RestServiceV1.Providers.GeoLocation
+namespace RestServiceV1.Providers
 {
     using DataContracts.InApp;
     using System;

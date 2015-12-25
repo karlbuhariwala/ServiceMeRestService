@@ -3,6 +3,7 @@
 // FileName = SqlQueries.cs
 
 using java.lang;
+using RestServiceV1.DataContracts.InApp;
 using System.Collections.Generic;
 namespace RestServiceV1.Providers
 {
@@ -127,7 +128,12 @@ SET
     , [IsAgent] = COALESCE(@IsAgent, [IsAgent])
     , [IsManager] = COALESCE(@IsManager, [IsManager])
     , [Longitude] = COALESCE(@Longitude, [Longitude])
-    , [Lattitude] = COALESCE(@Lattitude, [Lattitude])
+    , [Latitude] = COALESCE(@Latitude, [Latitude])
+    , [AreaOfService] = COALESCE(@AreaOfService, [AreaOfService])
+    , [AreaOfServiceTopLeftLat] = COALESCE(@AreaOfServiceTopLeftLat, [AreaOfServiceTopLeftLat])
+    , [AreaOfServiceTopLeftLng] = COALESCE(@AreaOfServiceTopLeftLng, [AreaOfServiceTopLeftLng])
+    , [AreaOfServiceBottomRightLat] = COALESCE(@AreaOfServiceBottomRightLat, [AreaOfServiceBottomRightLat])
+    , [AreaOfServiceBottomRightLng] = COALESCE(@AreaOfServiceBottomRightLng, [AreaOfServiceBottomRightLng])
     , [LandingPage] = COALESCE(@LandingPage, [LandingPage])
     , [Tags] = COALESCE(@Tags, [Tags])
 WHERE
@@ -623,7 +629,7 @@ WHERE
         /// </summary>
         /// <param name="userIds">The user ids.</param>
         /// <returns>Query with correct length of userIds</returns>
-        public static string GetUsersByIdsQuery(List<string> userIds, double longitude = 0, double lattitude = 0 )
+        public static string GetUsersByIdsQuery(List<string> userIds, Coordinates coordinates = null)
         {
             List<string> parameterNames = new List<string>();
             for (int i = 0; i < userIds.Count; i++)
@@ -632,13 +638,13 @@ WHERE
             }
 
             string latLngString = string.Empty;
-            if(longitude != 0 || longitude != 0)
+            if(coordinates != null)
             {
-                // Do between
-                latLngString = @"AND "
+                latLngString = string.Format(@"AND (AreaOfServiceTopLeftLat < {0} AND {0} < AreaOfServiceBottomRightLat)", "@Lat");
+                latLngString += string.Format(@"AND (AreaOfServiceTopLeftLng < {0} AND {0} < AreaOfServiceBottomRightLng)", "@Lng");
             }
 
-            return string.Format(SqlQueries.GetUsersByIds, string.Join(",", parameterNames));
+            return string.Format(SqlQueries.GetUsersByIds, string.Join(",", parameterNames), latLngString);
         }
 
         /// <summary>

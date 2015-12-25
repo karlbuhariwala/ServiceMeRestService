@@ -70,7 +70,9 @@ namespace RestServiceV1.ServiceLayer
                             // Todo: Log
                         }
 
-                        agentProfile.AreaOfService = row["AreaOfService"].ToString();
+                        double.TryParse(row["AreaOfService"].ToString(), out tempDouble);
+                        agentProfile.AreaOfService = tempDouble;
+
                         agentProfile.Tags = row["Tags"].ToString().Split(new string[] { Constants.QuerySeparator }, StringSplitOptions.RemoveEmptyEntries).ToList<string>();
                         returnContainer.AgentProfile = agentProfile;
                     }

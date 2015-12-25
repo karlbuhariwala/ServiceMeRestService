@@ -36,5 +36,23 @@ namespace RestServiceV1.DataContracts
         /// </value>
         [DataMember(Name = "isAgent")]
         public bool IsAgent { get; set; }
+
+        /// <summary>
+        /// Gets the latitude.
+        /// </summary>
+        /// <value>
+        /// The latitude.
+        /// </value>
+        [DataMember(Name = "latitude")]
+        public double Latitude { get; internal set; }
+
+        /// <summary>
+        /// Gets the longitude.
+        /// </summary>
+        /// <value>
+        /// The longitude.
+        /// </value>
+        [DataMember(Name = "longitude")]
+        public double Longitude { get; internal set; }
     }
 }

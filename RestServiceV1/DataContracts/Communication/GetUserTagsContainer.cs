@@ -37,5 +37,14 @@ namespace RestServiceV1.DataContracts
         /// </value>
         [DataMember(Name = "tags")]
         public List<string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the area of service.
+        /// </summary>
+        /// <value>
+        /// The area of service.
+        /// </value>
+        [DataMember(Name = "areaOfService")]
+        public double AreaOfService { get; set; }
     }
 }
