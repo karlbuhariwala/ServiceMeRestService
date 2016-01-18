@@ -260,6 +260,8 @@
     <Compile Include="Providers\Nlp\INlpProvider.cs" />
     <Compile Include="Providers\Nlp\NlpProvider.cs" />
     <Compile Include="Providers\ProviderFactory.cs" />
+    <Compile Include="Providers\RankingProvider\IRankingProvider.cs" />
+    <Compile Include="Providers\RankingProvider\RankingProvider.cs" />
     <Compile Include="Providers\Sql\ISqlProvider.cs" />
     <Compile Include="Providers\Sql\SqlProvider.cs" />
     <Compile Include="Providers\Sql\SqlTestProvider.cs" />

@@ -28,7 +28,7 @@ namespace RestServiceV1.ServiceLayer
             GetRecommendedAgentsReturnContainer returnContainer = new GetRecommendedAgentsReturnContainer();
 
             const int maxTagsCount = 10;
-            const int maxAgentCount = 5;
+            const int maxAgentCount = int.MaxValue;
 
             // Todo: Make lists from Json
             ISqlProvider sqlProvider = (ISqlProvider)ProviderFactory.Instance.CreateProvider<ISqlProvider>(requestContainer.ProviderName);
@@ -98,13 +98,17 @@ namespace RestServiceV1.ServiceLayer
                         // Todo: Log
                     }
 
+                    int.TryParse(row["AgentPositiveRatingCount"].ToString(), out tempInt);
+                    agentProfile.AgentPositiveRatingCount = tempInt;
+
                     agentProfiles.Add(agentProfile);
                 }
             }
 
-            // Todo: Arrange in order of rating and take top x.
+            IRankingProvider rankingProvider = (IRankingProvider)ProviderFactory.Instance.CreateProvider<IRankingProvider>(null);
+            rankingProvider.SortByRank(agentProfiles);
 
-            returnContainer.RecommendedAgents = agentProfiles;
+            returnContainer.RecommendedAgents = agentProfiles.Take(5).ToList();
             returnContainer.ReturnCode = ReturnCodes.C101;
             return returnContainer;
         }

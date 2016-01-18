@@ -161,6 +161,24 @@ namespace RestServiceV1
         public int AgentRatingCount { get; set; }
 
         /// <summary>
+        /// Gets or sets the agent positive rating count.
+        /// </summary>
+        /// <value>
+        /// The agent positive rating count.
+        /// </value>
+        [DataMember(Name = "agentPositiveRatingCount")]
+        public int AgentPositiveRatingCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ci of 5 star rating.
+        /// </summary>
+        /// <value>
+        /// The ci of5 star rating.
+        /// </value>
+        [DataMember(Name = "cIOf5StarRating")]
+        public double CIOf5StarRating { get; set; }
+
+        /// <summary>
         /// Gets or sets the user rating count.
         /// </summary>
         /// <value>

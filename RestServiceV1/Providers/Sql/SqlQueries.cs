@@ -504,6 +504,7 @@ WHERE
     , Name
     , AgentRating
     , AgentRatingCount
+    , AgentPositiveRatingCount
     , AreaOfService
     , Tags
     , FavoriteAgents
@@ -640,7 +641,7 @@ WHERE
             string latLngString = string.Empty;
             if(coordinates != null)
             {
-                latLngString = string.Format(@"AND (AreaOfServiceTopLeftLat < {0} AND {0} < AreaOfServiceBottomRightLat)", "@Lat");
+                latLngString = string.Format(@"AND (AreaOfServiceBottomRightLat < {0} AND {0} < AreaOfServiceTopLeftLat)", "@Lat");
                 latLngString += string.Format(@"AND (AreaOfServiceTopLeftLng < {0} AND {0} < AreaOfServiceBottomRightLng)", "@Lng");
             }
 
