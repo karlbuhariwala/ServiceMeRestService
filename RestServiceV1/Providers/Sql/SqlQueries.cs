@@ -533,6 +533,7 @@ WHERE
     UserInfo.{0}Rating AS Rating
     , UserInfo.{0}RatingCount AS UserInfoTableRatingCount
     , ContextCaseInfo.{0}RatingCount AS ContextualDetailsRatingCount
+    {1}
 FROM
     ContextualCaseDetails AS ContextCaseInfo
     LEFT JOIN UserInfo AS UserInfo ON UserInfo.UserId = ContextCaseInfo.{0}Id
@@ -549,6 +550,7 @@ WHERE
 SET
     {0}Rating = COALESCE(@rating, {0}Rating)
     , {0}RatingCount = COALESCE(@ratingCount, {0}RatingCount)
+    {1}
 WHERE
     UserId = @userId";
 
@@ -585,12 +587,14 @@ WHERE
         public static string UpdateUserInfoWithRatingQuery(bool isAgent)
         {
             string userString = "User";
+            string positiveAgentCountString = string.Empty;
             if (isAgent)
             {
                 userString = "Agent";
+                positiveAgentCountString = ", AgentPositiveRatingCount = COALESCE(@positiveRatingCount, AgentPositiveRatingCount)";
             }
 
-            return string.Format(SqlQueries.UpdateUserInfoWithRating, userString);
+            return string.Format(SqlQueries.UpdateUserInfoWithRating, userString, positiveAgentCountString);
         }
 
         /// <summary>
@@ -601,12 +605,14 @@ WHERE
         public static string GetUserRatingsFromContextualInfoQuery(bool isAgent)
         {
             string userString = "User";
+            string positiveAgentCountString = string.Empty;
             if(isAgent)
             {
                 userString = "Agent";
+                positiveAgentCountString = ", UserInfo.AgentPositiveRatingCount AS UserInfoTablePositiveRatingCount ";
             }
 
-            return string.Format(SqlQueries.GetUserRatingsFromContextualInfo, userString);
+            return string.Format(SqlQueries.GetUserRatingsFromContextualInfo, userString, positiveAgentCountString);
         }
 
         /// <summary>

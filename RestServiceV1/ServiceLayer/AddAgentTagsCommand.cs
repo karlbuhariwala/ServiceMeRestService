@@ -47,13 +47,13 @@ namespace RestServiceV1.ServiceLayer
 
             Dictionary<string, string> tagsUserMap = new Dictionary<string, string>();
 
-            // Todo: Need to check if user already on the tag and not repeat.
+            // Todo: Need to check if user already on the tag and not repeat. Edit 1/18/2016: I believe here we are talking about for inserting below again in the DB.
             returnContainer.TagsThatNeedCodes = new List<string>();
             foreach (DataRow row in result.Tables[0].Rows)
             {
                 string tag = row["Tag"].ToString();
-                bool tempBool = false;
-                bool.TryParse(row["IsEnterpriseTag"].ToString(), out tempBool);
+                bool isEnterpriseTag = false;
+                bool.TryParse(row["IsEnterpriseTag"].ToString(), out isEnterpriseTag);
                 List<string> userIds = row["AgentIdGroup1"].ToString().Split(new string[] { Constants.QuerySeparator }, StringSplitOptions.RemoveEmptyEntries).ToList();
                 if(userIds.Contains(requestContainer.AgentProfile.UserId, StringComparer.OrdinalIgnoreCase))
                 {
@@ -61,7 +61,7 @@ namespace RestServiceV1.ServiceLayer
                     continue;
                 }
 
-                if (tempBool)
+                if (isEnterpriseTag)
                 {
                     DateTimeOffset tempDateTimeOffset = new DateTimeOffset(new DateTime(1900, 1, 1));
                     DateTimeOffset.TryParse(row["DateTimeTagCode"].ToString(), out tempDateTimeOffset);

@@ -49,14 +49,23 @@ namespace RestServiceV1.ServiceLayer
                 int userInfoTableRatingCount;
                 int.TryParse(row["UserInfoTableRatingCount"].ToString(), out userInfoTableRatingCount);
 
+                int userInfoTablePositiveRatingCount;
+                int.TryParse(row["UserInfoTablePositiveRatingCount"].ToString(), out userInfoTablePositiveRatingCount);
+
                 double newRating = ((rating * userInfoTableRatingCount) + requestContainer.Rating) / (double)(userInfoTableRatingCount + 1);
                 userInfoTableRatingCount += 1;
+                if(rating > 3.9)
+                {
+                    userInfoTablePositiveRatingCount += 1;
+                }
+
                 contextualDetailsRatingCount += 1;
 
                 parameters.Clear();
                 parameters.Add("@userId", requestContainer.UserId);
                 parameters.Add("@rating", newRating);
                 parameters.Add("@ratingCount", userInfoTableRatingCount);
+                parameters.Add("@positiveRatingCount", userInfoTablePositiveRatingCount);
                 sqlProvider.ExecuteQuery(SqlQueries.UpdateUserInfoWithRatingQuery(requestContainer.IsAgent), parameters);
 
                 parameters.Clear();
