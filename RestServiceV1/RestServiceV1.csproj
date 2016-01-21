@@ -242,6 +242,7 @@
     <Compile Include="DataContracts\InApp\DeviceValidationContainer.cs" />
     <Compile Include="DataContracts\InApp\GcmContainer.cs" />
     <Compile Include="DataContracts\InApp\GoogleApiGeocodeContainer.cs" />
+    <Compile Include="DataContracts\InApp\InfoBipContainers.cs" />
     <Compile Include="DataContracts\InApp\MyKeyValuePair.cs" />
     <Compile Include="DataContracts\InApp\RequestContext.cs" />
     <Compile Include="DataContracts\InApp\UserProfile.cs" />
@@ -259,6 +260,8 @@
     <Compile Include="Providers\KeywordProcessor\KeywordProcessorProvider.cs" />
     <Compile Include="Providers\Nlp\INlpProvider.cs" />
     <Compile Include="Providers\Nlp\NlpProvider.cs" />
+    <Compile Include="Providers\PhoneVerificationProvider\IPhoneVerificationProvider.cs" />
+    <Compile Include="Providers\PhoneVerificationProvider\PhoneVerificationProvider.cs" />
     <Compile Include="Providers\ProviderFactory.cs" />
     <Compile Include="Providers\RankingProvider\IRankingProvider.cs" />
     <Compile Include="Providers\RankingProvider\RankingProvider.cs" />
