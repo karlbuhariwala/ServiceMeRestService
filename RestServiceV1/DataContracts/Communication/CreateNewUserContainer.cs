@@ -60,6 +60,6 @@ namespace RestServiceV1.DataContracts
         /// <summary>
         /// The computer
         /// </summary>
-        Computer,
+        NonPhone,
     }
 }

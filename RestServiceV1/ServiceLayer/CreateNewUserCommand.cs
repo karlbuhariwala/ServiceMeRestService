@@ -67,6 +67,7 @@ namespace RestServiceV1.ServiceLayer
 
                     Dictionary<string, object> parameters = new Dictionary<string, object>();
                     parameters.Add("@userId", returnContainer.UserId);
+                    parameters.Add("@orgId", Constants.UnassignedOrg);
                     parameters.Add("@phoneNumber", phoneNumber);
                     parameters.Add("@isVerified", 0);
                     parameters.Add("@isAgent", 0);
@@ -88,7 +89,7 @@ namespace RestServiceV1.ServiceLayer
                 parameters1.Add("@Deleted", 0);
                 sqlProvider.ExecuteQuery(SqlQueries.InsertDeviceVerificationCode, parameters1);
             }
-            else if (requestContainer.DeviceType == DeviceType.Computer.ToString())
+            else if (requestContainer.DeviceType == DeviceType.NonPhone.ToString())
             {
                 if (exists)
                 {
@@ -98,10 +99,14 @@ namespace RestServiceV1.ServiceLayer
                     returnContainer.ReturnCode = ReturnCodes.C104;
 
                     // Todo: Verification text module needs to be called.
+                    Random rand = new Random((int)DateTime.UtcNow.AddDays(-1).Ticks);
+                    int code = rand.Next(0, 10000);
+                    IPhoneVerificationProvider phoneVerificationProvider = (IPhoneVerificationProvider)ProviderFactory.Instance.CreateProvider<IPhoneVerificationProvider>("PhoneVerificationDesignProvider");
+                    phoneVerificationProvider.SendVerificationSMS(phoneNumber, code.ToString());
 
                     Dictionary<string, object> parameters1 = new Dictionary<string, object>();
                     parameters1.Add("@userId", returnContainer.UserId);
-                    parameters1.Add("@VerificationCode", 1234);
+                    parameters1.Add("@VerificationCode", code);
                     parameters1.Add("@TimeStamp", DateTimeOffset.UtcNow);
                     parameters1.Add("@Deleted", 0);
                     sqlProvider.ExecuteQuery(SqlQueries.InsertDeviceVerificationCode, parameters1);

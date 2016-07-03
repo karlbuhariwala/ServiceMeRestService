@@ -261,6 +261,7 @@
     <Compile Include="Providers\Nlp\INlpProvider.cs" />
     <Compile Include="Providers\Nlp\NlpProvider.cs" />
     <Compile Include="Providers\PhoneVerificationProvider\IPhoneVerificationProvider.cs" />
+    <Compile Include="Providers\PhoneVerificationProvider\PhoneVerificationDesignProvider.cs" />
     <Compile Include="Providers\PhoneVerificationProvider\PhoneVerificationProvider.cs" />
     <Compile Include="Providers\ProviderFactory.cs" />
     <Compile Include="Providers\RankingProvider\IRankingProvider.cs" />

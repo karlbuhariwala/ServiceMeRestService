@@ -71,3 +71,13 @@ WHERE
 DELETE FROM UserInfo
 WHERE
 	UserId LIKE '%'
+
+
+
+SELECT
+    *
+FROM
+    UserInfo
+WHERE
+    UserId IN ('5B9878ED-15D4-414F-8AA5-8644817400D9')
+    AND (AreaOfServiceBottomRightLat< 47.5301011 AND 47.5301011 < AreaOfServiceTopLeftLat )AND (AreaOfServiceTopLeftLng < -122.0326191 AND -122.0326191 < AreaOfServiceBottomRightLng)

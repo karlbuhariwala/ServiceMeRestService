@@ -521,6 +521,11 @@ WHERE
         private const string GetAgentsForTag = @"SELECT
     AgentIdGroup1
     , AgentIdGroup2
+    , IsEnterpriseTag
+    , Tag
+    , EnterpriseTagRating
+    , EnterpriseTagRatingCount
+    , EnterpriseTagPositiveRatingCount
 FROM
     TagInfo
 WHERE

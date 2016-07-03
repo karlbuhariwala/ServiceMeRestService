@@ -54,3 +54,8 @@ FROM
 	TagInfo
 WHERE
 	Tag LIKE @tag
+
+Update TagInfo
+SET Code = 1234
+, DateTimeTagCode = DATEADD(minute, 5, CURRENT_TIMESTAMP)
+WHERE Tag = 'Flowers'

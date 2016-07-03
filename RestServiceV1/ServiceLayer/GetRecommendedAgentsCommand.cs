@@ -41,10 +41,34 @@ namespace RestServiceV1.ServiceLayer
             DataSet agentIdsresult = sqlProvider.ExecuteQuery(SqlQueries.GetAgentsForTagQuery(requestContainer.CaseDetails.Tags.Take(maxTagsCount).ToList<string>()), parameters);
 
             List<string> agentIds = new List<string>();
+            returnContainer.RecommendedAgents = new List<UserProfile>();
             if (agentIdsresult.Tables.Count > 0 && agentIdsresult.Tables[0].Rows.Count > 0)
             {
                 foreach (DataRow row in agentIdsresult.Tables[0].Rows)
                 {
+                    bool isEnterpriseTag;
+                    bool.TryParse(row["IsEnterpriseTag"].ToString(), out isEnterpriseTag);
+                    if (isEnterpriseTag)
+                    {
+                        UserProfile userProfile = new UserProfile();
+                        userProfile.Name = Constants.TagKeywordIndicator + row["Tag"].ToString();
+                        userProfile.UserId = string.Empty;
+                        double tempDouble;
+                        double.TryParse(row["EnterpriseTagRating"].ToString(), out tempDouble);
+                        userProfile.AgentRating = tempDouble;
+
+                        int tempInt;
+                        int.TryParse(row["EnterpriseTagRatingCount"].ToString(), out tempInt);
+                        userProfile.AgentRatingCount = tempInt;
+
+
+                        int.TryParse(row["EnterpriseTagPositiveRatingCount"].ToString(), out tempInt);
+                        userProfile.AgentPositiveRatingCount = tempInt;
+
+                        returnContainer.RecommendedAgents.Add(userProfile);
+                        continue;
+                    }
+
                     // Todo: Change to json
                     agentIds.AddRange(row["AgentIdGroup1"].ToString().Split(new string[] { Constants.QuerySeparator }, StringSplitOptions.RemoveEmptyEntries).ToList<string>());
                     agentIds.AddRange(row["AgentIdGroup2"].ToString().Split(new string[] { Constants.QuerySeparator }, StringSplitOptions.RemoveEmptyEntries).ToList<string>());
@@ -105,10 +129,11 @@ namespace RestServiceV1.ServiceLayer
                 }
             }
 
+            // Todo: Enterprise tags are not ranked.
             IRankingProvider rankingProvider = (IRankingProvider)ProviderFactory.Instance.CreateProvider<IRankingProvider>(null);
             rankingProvider.SortByRank(agentProfiles);
 
-            returnContainer.RecommendedAgents = agentProfiles.Take(5).ToList();
+            returnContainer.RecommendedAgents.AddRange(agentProfiles.Take(5).ToList());
             returnContainer.ReturnCode = ReturnCodes.C101;
             return returnContainer;
         }

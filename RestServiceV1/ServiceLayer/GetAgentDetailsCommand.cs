@@ -87,6 +87,9 @@ namespace RestServiceV1.ServiceLayer
                     }
                 }
 
+                // If the agent profile is null, it is a tag.
+                // Name, rating, area of service, 
+
                 returnContainer.ReturnCode = ReturnCodes.C101;
             }
             else

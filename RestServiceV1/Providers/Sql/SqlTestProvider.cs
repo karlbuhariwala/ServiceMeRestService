@@ -598,15 +598,30 @@ namespace RestServiceV1.Providers
             DataTable table = new DataTable("InfoTable");
             table.Columns.Add("AgentIdGroup1");
             table.Columns.Add("AgentIdGroup2");
+            table.Columns.Add("IsEnterpriseTag"); 
+            table.Columns.Add("Tag");
+            table.Columns.Add("EnterpriseTagRating");
+            table.Columns.Add("EnterpriseTagRatingCount");
+            table.Columns.Add("EnterpriseTagPositiveRatingCount");
 
             DataRow row1 = table.NewRow();
             row1["AgentIdGroup1"] = "be3136e5-556b-4da5-977f-bb192f7829bf|$|8e68681e-9649-4cbe-b249-0bf51b2e5766|$|12f2c6df-f778-4913-aa9e-28e4899ce050";
             row1["AgentIdGroup2"] = string.Empty;
+            row1["IsEnterpriseTag"] = true;
+            row1["Tag"] = "Flowers";
+            row1["EnterpriseTagRating"] = 4.5;
+            row1["EnterpriseTagRatingCount"] = 65;
+            row1["EnterpriseTagPositiveRatingCount"] = 30;
             table.Rows.Add(row1);
 
             DataRow row2 = table.NewRow();
             row2["AgentIdGroup1"] = "60dcfa50-9ad7-42c3-80b2-b3c03504aaf1|$|4edf5fed-b37e-4a75-948a-1e2b5a25b6ff";
             row2["AgentIdGroup2"] = "bf1fdeb5-1328-4e8a-a809-d2f017e2730e";
+            row2["IsEnterpriseTag"] = false;
+            row2["Tag"] = "Music";
+            row1["EnterpriseTagRating"] = 0;
+            row1["EnterpriseTagRatingCount"] = 0;
+            row1["EnterpriseTagPositiveRatingCount"] = 0;
             table.Rows.Add(row2);
 
             returnData.Tables.Add(table);
